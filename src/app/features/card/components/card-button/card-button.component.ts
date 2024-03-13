@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IconComponent} from "../icon/icon.component";
+import {IconComponent} from "../../../icon/icon.component";
 import { RouterLink } from '@angular/router';
 
 @Component({

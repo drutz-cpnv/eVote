@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IconComponent} from "../icon/icon.component";
-import {CardButtonComponent} from "../card-button/card-button.component";
+import {CardButtonComponent} from "../card/components/card-button/card-button.component";
 import {HeroRowComponent} from "../hero-row/hero-row.component";
 
 @Component({
