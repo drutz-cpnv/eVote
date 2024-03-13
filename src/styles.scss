@@ -2,3 +2,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.container {
+  @apply mx-auto;
+  @apply max-w-7xl;
+  @apply px-4;
+  @apply flex;
+}
+
+.border-l-1 {
+  border-left-width: .5px;
+}
