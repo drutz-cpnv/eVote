@@ -1,7 +1,8 @@
-import {Component, Inject} from '@angular/core';
-import {IconComponent} from "../icon/icon.component";
-import {HeroRowComponent} from "../hero-row/hero-row.component";
-import {CardComponent} from "../card/card.component";
+import { Component, Inject } from '@angular/core';
+import { IconComponent } from "../icon/icon.component";
+import { HeroRowComponent } from "../hero-row/hero-row.component";
+import { CardComponent } from "../card/card.component";
+import { MyQueryGQL } from '../../../graphql/generated/graphql';
 
 
 @Component({
@@ -18,4 +19,11 @@ import {CardComponent} from "../card/card.component";
 export class MainPageComponent {
   @Inject('title')
   public title: string = 'Main Page';
+
+
+  constructor(private myQueryGQL: MyQueryGQL) {
+    this.myQueryGQL.fetch().subscribe(result => {
+      console.log(result);
+    });
+  }
 }

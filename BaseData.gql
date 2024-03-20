@@ -1,0 +1,99 @@
+mutation AddSwissCantons {
+  addCanton(input: [
+    {flag_path: "ag.svg", name: "Aargau"},
+    {flag_path: "ai.svg", name: "Appenzell Innerrhoden"},
+    {flag_path: "ar.svg", name: "Appenzell Ausserrhoden"},
+    {flag_path: "be.svg", name: "Bern"},
+    {flag_path: "bl.svg", name: "Basel-Landschaft"},
+    {flag_path: "bs.svg", name: "Basel-Stadt"},
+    {flag_path: "fr.svg", name: "Fribourg"},
+    {flag_path: "ge.svg", name: "Geneva"},
+    {flag_path: "gl.svg", name: "Glarus"},
+    {flag_path: "gr.svg", name: "Graubünden"},
+    {flag_path: "ju.svg", name: "Jura"},
+    {flag_path: "lu.svg", name: "Lucerne"},
+    {flag_path: "ne.svg", name: "Neuchâtel"},
+    {flag_path: "nw.svg", name: "Nidwalden"},
+    {flag_path: "ow.svg", name: "Obwalden"},
+    {flag_path: "sg.svg", name: "St. Gallen"},
+    {flag_path: "sh.svg", name: "Schaffhausen"},
+    {flag_path: "so.svg", name: "Solothurn"},
+    {flag_path: "sz.svg", name: "Schwyz"},
+    {flag_path: "tg.svg", name: "Thurgau"},
+    {flag_path: "ti.svg", name: "Ticino"},
+    {flag_path: "ur.svg", name: "Uri"},
+    {flag_path: "vd.svg", name: "Vaud"},
+    {flag_path: "vs.svg", name: "Valais"},
+    {flag_path: "zg.svg", name: "Zug"},
+    {flag_path: "zh.svg", name: "Zürich"}
+  ]) {
+    canton {
+      id
+    }
+  }
+}
+mutation AddSwissTowns {
+  addTown(input: [
+    {located_in: {id: "0x1a515ba235"}, name: "Lausanne"},
+    {located_in: {id: "0x1a515ba221"}, name: "Zürich"},
+    {located_in: {id: "0x1a515ba235"}, name: "Montreux"},
+    {located_in: {id: "0x1a515ba235"}, name: "Yverdon-Les-Bains"},
+  ]) {
+    town {
+      id
+    }
+  }
+}
+
+mutation AddCitizen{
+  addCitizen(input: [
+    {password: "123456", lives: {id: "0x1a519345b9"}},
+    {password: "123456", lives: {id: "0x1a519345ba"}},
+    {password: "123456", lives: {id: "0x1a519345bb"}},
+    {password: "123456", lives: {id: "0x1a519345bc"}},
+  ]) {
+    citizen {
+      user_id
+    }
+  }
+}
+mutation AddSubject{
+  addSubject(input: [
+    {title: "Initiative populaire « Mieux vivre à la retraite (initiative pour une 13e rente AVS) »", description: "L’initiative entend augmenter les rentes de vieillesse de l’AVS d’une rente mensuelle. Une rente supplémentaire s’ajoutera ainsi chaque année aux 12 rentes mensuelles. L’initia- tive précise que la 13e rente ne conduira pas à des réductions des prestations complémentaires. La rente de vieillesse an- nuelle maximale augmentera de 2450 francs pour atteindre 31 850 francs pour une personne seule, et de 3675 francs pour atteindre 47 775 francs pour un couple marié. Cette augmenta- tion entraînera la première année un coût supplémentaire d’environ 4,1 milliards de francs pour la 13e rente AVS, dont 800 millions à la charge de la Confédération. Les coûts aug- menteront ensuite rapidement. L’initiative laisse ouverte la question du financement. Différentes réformes ont permis de consolider le financement des prestations de l’AVS. Il faut toutefois s’attendre à un déficit après 2030, même sans 13e rente. Si la 13e rente est mise en place, l’AVS devra soit augmenter ses revenus, soit réduire ses prestations."},
+    {title: "Initiative populaire « Pour une prévoyance vieillesse sûre et pérenne (initiative sur les rentes) »", description: "L’initiative sur les rentes entend financer durablement l’AVS en relevant l’âge de la retraite. Elle prévoit tout d’abord de relever progressivement l’âge de la retraite des hommes et des femmes à 66 ans d’ici 2033. L’âge de la retraite sera ensuite lié à l’espérance de vie moyenne : il augmentera auto- matiquement en même temps qu’elle, non pas à l’identique, mais à raison de 80 % de la durée de vie gagnée et par étape de 2 mois par an au plus. Si l’initiative est acceptée, l’AVS sera soulagée financièrement : selon les estimations, la retraite à 66 ans réduira les dépenses de l’AVS de 2 milliards de francs. L’adaptation automatique de l’âge de la retraite à l’espérance de vie déchargera encore plus l’AVS."},
+    {title: "Initiative populaire « Pour la protection du climat » ?", description: "Cette initiative propose d’introduire dans la Constitution vaudoise plusieurs nouvelles dispositions visant la protection du climat et de la biodiversité. Les modifications proposées sont les suivantes : • Inscrire la protection du climat et de la biodiversité comme l’un des buts et principes de l’action de l’Etat (modification de l’art. 6 cst–VD) • Ancrer l’objectif de neutralité carbone sur le territoire vaudois d’ici à 2050 au plus tard, avec l’objectif pour l’Etat et les communes de réduire significativement les impacts climatiques négatifs de leurs politiques publiques, ainsi que l’obligation de se doter de plans d’action et d’objectifs intermédiaires pour 2030 et 2040 (nouvel art. 52b al. 1 et 2 et dispositions transitoires) • Inciter les caisses de pension de droit public à concourir à l’at- teinte de l’objectif de neutralité carbone, en exigeant qu’elles se dotent de stratégies indicatives en matière d’investissements res- ponsables et respectueux du climat (nouvel art. 52b al. 3 et dispo- sitions transitoires). Ces stratégies devront être révisées tous les cinq ans • Introduire l’obligation, pour l’Etat et les communes, de veiller à ce que les personnes morales dans lesquelles ils détiennent des participations élaborent des plans visant à réorienter les flux finan- ciers vers des activités moins émettrices de gaz à effet de serre, avec des objectifs intermédiaires pour 2030 et 2040 (nouvel art. 162 al. 1 bis et dispositions transitoires)"},
+    {title: "Acceptez-vous la révision partielle de la Constitution du Canton de Vaud du 14 avril 2003 liée à la création d’un Conseil de la magistrature ?",description: "Le Conseil de la magistrature aura 3 missions principales : • Exercer la surveillance administrative sur le Tribunal cantonal et le Ministère public. Il s’agit ici de veiller au bon fonctionnement des institutions judiciaires. Le Conseil de la magistrature s’assu- rera que l’organisation et le fonctionnement du Tribunal cantonal et du Ministère public leur permettent d’exécuter leurs missions conformément à la loi et de manière efficace; • Exercer la surveillance disciplinaire sur l’ensemble des magis- trates et des magistrats. Il s’agit ici de veiller à ce qu’elles et ils aient un comportement conforme aux devoirs et à la dignité de leur fonction. Le Conseil de la magistrature pourra enquêter, et cas échéant, sanctionner, les magistrates et les magistrats qui auraient enfreint leurs devoirs ou qui auraient adopté un comportement in- digne de leur charge; • Élaborer les préavis à l’intention du Grand Conseil après avoir en- tendu les candidates et les candidats aux postes de juge cantonal, de procureur général et de procureur général adjoint. Chaque citoyenne ou citoyen pourra saisir le Conseil de magistrature pour dénoncer le dysfonctionnement d’une autorité judiciaire ou d’une/d’un ma- gistrat. L’instauration d’un Conseil de la magistrature permet de préciser les li- mites de la haute surveillance, mais ne modifie pas le pouvoir de haute surveillance sur la justice, confié par la Constitution actuelle au Grand Conseil, qui conserve cette prérogative."},
+    {title: "Initiative populaire communale « Sauver les Grands-Prés »",description: "Le secteur des Grands Prés à Baugy fait l’objet d’un projet de construction sur la base d’un plan partiel d’affectation (PPA) entré en vigueur en 2018. La possibilité de construire sur cette parcelle est contestée par une initiative populaire communale qui exige de consacrer l’ensemble de cette parcelle communale à la promotion de la biodiversité et à la réalisation d’un parc public supplémentaire. En votant OUI, vous soutenez l’interdiction de toute construction sur cette parcelle et sa transformation de pré en parc public, notamment dédié à la préservation de la biodiversité. En votant NON, vous permettez qu’un projet de construction de logements et de surfaces d’activités puisse continuer à se développer."},
+  ]) {
+    subject {
+      id
+    }
+  }
+}
+mutation AddFederal_Subjects {
+  addFederal_Subjects(input: [{subjects: [{id: "0x1a5193fc4a"}, {id: "0x1a5193fc4b"}]}]) {
+    federal_Subjects {
+      id
+    }
+  }
+}
+mutation AddCanton_Subjects {
+  addCanton_Subjects(input: [
+    {canton: {id: "0x1a515ba235"}, subjects: [{id: "0x1a5193fc4c"}, {id: "0x1a5193fc4d"}]},
+  ]) {
+    canton_Subjects {
+      id
+    }
+  }
+}
+mutation AddTown_Subjects {
+  addTown_Subjects(input: [{town: {id: "0x1a519345b9"}, subjects: [{id: "0x1a5193fc4a"}]}]) {
+    town_Subjects {
+      id
+    }
+  }
+}
+mutation Citizen_Subject_Vote{
+  addCitizen_Subject_Vote(input: [
+    
+}

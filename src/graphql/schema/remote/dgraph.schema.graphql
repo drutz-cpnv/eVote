@@ -1,0 +1,1955 @@
+""""""
+directive @auth(add: AuthRule, delete: AuthRule, password: AuthRule, query: AuthRule, update: AuthRule) on INTERFACE | OBJECT
+
+""""""
+directive @cacheControl(maxAge: Int!) on QUERY
+
+""""""
+directive @cascade(fields: [String]) on FIELD
+
+""""""
+directive @custom(dql: String, http: CustomHTTP) on FIELD_DEFINITION
+
+""""""
+directive @dgraph(pred: String, type: String) on FIELD_DEFINITION | INTERFACE | OBJECT
+
+""""""
+directive @generate(mutation: GenerateMutationParams, query: GenerateQueryParams, subscription: Boolean) on INTERFACE | OBJECT
+
+""""""
+directive @hasInverse(field: String!) on FIELD_DEFINITION
+
+""""""
+directive @id(interface: Boolean) on FIELD_DEFINITION
+
+""""""
+directive @lambda on FIELD_DEFINITION
+
+""""""
+directive @lambdaOnMutate(add: Boolean, delete: Boolean, update: Boolean) on INTERFACE | OBJECT
+
+""""""
+directive @remote on ENUM | INPUT_OBJECT | INTERFACE | OBJECT | UNION
+
+""""""
+directive @remoteResponse(name: String) on FIELD_DEFINITION
+
+""""""
+directive @search(by: [DgraphIndex!]) on FIELD_DEFINITION
+
+""""""
+directive @secret(field: String!, pred: String) on INTERFACE | OBJECT
+
+""""""
+directive @withSubscription on FIELD_DEFINITION | INTERFACE | OBJECT
+
+""""""
+input AddCantonInput {
+  """"""
+  flag_path: String
+
+  """"""
+  name: String
+}
+
+""""""
+type AddCantonPayload {
+  """"""
+  canton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddCanton_SubjectsInput {
+  """"""
+  canton: CantonRef
+
+  """"""
+  subjects: [SubjectRef]
+}
+
+""""""
+type AddCanton_SubjectsPayload {
+  """"""
+  canton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddCitizenInput {
+  """"""
+  lives: TownRef
+
+  """"""
+  password: String
+}
+
+""""""
+type AddCitizenPayload {
+  """"""
+  citizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddCitizen_Subject_VoteInput {
+  """"""
+  target: SubjectRef
+
+  """"""
+  vote: Choice
+
+  """"""
+  voter: CitizenRef
+}
+
+""""""
+type AddCitizen_Subject_VotePayload {
+  """"""
+  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddFederal_SubjectsInput {
+  """"""
+  subjects: [SubjectRef]
+}
+
+""""""
+type AddFederal_SubjectsPayload {
+  """"""
+  federal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input AddSubjectInput {
+  """"""
+  description: String
+
+  """"""
+  title: String
+}
+
+""""""
+type AddSubjectPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  subject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+}
+
+""""""
+input AddTownInput {
+  """"""
+  located_in: CantonRef
+
+  """"""
+  name: String
+}
+
+""""""
+type AddTownPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  town(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
+}
+
+""""""
+input AddTown_SubjectsInput {
+  """"""
+  subjects: [SubjectRef]
+
+  """"""
+  town: TownRef
+}
+
+""""""
+type AddTown_SubjectsPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  town_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
+}
+
+""""""
+input AddVotationInput {
+  """"""
+  canton_subjects: [Canton_SubjectsRef]
+
+  """"""
+  end_date: String
+
+  """"""
+  federal_subject: Federal_SubjectsRef
+
+  """"""
+  start_date: DateTime
+
+  """"""
+  town_subjects: [Town_SubjectsRef]
+}
+
+""""""
+type AddVotationPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  votation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
+}
+
+""""""
+input AuthRule {
+  """"""
+  and: [AuthRule]
+
+  """"""
+  not: AuthRule
+
+  """"""
+  or: [AuthRule]
+
+  """"""
+  rule: String
+}
+
+""""""
+type Canton {
+  """"""
+  flag_path: String
+
+  """"""
+  id: ID!
+
+  """"""
+  name: String
+}
+
+""""""
+type CantonAggregateResult {
+  """"""
+  count: Int
+
+  """"""
+  flag_pathMax: String
+
+  """"""
+  flag_pathMin: String
+
+  """"""
+  nameMax: String
+
+  """"""
+  nameMin: String
+}
+
+""""""
+input CantonFilter {
+  """"""
+  and: [CantonFilter]
+
+  """"""
+  has: [CantonHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  name: StringTermFilter
+
+  """"""
+  not: CantonFilter
+
+  """"""
+  or: [CantonFilter]
+}
+
+""""""
+enum CantonHasFilter {
+  """"""
+  flag_path
+
+  """"""
+  name
+}
+
+""""""
+input CantonOrder {
+  """"""
+  asc: CantonOrderable
+
+  """"""
+  desc: CantonOrderable
+
+  """"""
+  then: CantonOrder
+}
+
+""""""
+enum CantonOrderable {
+  """"""
+  flag_path
+
+  """"""
+  name
+}
+
+""""""
+input CantonPatch {
+  """"""
+  flag_path: String
+
+  """"""
+  name: String
+}
+
+""""""
+input CantonRef {
+  """"""
+  flag_path: String
+
+  """"""
+  id: ID
+
+  """"""
+  name: String
+}
+
+""""""
+type Canton_Subjects {
+  """"""
+  canton(filter: CantonFilter): Canton
+
+  """"""
+  id: ID!
+
+  """"""
+  subjects(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+
+  """"""
+  subjectsAggregate(filter: SubjectFilter): SubjectAggregateResult
+}
+
+""""""
+type Canton_SubjectsAggregateResult {
+  """"""
+  count: Int
+}
+
+""""""
+input Canton_SubjectsFilter {
+  """"""
+  and: [Canton_SubjectsFilter]
+
+  """"""
+  has: [Canton_SubjectsHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: Canton_SubjectsFilter
+
+  """"""
+  or: [Canton_SubjectsFilter]
+}
+
+""""""
+enum Canton_SubjectsHasFilter {
+  """"""
+  canton
+
+  """"""
+  subjects
+}
+
+""""""
+input Canton_SubjectsPatch {
+  """"""
+  canton: CantonRef
+
+  """"""
+  subjects: [SubjectRef]
+}
+
+""""""
+input Canton_SubjectsRef {
+  """"""
+  canton: CantonRef
+
+  """"""
+  id: ID
+
+  """"""
+  subjects: [SubjectRef]
+}
+
+""""""
+enum Choice {
+  """"""
+  Blanc
+
+  """"""
+  Non
+
+  """"""
+  Oui
+}
+
+""""""
+type Citizen {
+  """"""
+  lives(filter: TownFilter): Town
+
+  """"""
+  password: String
+
+  """"""
+  user_id: ID!
+}
+
+""""""
+type CitizenAggregateResult {
+  """"""
+  count: Int
+
+  """"""
+  passwordMax: String
+
+  """"""
+  passwordMin: String
+}
+
+""""""
+input CitizenFilter {
+  """"""
+  and: [CitizenFilter]
+
+  """"""
+  has: [CitizenHasFilter]
+
+  """"""
+  not: CitizenFilter
+
+  """"""
+  or: [CitizenFilter]
+
+  """"""
+  user_id: [ID!]
+}
+
+""""""
+enum CitizenHasFilter {
+  """"""
+  lives
+
+  """"""
+  password
+}
+
+""""""
+input CitizenOrder {
+  """"""
+  asc: CitizenOrderable
+
+  """"""
+  desc: CitizenOrderable
+
+  """"""
+  then: CitizenOrder
+}
+
+""""""
+enum CitizenOrderable {
+  """"""
+  password
+}
+
+""""""
+input CitizenPatch {
+  """"""
+  lives: TownRef
+
+  """"""
+  password: String
+}
+
+""""""
+input CitizenRef {
+  """"""
+  lives: TownRef
+
+  """"""
+  password: String
+
+  """"""
+  user_id: ID
+}
+
+""""""
+type Citizen_Subject_Vote {
+  """"""
+  id: ID!
+
+  """"""
+  target(filter: SubjectFilter): Subject
+
+  """"""
+  vote: Choice
+
+  """"""
+  voter(filter: CitizenFilter): Citizen
+}
+
+""""""
+type Citizen_Subject_VoteAggregateResult {
+  """"""
+  count: Int
+}
+
+""""""
+input Citizen_Subject_VoteFilter {
+  """"""
+  and: [Citizen_Subject_VoteFilter]
+
+  """"""
+  has: [Citizen_Subject_VoteHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: Citizen_Subject_VoteFilter
+
+  """"""
+  or: [Citizen_Subject_VoteFilter]
+}
+
+""""""
+enum Citizen_Subject_VoteHasFilter {
+  """"""
+  target
+
+  """"""
+  vote
+
+  """"""
+  voter
+}
+
+""""""
+input Citizen_Subject_VotePatch {
+  """"""
+  target: SubjectRef
+
+  """"""
+  vote: Choice
+
+  """"""
+  voter: CitizenRef
+}
+
+""""""
+input Citizen_Subject_VoteRef {
+  """"""
+  id: ID
+
+  """"""
+  target: SubjectRef
+
+  """"""
+  vote: Choice
+
+  """"""
+  voter: CitizenRef
+}
+
+""""""
+input ContainsFilter {
+  """"""
+  point: PointRef
+
+  """"""
+  polygon: PolygonRef
+}
+
+""""""
+input CustomHTTP {
+  """"""
+  body: String
+
+  """"""
+  forwardHeaders: [String!]
+
+  """"""
+  graphql: String
+
+  """"""
+  introspectionHeaders: [String!]
+
+  """"""
+  method: HTTPMethod!
+
+  """"""
+  mode: Mode
+
+  """"""
+  secretHeaders: [String!]
+
+  """"""
+  skipIntrospection: Boolean
+
+  """"""
+  url: String!
+}
+
+"""
+The DateTime scalar type represents date and time as a string in RFC3339 format.
+For example: "1985-04-12T23:20:50.52Z" represents 20 mins 50.52 secs after the 23rd hour of Apr 12th 1985 in UTC.
+"""
+scalar DateTime
+
+""""""
+input DateTimeFilter {
+  """"""
+  between: DateTimeRange
+
+  """"""
+  eq: DateTime
+
+  """"""
+  ge: DateTime
+
+  """"""
+  gt: DateTime
+
+  """"""
+  in: [DateTime]
+
+  """"""
+  le: DateTime
+
+  """"""
+  lt: DateTime
+}
+
+""""""
+input DateTimeRange {
+  """"""
+  max: DateTime!
+
+  """"""
+  min: DateTime!
+}
+
+""""""
+type DeleteCantonPayload {
+  """"""
+  canton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteCanton_SubjectsPayload {
+  """"""
+  canton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteCitizenPayload {
+  """"""
+  citizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteCitizen_Subject_VotePayload {
+  """"""
+  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteFederal_SubjectsPayload {
+  """"""
+  federal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
+
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+}
+
+""""""
+type DeleteSubjectPayload {
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+
+  """"""
+  subject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+}
+
+""""""
+type DeleteTownPayload {
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+
+  """"""
+  town(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
+}
+
+""""""
+type DeleteTown_SubjectsPayload {
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+
+  """"""
+  town_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
+}
+
+""""""
+type DeleteVotationPayload {
+  """"""
+  msg: String
+
+  """"""
+  numUids: Int
+
+  """"""
+  votation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
+}
+
+""""""
+enum DgraphIndex {
+  """"""
+  bool
+
+  """"""
+  day
+
+  """"""
+  exact
+
+  """"""
+  float
+
+  """"""
+  fulltext
+
+  """"""
+  geo
+
+  """"""
+  hash
+
+  """"""
+  hour
+
+  """"""
+  int
+
+  """"""
+  int64
+
+  """"""
+  month
+
+  """"""
+  regexp
+
+  """"""
+  term
+
+  """"""
+  trigram
+
+  """"""
+  year
+}
+
+""""""
+type Federal_Subjects {
+  """"""
+  id: ID!
+
+  """"""
+  subjects(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+
+  """"""
+  subjectsAggregate(filter: SubjectFilter): SubjectAggregateResult
+}
+
+""""""
+type Federal_SubjectsAggregateResult {
+  """"""
+  count: Int
+}
+
+""""""
+input Federal_SubjectsFilter {
+  """"""
+  and: [Federal_SubjectsFilter]
+
+  """"""
+  has: [Federal_SubjectsHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: Federal_SubjectsFilter
+
+  """"""
+  or: [Federal_SubjectsFilter]
+}
+
+""""""
+enum Federal_SubjectsHasFilter {
+  """"""
+  subjects
+}
+
+""""""
+input Federal_SubjectsPatch {
+  """"""
+  subjects: [SubjectRef]
+}
+
+""""""
+input Federal_SubjectsRef {
+  """"""
+  id: ID
+
+  """"""
+  subjects: [SubjectRef]
+}
+
+""""""
+input FloatFilter {
+  """"""
+  between: FloatRange
+
+  """"""
+  eq: Float
+
+  """"""
+  ge: Float
+
+  """"""
+  gt: Float
+
+  """"""
+  in: [Float]
+
+  """"""
+  le: Float
+
+  """"""
+  lt: Float
+}
+
+""""""
+input FloatRange {
+  """"""
+  max: Float!
+
+  """"""
+  min: Float!
+}
+
+""""""
+input GenerateMutationParams {
+  """"""
+  add: Boolean
+
+  """"""
+  delete: Boolean
+
+  """"""
+  update: Boolean
+}
+
+""""""
+input GenerateQueryParams {
+  """"""
+  aggregate: Boolean
+
+  """"""
+  get: Boolean
+
+  """"""
+  password: Boolean
+
+  """"""
+  query: Boolean
+}
+
+""""""
+enum HTTPMethod {
+  """"""
+  DELETE
+
+  """"""
+  GET
+
+  """"""
+  PATCH
+
+  """"""
+  POST
+
+  """"""
+  PUT
+}
+
+"""
+The Int64 scalar type represents a signed 64‐bit numeric non‐fractional value.
+Int64 can represent values in range [-(2^63),(2^63 - 1)].
+"""
+scalar Int64
+
+""""""
+input Int64Filter {
+  """"""
+  between: Int64Range
+
+  """"""
+  eq: Int64
+
+  """"""
+  ge: Int64
+
+  """"""
+  gt: Int64
+
+  """"""
+  in: [Int64]
+
+  """"""
+  le: Int64
+
+  """"""
+  lt: Int64
+}
+
+""""""
+input Int64Range {
+  """"""
+  max: Int64!
+
+  """"""
+  min: Int64!
+}
+
+""""""
+input IntFilter {
+  """"""
+  between: IntRange
+
+  """"""
+  eq: Int
+
+  """"""
+  ge: Int
+
+  """"""
+  gt: Int
+
+  """"""
+  in: [Int]
+
+  """"""
+  le: Int
+
+  """"""
+  lt: Int
+}
+
+""""""
+input IntRange {
+  """"""
+  max: Int!
+
+  """"""
+  min: Int!
+}
+
+""""""
+input IntersectsFilter {
+  """"""
+  multiPolygon: MultiPolygonRef
+
+  """"""
+  polygon: PolygonRef
+}
+
+""""""
+enum Mode {
+  """"""
+  BATCH
+
+  """"""
+  SINGLE
+}
+
+""""""
+type MultiPolygon {
+  """"""
+  polygons: [Polygon!]!
+}
+
+""""""
+input MultiPolygonRef {
+  """"""
+  polygons: [PolygonRef!]!
+}
+
+""""""
+type Mutation {
+  """"""
+  addCanton(input: [AddCantonInput!]!): AddCantonPayload
+
+  """"""
+  addCanton_Subjects(input: [AddCanton_SubjectsInput!]!): AddCanton_SubjectsPayload
+
+  """"""
+  addCitizen(input: [AddCitizenInput!]!): AddCitizenPayload
+
+  """"""
+  addCitizen_Subject_Vote(input: [AddCitizen_Subject_VoteInput!]!): AddCitizen_Subject_VotePayload
+
+  """"""
+  addFederal_Subjects(input: [AddFederal_SubjectsInput!]!): AddFederal_SubjectsPayload
+
+  """"""
+  addSubject(input: [AddSubjectInput!]!): AddSubjectPayload
+
+  """"""
+  addTown(input: [AddTownInput!]!): AddTownPayload
+
+  """"""
+  addTown_Subjects(input: [AddTown_SubjectsInput!]!): AddTown_SubjectsPayload
+
+  """"""
+  addVotation(input: [AddVotationInput!]!): AddVotationPayload
+
+  """"""
+  deleteCanton(filter: CantonFilter!): DeleteCantonPayload
+
+  """"""
+  deleteCanton_Subjects(filter: Canton_SubjectsFilter!): DeleteCanton_SubjectsPayload
+
+  """"""
+  deleteCitizen(filter: CitizenFilter!): DeleteCitizenPayload
+
+  """"""
+  deleteCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter!): DeleteCitizen_Subject_VotePayload
+
+  """"""
+  deleteFederal_Subjects(filter: Federal_SubjectsFilter!): DeleteFederal_SubjectsPayload
+
+  """"""
+  deleteSubject(filter: SubjectFilter!): DeleteSubjectPayload
+
+  """"""
+  deleteTown(filter: TownFilter!): DeleteTownPayload
+
+  """"""
+  deleteTown_Subjects(filter: Town_SubjectsFilter!): DeleteTown_SubjectsPayload
+
+  """"""
+  deleteVotation(filter: VotationFilter!): DeleteVotationPayload
+
+  """"""
+  updateCanton(input: UpdateCantonInput!): UpdateCantonPayload
+
+  """"""
+  updateCanton_Subjects(input: UpdateCanton_SubjectsInput!): UpdateCanton_SubjectsPayload
+
+  """"""
+  updateCitizen(input: UpdateCitizenInput!): UpdateCitizenPayload
+
+  """"""
+  updateCitizen_Subject_Vote(input: UpdateCitizen_Subject_VoteInput!): UpdateCitizen_Subject_VotePayload
+
+  """"""
+  updateFederal_Subjects(input: UpdateFederal_SubjectsInput!): UpdateFederal_SubjectsPayload
+
+  """"""
+  updateSubject(input: UpdateSubjectInput!): UpdateSubjectPayload
+
+  """"""
+  updateTown(input: UpdateTownInput!): UpdateTownPayload
+
+  """"""
+  updateTown_Subjects(input: UpdateTown_SubjectsInput!): UpdateTown_SubjectsPayload
+
+  """"""
+  updateVotation(input: UpdateVotationInput!): UpdateVotationPayload
+}
+
+""""""
+input NearFilter {
+  """"""
+  coordinate: PointRef!
+
+  """"""
+  distance: Float!
+}
+
+""""""
+type Point {
+  """"""
+  latitude: Float!
+
+  """"""
+  longitude: Float!
+}
+
+""""""
+input PointGeoFilter {
+  """"""
+  near: NearFilter
+
+  """"""
+  within: WithinFilter
+}
+
+""""""
+type PointList {
+  """"""
+  points: [Point!]!
+}
+
+""""""
+input PointListRef {
+  """"""
+  points: [PointRef!]!
+}
+
+""""""
+input PointRef {
+  """"""
+  latitude: Float!
+
+  """"""
+  longitude: Float!
+}
+
+""""""
+type Polygon {
+  """"""
+  coordinates: [PointList!]!
+}
+
+""""""
+input PolygonGeoFilter {
+  """"""
+  contains: ContainsFilter
+
+  """"""
+  intersects: IntersectsFilter
+
+  """"""
+  near: NearFilter
+
+  """"""
+  within: WithinFilter
+}
+
+""""""
+input PolygonRef {
+  """"""
+  coordinates: [PointListRef!]!
+}
+
+""""""
+type Query {
+  """"""
+  aggregateCanton(filter: CantonFilter): CantonAggregateResult
+
+  """"""
+  aggregateCanton_Subjects(filter: Canton_SubjectsFilter): Canton_SubjectsAggregateResult
+
+  """"""
+  aggregateCitizen(filter: CitizenFilter): CitizenAggregateResult
+
+  """"""
+  aggregateCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter): Citizen_Subject_VoteAggregateResult
+
+  """"""
+  aggregateFederal_Subjects(filter: Federal_SubjectsFilter): Federal_SubjectsAggregateResult
+
+  """"""
+  aggregateSubject(filter: SubjectFilter): SubjectAggregateResult
+
+  """"""
+  aggregateTown(filter: TownFilter): TownAggregateResult
+
+  """"""
+  aggregateTown_Subjects(filter: Town_SubjectsFilter): Town_SubjectsAggregateResult
+
+  """"""
+  aggregateVotation(filter: VotationFilter): VotationAggregateResult
+
+  """"""
+  getCanton(id: ID!): Canton
+
+  """"""
+  getCanton_Subjects(id: ID!): Canton_Subjects
+
+  """"""
+  getCitizen(user_id: ID!): Citizen
+
+  """"""
+  getCitizen_Subject_Vote(id: ID!): Citizen_Subject_Vote
+
+  """"""
+  getFederal_Subjects(id: ID!): Federal_Subjects
+
+  """"""
+  getSubject(id: ID!): Subject
+
+  """"""
+  getTown(id: ID!): Town
+
+  """"""
+  getTown_Subjects(id: ID!): Town_Subjects
+
+  """"""
+  getVotation(id: ID!): Votation
+
+  """"""
+  queryCanton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
+
+  """"""
+  queryCanton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
+
+  """"""
+  queryCitizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
+
+  """"""
+  queryCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
+
+  """"""
+  queryFederal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
+
+  """"""
+  querySubject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+
+  """"""
+  queryTown(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
+
+  """"""
+  queryTown_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
+
+  """"""
+  queryVotation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
+}
+
+""""""
+input StringExactFilter {
+  """"""
+  between: StringRange
+
+  """"""
+  eq: String
+
+  """"""
+  ge: String
+
+  """"""
+  gt: String
+
+  """"""
+  in: [String]
+
+  """"""
+  le: String
+
+  """"""
+  lt: String
+}
+
+""""""
+input StringFullTextFilter {
+  """"""
+  alloftext: String
+
+  """"""
+  anyoftext: String
+}
+
+""""""
+input StringHashFilter {
+  """"""
+  eq: String
+
+  """"""
+  in: [String]
+}
+
+""""""
+input StringRange {
+  """"""
+  max: String!
+
+  """"""
+  min: String!
+}
+
+""""""
+input StringRegExpFilter {
+  """"""
+  regexp: String
+}
+
+""""""
+input StringTermFilter {
+  """"""
+  allofterms: String
+
+  """"""
+  anyofterms: String
+}
+
+""""""
+type Subject {
+  """"""
+  description: String
+
+  """"""
+  id: ID!
+
+  """"""
+  title: String
+}
+
+""""""
+type SubjectAggregateResult {
+  """"""
+  count: Int
+
+  """"""
+  descriptionMax: String
+
+  """"""
+  descriptionMin: String
+
+  """"""
+  titleMax: String
+
+  """"""
+  titleMin: String
+}
+
+""""""
+input SubjectFilter {
+  """"""
+  and: [SubjectFilter]
+
+  """"""
+  has: [SubjectHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: SubjectFilter
+
+  """"""
+  or: [SubjectFilter]
+}
+
+""""""
+enum SubjectHasFilter {
+  """"""
+  description
+
+  """"""
+  title
+}
+
+""""""
+input SubjectOrder {
+  """"""
+  asc: SubjectOrderable
+
+  """"""
+  desc: SubjectOrderable
+
+  """"""
+  then: SubjectOrder
+}
+
+""""""
+enum SubjectOrderable {
+  """"""
+  description
+
+  """"""
+  title
+}
+
+""""""
+input SubjectPatch {
+  """"""
+  description: String
+
+  """"""
+  title: String
+}
+
+""""""
+input SubjectRef {
+  """"""
+  description: String
+
+  """"""
+  id: ID
+
+  """"""
+  title: String
+}
+
+""""""
+type Town {
+  """"""
+  id: ID!
+
+  """"""
+  located_in(filter: CantonFilter): Canton
+
+  """"""
+  name: String
+}
+
+""""""
+type TownAggregateResult {
+  """"""
+  count: Int
+
+  """"""
+  nameMax: String
+
+  """"""
+  nameMin: String
+}
+
+""""""
+input TownFilter {
+  """"""
+  and: [TownFilter]
+
+  """"""
+  has: [TownHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: TownFilter
+
+  """"""
+  or: [TownFilter]
+}
+
+""""""
+enum TownHasFilter {
+  """"""
+  located_in
+
+  """"""
+  name
+}
+
+""""""
+input TownOrder {
+  """"""
+  asc: TownOrderable
+
+  """"""
+  desc: TownOrderable
+
+  """"""
+  then: TownOrder
+}
+
+""""""
+enum TownOrderable {
+  """"""
+  name
+}
+
+""""""
+input TownPatch {
+  """"""
+  located_in: CantonRef
+
+  """"""
+  name: String
+}
+
+""""""
+input TownRef {
+  """"""
+  id: ID
+
+  """"""
+  located_in: CantonRef
+
+  """"""
+  name: String
+}
+
+""""""
+type Town_Subjects {
+  """"""
+  id: ID!
+
+  """"""
+  subjects(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+
+  """"""
+  subjectsAggregate(filter: SubjectFilter): SubjectAggregateResult
+
+  """"""
+  town(filter: TownFilter): Town
+}
+
+""""""
+type Town_SubjectsAggregateResult {
+  """"""
+  count: Int
+}
+
+""""""
+input Town_SubjectsFilter {
+  """"""
+  and: [Town_SubjectsFilter]
+
+  """"""
+  has: [Town_SubjectsHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: Town_SubjectsFilter
+
+  """"""
+  or: [Town_SubjectsFilter]
+}
+
+""""""
+enum Town_SubjectsHasFilter {
+  """"""
+  subjects
+
+  """"""
+  town
+}
+
+""""""
+input Town_SubjectsPatch {
+  """"""
+  subjects: [SubjectRef]
+
+  """"""
+  town: TownRef
+}
+
+""""""
+input Town_SubjectsRef {
+  """"""
+  id: ID
+
+  """"""
+  subjects: [SubjectRef]
+
+  """"""
+  town: TownRef
+}
+
+""""""
+input UpdateCantonInput {
+  """"""
+  filter: CantonFilter!
+
+  """"""
+  remove: CantonPatch
+
+  """"""
+  set: CantonPatch
+}
+
+""""""
+type UpdateCantonPayload {
+  """"""
+  canton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateCanton_SubjectsInput {
+  """"""
+  filter: Canton_SubjectsFilter!
+
+  """"""
+  remove: Canton_SubjectsPatch
+
+  """"""
+  set: Canton_SubjectsPatch
+}
+
+""""""
+type UpdateCanton_SubjectsPayload {
+  """"""
+  canton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateCitizenInput {
+  """"""
+  filter: CitizenFilter!
+
+  """"""
+  remove: CitizenPatch
+
+  """"""
+  set: CitizenPatch
+}
+
+""""""
+type UpdateCitizenPayload {
+  """"""
+  citizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateCitizen_Subject_VoteInput {
+  """"""
+  filter: Citizen_Subject_VoteFilter!
+
+  """"""
+  remove: Citizen_Subject_VotePatch
+
+  """"""
+  set: Citizen_Subject_VotePatch
+}
+
+""""""
+type UpdateCitizen_Subject_VotePayload {
+  """"""
+  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateFederal_SubjectsInput {
+  """"""
+  filter: Federal_SubjectsFilter!
+
+  """"""
+  remove: Federal_SubjectsPatch
+
+  """"""
+  set: Federal_SubjectsPatch
+}
+
+""""""
+type UpdateFederal_SubjectsPayload {
+  """"""
+  federal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
+
+  """"""
+  numUids: Int
+}
+
+""""""
+input UpdateSubjectInput {
+  """"""
+  filter: SubjectFilter!
+
+  """"""
+  remove: SubjectPatch
+
+  """"""
+  set: SubjectPatch
+}
+
+""""""
+type UpdateSubjectPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  subject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+}
+
+""""""
+input UpdateTownInput {
+  """"""
+  filter: TownFilter!
+
+  """"""
+  remove: TownPatch
+
+  """"""
+  set: TownPatch
+}
+
+""""""
+type UpdateTownPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  town(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
+}
+
+""""""
+input UpdateTown_SubjectsInput {
+  """"""
+  filter: Town_SubjectsFilter!
+
+  """"""
+  remove: Town_SubjectsPatch
+
+  """"""
+  set: Town_SubjectsPatch
+}
+
+""""""
+type UpdateTown_SubjectsPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  town_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
+}
+
+""""""
+input UpdateVotationInput {
+  """"""
+  filter: VotationFilter!
+
+  """"""
+  remove: VotationPatch
+
+  """"""
+  set: VotationPatch
+}
+
+""""""
+type UpdateVotationPayload {
+  """"""
+  numUids: Int
+
+  """"""
+  votation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
+}
+
+""""""
+type Votation {
+  """"""
+  canton_subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
+
+  """"""
+  canton_subjectsAggregate(filter: Canton_SubjectsFilter): Canton_SubjectsAggregateResult
+
+  """"""
+  end_date: String
+
+  """"""
+  federal_subject(filter: Federal_SubjectsFilter): Federal_Subjects
+
+  """"""
+  id: ID!
+
+  """"""
+  start_date: DateTime
+
+  """"""
+  town_subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
+
+  """"""
+  town_subjectsAggregate(filter: Town_SubjectsFilter): Town_SubjectsAggregateResult
+}
+
+""""""
+type VotationAggregateResult {
+  """"""
+  count: Int
+
+  """"""
+  end_dateMax: String
+
+  """"""
+  end_dateMin: String
+
+  """"""
+  start_dateMax: DateTime
+
+  """"""
+  start_dateMin: DateTime
+}
+
+""""""
+input VotationFilter {
+  """"""
+  and: [VotationFilter]
+
+  """"""
+  has: [VotationHasFilter]
+
+  """"""
+  id: [ID!]
+
+  """"""
+  not: VotationFilter
+
+  """"""
+  or: [VotationFilter]
+}
+
+""""""
+enum VotationHasFilter {
+  """"""
+  canton_subjects
+
+  """"""
+  end_date
+
+  """"""
+  federal_subject
+
+  """"""
+  start_date
+
+  """"""
+  town_subjects
+}
+
+""""""
+input VotationOrder {
+  """"""
+  asc: VotationOrderable
+
+  """"""
+  desc: VotationOrderable
+
+  """"""
+  then: VotationOrder
+}
+
+""""""
+enum VotationOrderable {
+  """"""
+  end_date
+
+  """"""
+  start_date
+}
+
+""""""
+input VotationPatch {
+  """"""
+  canton_subjects: [Canton_SubjectsRef]
+
+  """"""
+  end_date: String
+
+  """"""
+  federal_subject: Federal_SubjectsRef
+
+  """"""
+  start_date: DateTime
+
+  """"""
+  town_subjects: [Town_SubjectsRef]
+}
+
+""""""
+input VotationRef {
+  """"""
+  canton_subjects: [Canton_SubjectsRef]
+
+  """"""
+  end_date: String
+
+  """"""
+  federal_subject: Federal_SubjectsRef
+
+  """"""
+  id: ID
+
+  """"""
+  start_date: DateTime
+
+  """"""
+  town_subjects: [Town_SubjectsRef]
+}
+
+""""""
+input WithinFilter {
+  """"""
+  polygon: PolygonRef!
+}
