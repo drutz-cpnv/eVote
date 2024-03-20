@@ -1,1 +1,10 @@
-<p>adm-page works!</p>
+<app-header/>
+<section>
+  <div class="container bg-white shadow rounded-lg w-2/3 m-2 flex p-5 flex-col border border-gray-200">
+    <h1 class="text-4xl pb-4 ">Manage votes</h1>
+    <div class="flex flex-row justify-between">
+      <app-card-button iconName="add" iconSize="6xl" text="New" linkPath="/admin/vote/new"/>
+      <app-card-button iconName="close" iconSize="6xl" text="Closed" linkPath="/admin/votes"/>
+    </div>
+  </div>
+</section>
