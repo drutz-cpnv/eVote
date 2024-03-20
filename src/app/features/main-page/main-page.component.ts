@@ -3,6 +3,7 @@ import { IconComponent } from "../icon/icon.component";
 import { HeroRowComponent } from "../hero-row/hero-row.component";
 import { CardComponent } from "../card/card.component";
 import { MyQueryGQL } from '../../../graphql/generated/graphql';
+import { HeaderComponent } from "../header/header.component";
 
 
 @Component({
@@ -11,7 +12,8 @@ import { MyQueryGQL } from '../../../graphql/generated/graphql';
   imports: [
     IconComponent,
     HeroRowComponent,
-    CardComponent
+    CardComponent,
+    HeaderComponent
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.css'
