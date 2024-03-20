@@ -23,9 +23,9 @@ export class MainPageComponent {
   public title: string = 'Main Page';
 
 
-  constructor(private myQueryGQL: MyQueryGQL) {
+/*  constructor(private myQueryGQL: MyQueryGQL) {
     this.myQueryGQL.fetch().subscribe(result => {
       console.log(result);
     });
-  }
+  }*/
 }
