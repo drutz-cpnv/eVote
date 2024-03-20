@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {IconComponent} from "../icon/icon.component";
 import {HeroRowComponent} from "../hero-row/hero-row.component";
+import {CardComponent} from "../card/card.component";
 
 
 @Component({
@@ -8,7 +9,8 @@ import {HeroRowComponent} from "../hero-row/hero-row.component";
   standalone: true,
   imports: [
     IconComponent,
-    HeroRowComponent
+    HeroRowComponent,
+    CardComponent
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.css'
