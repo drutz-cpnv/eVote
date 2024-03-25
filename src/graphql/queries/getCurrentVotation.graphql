@@ -1,0 +1,30 @@
+query GetCurrentVotation {
+  queryVotation(first: 1) {
+    id
+    end_date
+    federal_subject {
+      subjects {
+        title
+        id
+        description
+      }
+      id
+    }
+    town_subjects {
+      subjects {
+        title
+        id
+        description
+      }
+      id
+    }
+    canton_subjects {
+      id
+      subjects {
+        description
+        id
+        title
+      }
+    }
+  }
+}
