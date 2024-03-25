@@ -93,7 +93,24 @@ mutation AddTown_Subjects {
     }
   }
 }
-mutation Citizen_Subject_Vote{
-  addCitizen_Subject_Vote(input: [
-    
+mutation addVotation {
+  addVotation(input: {end_date: "2024-04-02", start_date: "2024-03-02", canton_subjects: {id: "0x1a5193fd6d"}, town_subjects: {id: "0x1a5193fd76"}, federal_subject: {id: "0x1a5193fcb7"}}) {
+    votation {
+      id
+      start_date
+      end_date
+    }
+  }
+}
+
+
+mutation AddVote {
+  addCitizen_Subject_Vote(input: {target: {id: ""}, voter: {user_id: ""}, vote: Non}) {
+    citizen_Subject_Vote {
+      vote
+      voter {
+        user_id
+      }
+    }
+  }
 }
