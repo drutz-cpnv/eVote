@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-vote-page',
+  selector: 'app-votation-page',
   standalone: true,
   imports: [],
   templateUrl: './vote-page.component.html',
-  styleUrl: './vote-page.component.css'
+  styleUrl: './votation-page.component.css'
 })
 export class VotePageComponent {
 

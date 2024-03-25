@@ -1,622 +1,177 @@
 """"""
-directive @auth(add: AuthRule, delete: AuthRule, password: AuthRule, query: AuthRule, update: AuthRule) on INTERFACE | OBJECT
-
-""""""
-directive @cacheControl(maxAge: Int!) on QUERY
-
-""""""
-directive @cascade(fields: [String]) on FIELD
-
-""""""
-directive @custom(dql: String, http: CustomHTTP) on FIELD_DEFINITION
-
-""""""
 directive @dgraph(pred: String, type: String) on FIELD_DEFINITION | INTERFACE | OBJECT
 
 """"""
-directive @generate(mutation: GenerateMutationParams, query: GenerateQueryParams, subscription: Boolean) on INTERFACE | OBJECT
-
-""""""
-directive @hasInverse(field: String!) on FIELD_DEFINITION
-
-""""""
-directive @id(interface: Boolean) on FIELD_DEFINITION
-
-""""""
-directive @lambda on FIELD_DEFINITION
-
-""""""
-directive @lambdaOnMutate(add: Boolean, delete: Boolean, update: Boolean) on INTERFACE | OBJECT
-
-""""""
-directive @remote on ENUM | INPUT_OBJECT | INTERFACE | OBJECT | UNION
-
-""""""
-directive @remoteResponse(name: String) on FIELD_DEFINITION
-
-""""""
-directive @search(by: [DgraphIndex!]) on FIELD_DEFINITION
+directive @id on FIELD_DEFINITION
 
 """"""
 directive @secret(field: String!, pred: String) on INTERFACE | OBJECT
 
 """"""
-directive @withSubscription on FIELD_DEFINITION | INTERFACE | OBJECT
-
-""""""
-input AddCantonInput {
+input AddGroupInput {
   """"""
-  flag_path: String
+  name: String!
 
   """"""
-  name: String
+  rules: [RuleRef]
 }
 
 """"""
-type AddCantonPayload {
+type AddGroupPayload {
   """"""
-  canton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
-
-  """"""
-  numUids: Int
+  group: [Group]
 }
 
 """"""
-input AddCanton_SubjectsInput {
-  """"""
-  canton: CantonRef
-
-  """"""
-  subjects: [SubjectRef]
-}
-
-""""""
-type AddCanton_SubjectsPayload {
-  """"""
-  canton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
-
-  """"""
-  numUids: Int
-}
-
-""""""
-input AddCitizenInput {
-  """"""
-  lives: TownRef
-
-  """"""
+input AddNamespaceInput {
+  """
+  Enter a new password for groot in that namespace. If you leave it blank, the password will be the default.
+  """
   password: String
 }
 
 """"""
-type AddCitizenPayload {
+input AddUserInput {
   """"""
-  citizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
+  groups: [GroupRef]
 
   """"""
-  numUids: Int
+  name: String!
+
+  """"""
+  password: String!
 }
 
 """"""
-input AddCitizen_Subject_VoteInput {
+type AddUserPayload {
   """"""
-  target: SubjectRef
-
-  """"""
-  vote: Choice
-
-  """"""
-  voter: CitizenRef
+  user: [User]
 }
 
 """"""
-type AddCitizen_Subject_VotePayload {
-  """"""
-  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
+input AssignInput {
+  """How many to assign."""
+  num: UInt64!
 
-  """"""
-  numUids: Int
+  """Choose what to assign: UID, TIMESTAMP or NAMESPACE_ID."""
+  what: AssignKind!
 }
 
 """"""
-input AddFederal_SubjectsInput {
+enum AssignKind {
   """"""
-  subjects: [SubjectRef]
+  NAMESPACE_ID
+
+  """"""
+  TIMESTAMP
+
+  """"""
+  UID
 }
 
 """"""
-type AddFederal_SubjectsPayload {
+type AssignPayload {
   """"""
-  federal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
-
-  """"""
-  numUids: Int
+  response: AssignedIds
 }
 
 """"""
-input AddSubjectInput {
-  """"""
-  description: String
+type AssignedIds {
+  """The last UID, TIMESTAMP or NAMESPACE_ID assigned."""
+  endId: UInt64
 
-  """"""
-  title: String
+  """TIMESTAMP for read-only transactions."""
+  readOnly: UInt64
+
+  """The first UID, TIMESTAMP or NAMESPACE_ID assigned."""
+  startId: UInt64
 }
 
 """"""
-type AddSubjectPayload {
-  """"""
-  numUids: Int
+type BackupGroup {
+  """The ID of the cluster group."""
+  groupId: UInt64
 
-  """"""
-  subject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+  """List of predicates assigned to the group."""
+  predicates: [String]
 }
 
 """"""
-input AddTownInput {
-  """"""
-  located_in: CantonRef
+input BackupInput {
+  """Access key credential for the destination."""
+  accessKey: String
 
-  """"""
-  name: String
+  """
+  Set to true to allow backing up to S3 or Minio bucket that requires no credentials.
+  """
+  anonymous: Boolean
+
+  """Destination for the backup: e.g. Minio or S3 bucket."""
+  destination: String!
+
+  """Force a full backup instead of an incremental backup."""
+  forceFull: Boolean
+
+  """Secret key credential for the destination."""
+  secretKey: String
+
+  """AWS session token, if required."""
+  sessionToken: String
 }
 
 """"""
-type AddTownPayload {
+type BackupPayload {
   """"""
-  numUids: Int
+  response: Response
 
   """"""
-  town(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
+  taskId: String
 }
 
 """"""
-input AddTown_SubjectsInput {
+type ClusterGroup {
   """"""
-  subjects: [SubjectRef]
+  checksum: UInt64
 
   """"""
-  town: TownRef
+  id: UInt64
+
+  """"""
+  members: [Member]
+
+  """"""
+  snapshotTs: UInt64
+
+  """"""
+  tablets: [Tablet]
 }
 
 """"""
-type AddTown_SubjectsPayload {
+type Config {
   """"""
-  numUids: Int
-
-  """"""
-  town_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
+  cacheMb: Float
 }
 
 """"""
-input AddVotationInput {
-  """"""
-  canton_subjects: [Canton_SubjectsRef]
+input ConfigInput {
+  """
+  Estimated memory the caches can take. Actual usage by the process would be
+  more than specified here. The caches will be updated according to the
+  cache_percentage flag.
+  """
+  cacheMb: Float
 
-  """"""
-  end_date: String
-
-  """"""
-  federal_subject: Federal_SubjectsRef
-
-  """"""
-  start_date: DateTime
-
-  """"""
-  town_subjects: [Town_SubjectsRef]
+  """
+  True value of logDQLRequest enables logging of all the requests coming to alphas.
+  False value of logDQLRequest disables above.
+  """
+  logDQLRequest: Boolean
 }
 
 """"""
-type AddVotationPayload {
+type ConfigPayload {
   """"""
-  numUids: Int
-
-  """"""
-  votation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
-}
-
-""""""
-input AuthRule {
-  """"""
-  and: [AuthRule]
-
-  """"""
-  not: AuthRule
-
-  """"""
-  or: [AuthRule]
-
-  """"""
-  rule: String
-}
-
-""""""
-type Canton {
-  """"""
-  flag_path: String
-
-  """"""
-  id: ID!
-
-  """"""
-  name: String
-}
-
-""""""
-type CantonAggregateResult {
-  """"""
-  count: Int
-
-  """"""
-  flag_pathMax: String
-
-  """"""
-  flag_pathMin: String
-
-  """"""
-  nameMax: String
-
-  """"""
-  nameMin: String
-}
-
-""""""
-input CantonFilter {
-  """"""
-  and: [CantonFilter]
-
-  """"""
-  has: [CantonHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  name: StringTermFilter
-
-  """"""
-  not: CantonFilter
-
-  """"""
-  or: [CantonFilter]
-}
-
-""""""
-enum CantonHasFilter {
-  """"""
-  flag_path
-
-  """"""
-  name
-}
-
-""""""
-input CantonOrder {
-  """"""
-  asc: CantonOrderable
-
-  """"""
-  desc: CantonOrderable
-
-  """"""
-  then: CantonOrder
-}
-
-""""""
-enum CantonOrderable {
-  """"""
-  flag_path
-
-  """"""
-  name
-}
-
-""""""
-input CantonPatch {
-  """"""
-  flag_path: String
-
-  """"""
-  name: String
-}
-
-""""""
-input CantonRef {
-  """"""
-  flag_path: String
-
-  """"""
-  id: ID
-
-  """"""
-  name: String
-}
-
-""""""
-type Canton_Subjects {
-  """"""
-  canton(filter: CantonFilter): Canton
-
-  """"""
-  id: ID!
-
-  """"""
-  subjects(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
-
-  """"""
-  subjectsAggregate(filter: SubjectFilter): SubjectAggregateResult
-}
-
-""""""
-type Canton_SubjectsAggregateResult {
-  """"""
-  count: Int
-}
-
-""""""
-input Canton_SubjectsFilter {
-  """"""
-  and: [Canton_SubjectsFilter]
-
-  """"""
-  has: [Canton_SubjectsHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  not: Canton_SubjectsFilter
-
-  """"""
-  or: [Canton_SubjectsFilter]
-}
-
-""""""
-enum Canton_SubjectsHasFilter {
-  """"""
-  canton
-
-  """"""
-  subjects
-}
-
-""""""
-input Canton_SubjectsPatch {
-  """"""
-  canton: CantonRef
-
-  """"""
-  subjects: [SubjectRef]
-}
-
-""""""
-input Canton_SubjectsRef {
-  """"""
-  canton: CantonRef
-
-  """"""
-  id: ID
-
-  """"""
-  subjects: [SubjectRef]
-}
-
-""""""
-enum Choice {
-  """"""
-  Blanc
-
-  """"""
-  Non
-
-  """"""
-  Oui
-}
-
-""""""
-type Citizen {
-  """"""
-  lives(filter: TownFilter): Town
-
-  """"""
-  password: String
-
-  """"""
-  user_id: ID!
-}
-
-""""""
-type CitizenAggregateResult {
-  """"""
-  count: Int
-
-  """"""
-  passwordMax: String
-
-  """"""
-  passwordMin: String
-}
-
-""""""
-input CitizenFilter {
-  """"""
-  and: [CitizenFilter]
-
-  """"""
-  has: [CitizenHasFilter]
-
-  """"""
-  not: CitizenFilter
-
-  """"""
-  or: [CitizenFilter]
-
-  """"""
-  user_id: [ID!]
-}
-
-""""""
-enum CitizenHasFilter {
-  """"""
-  lives
-
-  """"""
-  password
-}
-
-""""""
-input CitizenOrder {
-  """"""
-  asc: CitizenOrderable
-
-  """"""
-  desc: CitizenOrderable
-
-  """"""
-  then: CitizenOrder
-}
-
-""""""
-enum CitizenOrderable {
-  """"""
-  password
-}
-
-""""""
-input CitizenPatch {
-  """"""
-  lives: TownRef
-
-  """"""
-  password: String
-}
-
-""""""
-input CitizenRef {
-  """"""
-  lives: TownRef
-
-  """"""
-  password: String
-
-  """"""
-  user_id: ID
-}
-
-""""""
-type Citizen_Subject_Vote {
-  """"""
-  id: ID!
-
-  """"""
-  target(filter: SubjectFilter): Subject
-
-  """"""
-  vote: Choice
-
-  """"""
-  voter(filter: CitizenFilter): Citizen
-}
-
-""""""
-type Citizen_Subject_VoteAggregateResult {
-  """"""
-  count: Int
-}
-
-""""""
-input Citizen_Subject_VoteFilter {
-  """"""
-  and: [Citizen_Subject_VoteFilter]
-
-  """"""
-  has: [Citizen_Subject_VoteHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  not: Citizen_Subject_VoteFilter
-
-  """"""
-  or: [Citizen_Subject_VoteFilter]
-}
-
-""""""
-enum Citizen_Subject_VoteHasFilter {
-  """"""
-  target
-
-  """"""
-  vote
-
-  """"""
-  voter
-}
-
-""""""
-input Citizen_Subject_VotePatch {
-  """"""
-  target: SubjectRef
-
-  """"""
-  vote: Choice
-
-  """"""
-  voter: CitizenRef
-}
-
-""""""
-input Citizen_Subject_VoteRef {
-  """"""
-  id: ID
-
-  """"""
-  target: SubjectRef
-
-  """"""
-  vote: Choice
-
-  """"""
-  voter: CitizenRef
-}
-
-""""""
-input ContainsFilter {
-  """"""
-  point: PointRef
-
-  """"""
-  polygon: PolygonRef
-}
-
-""""""
-input CustomHTTP {
-  """"""
-  body: String
-
-  """"""
-  forwardHeaders: [String!]
-
-  """"""
-  graphql: String
-
-  """"""
-  introspectionHeaders: [String!]
-
-  """"""
-  method: HTTPMethod!
-
-  """"""
-  mode: Mode
-
-  """"""
-  secretHeaders: [String!]
-
-  """"""
-  skipIntrospection: Boolean
-
-  """"""
-  url: String!
+  response: Response
 }
 
 """
@@ -626,43 +181,7 @@ For example: "1985-04-12T23:20:50.52Z" represents 20 mins 50.52 secs after the 2
 scalar DateTime
 
 """"""
-input DateTimeFilter {
-  """"""
-  between: DateTimeRange
-
-  """"""
-  eq: DateTime
-
-  """"""
-  ge: DateTime
-
-  """"""
-  gt: DateTime
-
-  """"""
-  in: [DateTime]
-
-  """"""
-  le: DateTime
-
-  """"""
-  lt: DateTime
-}
-
-""""""
-input DateTimeRange {
-  """"""
-  max: DateTime!
-
-  """"""
-  min: DateTime!
-}
-
-""""""
-type DeleteCantonPayload {
-  """"""
-  canton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
-
+type DeleteGroupPayload {
   """"""
   msg: String
 
@@ -671,10 +190,13 @@ type DeleteCantonPayload {
 }
 
 """"""
-type DeleteCanton_SubjectsPayload {
+input DeleteNamespaceInput {
   """"""
-  canton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
+  namespaceId: Int!
+}
 
+""""""
+type DeleteUserPayload {
   """"""
   msg: String
 
@@ -683,270 +205,133 @@ type DeleteCanton_SubjectsPayload {
 }
 
 """"""
-type DeleteCitizenPayload {
+type DrainingPayload {
   """"""
-  citizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
-
-  """"""
-  msg: String
-
-  """"""
-  numUids: Int
+  response: Response
 }
 
 """"""
-type DeleteCitizen_Subject_VotePayload {
-  """"""
-  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
-
-  """"""
-  msg: String
-
-  """"""
-  numUids: Int
+input EnterpriseLicenseInput {
+  """The contents of license file as a String."""
+  license: String!
 }
 
 """"""
-type DeleteFederal_SubjectsPayload {
+type EnterpriseLicensePayload {
   """"""
-  federal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
-
-  """"""
-  msg: String
-
-  """"""
-  numUids: Int
+  response: Response
 }
 
 """"""
-type DeleteSubjectPayload {
-  """"""
-  msg: String
+input ExportInput {
+  """Access key credential for the destination."""
+  accessKey: String
 
-  """"""
-  numUids: Int
+  """
+  Set to true to allow backing up to S3 or Minio bucket that requires no credentials.
+  """
+  anonymous: Boolean
 
-  """"""
-  subject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
+  """Destination for the export: e.g. Minio or S3 bucket or /absolute/path"""
+  destination: String
+
+  """Data format for the export, e.g. "rdf" or "json" (default: "rdf")"""
+  format: String
+
+  """
+  Namespace for the export in multi-tenant cluster. Users from guardians of galaxy can export
+  all namespaces by passing a negative value or specific namespaceId to export that namespace.
+  """
+  namespace: Int
+
+  """Secret key credential for the destination."""
+  secretKey: String
+
+  """AWS session token, if required."""
+  sessionToken: String
 }
 
 """"""
-type DeleteTownPayload {
+type ExportPayload {
   """"""
-  msg: String
+  response: Response
 
   """"""
-  numUids: Int
-
-  """"""
-  town(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
+  taskId: String
 }
 
-""""""
-type DeleteTown_SubjectsPayload {
-  """"""
-  msg: String
+"""Data about the GraphQL schema being served by Dgraph."""
+type GQLSchema {
+  """
+  The GraphQL schema that was generated from the 'schema' field.
+  This is the schema that is being served by Dgraph at /graphql.
+  """
+  generatedSchema: String!
 
-  """"""
-  numUids: Int
-
-  """"""
-  town_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
-}
-
-""""""
-type DeleteVotationPayload {
-  """"""
-  msg: String
-
-  """"""
-  numUids: Int
-
-  """"""
-  votation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
-}
-
-""""""
-enum DgraphIndex {
-  """"""
-  bool
-
-  """"""
-  day
-
-  """"""
-  exact
-
-  """"""
-  float
-
-  """"""
-  fulltext
-
-  """"""
-  geo
-
-  """"""
-  hash
-
-  """"""
-  hour
-
-  """"""
-  int
-
-  """"""
-  int64
-
-  """"""
-  month
-
-  """"""
-  regexp
-
-  """"""
-  term
-
-  """"""
-  trigram
-
-  """"""
-  year
-}
-
-""""""
-type Federal_Subjects {
   """"""
   id: ID!
 
-  """"""
-  subjects(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
-
-  """"""
-  subjectsAggregate(filter: SubjectFilter): SubjectAggregateResult
+  """
+  Input schema (GraphQL types) that was used in the latest schema update.
+  """
+  schema: String!
 }
 
 """"""
-type Federal_SubjectsAggregateResult {
+input GQLSchemaPatch {
   """"""
-  count: Int
+  schema: String!
 }
 
 """"""
-input Federal_SubjectsFilter {
-  """"""
-  and: [Federal_SubjectsFilter]
+type Group {
+  """Name of the group.  Dgraph ensures uniqueness of group names."""
+  name: String!
 
   """"""
-  has: [Federal_SubjectsHasFilter]
+  rules: [Rule]
 
   """"""
-  id: [ID!]
-
-  """"""
-  not: Federal_SubjectsFilter
-
-  """"""
-  or: [Federal_SubjectsFilter]
+  users: [User]
 }
 
 """"""
-enum Federal_SubjectsHasFilter {
+input GroupFilter {
   """"""
-  subjects
+  and: UserFilter
+
+  """"""
+  name: StringHashFilter
+
+  """"""
+  not: UserFilter
+
+  """"""
+  or: UserFilter
 }
 
 """"""
-input Federal_SubjectsPatch {
+input GroupOrder {
   """"""
-  subjects: [SubjectRef]
+  asc: GroupOrderable
+
+  """"""
+  desc: GroupOrderable
+
+  """"""
+  then: GroupOrder
 }
 
 """"""
-input Federal_SubjectsRef {
+enum GroupOrderable {
   """"""
-  id: ID
-
-  """"""
-  subjects: [SubjectRef]
+  name
 }
 
 """"""
-input FloatFilter {
+input GroupRef {
   """"""
-  between: FloatRange
-
-  """"""
-  eq: Float
-
-  """"""
-  ge: Float
-
-  """"""
-  gt: Float
-
-  """"""
-  in: [Float]
-
-  """"""
-  le: Float
-
-  """"""
-  lt: Float
-}
-
-""""""
-input FloatRange {
-  """"""
-  max: Float!
-
-  """"""
-  min: Float!
-}
-
-""""""
-input GenerateMutationParams {
-  """"""
-  add: Boolean
-
-  """"""
-  delete: Boolean
-
-  """"""
-  update: Boolean
-}
-
-""""""
-input GenerateQueryParams {
-  """"""
-  aggregate: Boolean
-
-  """"""
-  get: Boolean
-
-  """"""
-  password: Boolean
-
-  """"""
-  query: Boolean
-}
-
-""""""
-enum HTTPMethod {
-  """"""
-  DELETE
-
-  """"""
-  GET
-
-  """"""
-  PATCH
-
-  """"""
-  POST
-
-  """"""
-  PUT
+  name: String!
 }
 
 """
@@ -956,1000 +341,726 @@ Int64 can represent values in range [-(2^63),(2^63 - 1)].
 scalar Int64
 
 """"""
-input Int64Filter {
+type License {
   """"""
-  between: Int64Range
+  enabled: Boolean
 
   """"""
-  eq: Int64
+  expiryTs: Int64
 
   """"""
-  ge: Int64
+  maxNodes: UInt64
 
   """"""
-  gt: Int64
-
-  """"""
-  in: [Int64]
-
-  """"""
-  le: Int64
-
-  """"""
-  lt: Int64
+  user: String
 }
 
 """"""
-input Int64Range {
-  """"""
-  max: Int64!
+input ListBackupsInput {
+  """Access key credential for the destination."""
+  accessKey: String
 
-  """"""
-  min: Int64!
+  """
+  Whether the destination doesn't require credentials (e.g. S3 public bucket).
+  """
+  anonymous: Boolean
+
+  """Destination for the backup: e.g. Minio or S3 bucket."""
+  location: String!
+
+  """Secret key credential for the destination."""
+  secretKey: String
+
+  """AWS session token, if required."""
+  sessionToken: String
 }
 
 """"""
-input IntFilter {
+type LoginPayload {
   """"""
-  between: IntRange
-
-  """"""
-  eq: Int
-
-  """"""
-  ge: Int
-
-  """"""
-  gt: Int
-
-  """"""
-  in: [Int]
-
-  """"""
-  le: Int
-
-  """"""
-  lt: Int
+  response: LoginResponse
 }
 
 """"""
-input IntRange {
-  """"""
-  max: Int!
+type LoginResponse {
+  """JWT token that should be used in future requests after this login."""
+  accessJWT: String
 
-  """"""
-  min: Int!
+  """Refresh token that can be used to re-login after accessJWT expires."""
+  refreshJWT: String
 }
 
 """"""
-input IntersectsFilter {
-  """"""
-  multiPolygon: MultiPolygonRef
+type Manifest {
+  """Unique ID for the backup series."""
+  backupId: String
 
-  """"""
-  polygon: PolygonRef
+  """
+  Number of this backup within the backup series. The full backup always has a value of one.
+  """
+  backupNum: UInt64
+
+  """Whether this backup was encrypted."""
+  encrypted: Boolean
+
+  """List of groups and the predicates they store in this backup."""
+  groups: [BackupGroup]
+
+  """Path to the manifest file."""
+  path: String
+
+  """
+  The timestamp at which this backup was taken. The next incremental backup will
+  start from this timestamp.
+  """
+  since: UInt64
+
+  """The type of backup, either full or incremental."""
+  type: String
 }
 
 """"""
-enum Mode {
+type Member {
   """"""
-  BATCH
+  addr: String
 
   """"""
-  SINGLE
+  amDead: Boolean
+
+  """"""
+  clusterInfoOnly: Boolean
+
+  """"""
+  forceGroupId: Boolean
+
+  """"""
+  groupId: UInt64
+
+  """"""
+  id: UInt64
+
+  """"""
+  lastUpdate: UInt64
+
+  """"""
+  leader: Boolean
 }
 
 """"""
-type MultiPolygon {
+type MembershipState {
   """"""
-  polygons: [Polygon!]!
+  cid: String
+
+  """"""
+  counter: UInt64
+
+  """"""
+  groups: [ClusterGroup]
+
+  """"""
+  license: License
+
+  """"""
+  maxNsID: UInt64
+
+  """"""
+  maxRaftId: UInt64
+
+  """"""
+  maxTxnTs: UInt64
+
+  """"""
+  maxUID: UInt64
+
+  """
+  Contains list of namespaces. Note that this is not stored in proto's MembershipState and
+  computed at the time of query.
+  """
+  namespaces: [UInt64]
+
+  """"""
+  removed: [Member]
+
+  """"""
+  zeros: [Member]
 }
 
 """"""
-input MultiPolygonRef {
+input MoveTabletInput {
+  """ID of the destination group where the predicate is to be moved."""
+  groupId: UInt64!
+
+  """Namespace in which the predicate exists."""
+  namespace: UInt64
+
+  """Name of the predicate to move."""
+  tablet: String!
+}
+
+""""""
+type MoveTabletPayload {
   """"""
-  polygons: [PolygonRef!]!
+  response: Response
 }
 
 """"""
 type Mutation {
-  """"""
-  addCanton(input: [AddCantonInput!]!): AddCantonPayload
+  """Add a new group and (optionally) set the rules for the group."""
+  addGroup(input: [AddGroupInput!]!): AddGroupPayload
+
+  """Add a new namespace."""
+  addNamespace(input: AddNamespaceInput): NamespacePayload
+
+  """
+  Add a user.  When linking to groups: if the group doesn't exist it is created; if the group
+  exists, the new user is linked to the existing group.  It's possible to both create new
+  groups and link to existing groups in the one mutation.
+  
+  Dgraph ensures that usernames are unique, hence attempting to add an existing user results
+  in an error.
+  """
+  addUser(input: [AddUserInput!]!): AddUserPayload
+
+  """Lease UIDs, Timestamps or Namespace IDs in advance."""
+  assign(input: AssignInput!): AssignPayload
+
+  """
+  Start a binary backup.  See : https://dgraph.io/docs/enterprise-features/#binary-backups
+  """
+  backup(input: BackupInput!): BackupPayload
+
+  """Alter the node's config."""
+  config(input: ConfigInput!): ConfigPayload
 
   """"""
-  addCanton_Subjects(input: [AddCanton_SubjectsInput!]!): AddCanton_SubjectsPayload
+  deleteGroup(filter: GroupFilter!): DeleteGroupPayload
+
+  """Delete a namespace."""
+  deleteNamespace(input: DeleteNamespaceInput!): NamespacePayload
 
   """"""
-  addCitizen(input: [AddCitizenInput!]!): AddCitizenPayload
+  deleteUser(filter: UserFilter!): DeleteUserPayload
 
-  """"""
-  addCitizen_Subject_Vote(input: [AddCitizen_Subject_VoteInput!]!): AddCitizen_Subject_VotePayload
+  """
+  Set (or unset) the cluster draining mode.  In draining mode no further requests are served.
+  """
+  draining(enable: Boolean): DrainingPayload
 
-  """"""
-  addFederal_Subjects(input: [AddFederal_SubjectsInput!]!): AddFederal_SubjectsPayload
+  """Apply enterprise license."""
+  enterpriseLicense(input: EnterpriseLicenseInput!): EnterpriseLicensePayload
 
-  """"""
-  addSubject(input: [AddSubjectInput!]!): AddSubjectPayload
+  """
+  Starts an export of all data in the cluster.  Export format should be 'rdf' (the default
+  if no format is given), or 'json'.
+  See : https://dgraph.io/docs/deploy/#export-database
+  """
+  export(input: ExportInput!): ExportPayload
 
-  """"""
-  addTown(input: [AddTownInput!]!): AddTownPayload
+  """
+  Login to Dgraph.  Successful login results in a JWT that can be used in future requests.
+  If login is not successful an error is returned.
+  """
+  login(namespace: Int, password: String, refreshToken: String, userId: String): LoginPayload
 
-  """"""
-  addTown_Subjects(input: [AddTown_SubjectsInput!]!): AddTown_SubjectsPayload
+  """Move a predicate from one group to another."""
+  moveTablet(input: MoveTabletInput!): MoveTabletPayload
 
-  """"""
-  addVotation(input: [AddVotationInput!]!): AddVotationPayload
+  """Remove a node from the cluster."""
+  removeNode(input: RemoveNodeInput!): RemoveNodePayload
 
-  """"""
-  deleteCanton(filter: CantonFilter!): DeleteCantonPayload
+  """
+  Reset password can only be used by the Guardians of the galaxy to reset password of
+  any user in any namespace.
+  """
+  resetPassword(input: ResetPasswordInput!): ResetPasswordPayload
 
-  """"""
-  deleteCanton_Subjects(filter: Canton_SubjectsFilter!): DeleteCanton_SubjectsPayload
+  """
+  Start restoring a binary backup.  See :
+  	https://dgraph.io/docs/enterprise-features/#binary-backups
+  """
+  restore(input: RestoreInput!): RestorePayload
 
-  """"""
-  deleteCitizen(filter: CitizenFilter!): DeleteCitizenPayload
+  """Shutdown this node."""
+  shutdown: ShutdownPayload
 
-  """"""
-  deleteCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter!): DeleteCitizen_Subject_VotePayload
+  """
+  Update the Dgraph cluster to serve the input schema.  This may change the GraphQL
+  schema, the types and predicates in the Dgraph schema, and cause indexes to be recomputed.
+  """
+  updateGQLSchema(input: UpdateGQLSchemaInput!): UpdateGQLSchemaPayload
 
-  """"""
-  deleteFederal_Subjects(filter: Federal_SubjectsFilter!): DeleteFederal_SubjectsPayload
+  """
+  Add or remove rules for groups. If the filter doesn't match any groups,
+  the mutation has no effect.
+  """
+  updateGroup(input: UpdateGroupInput!): AddGroupPayload
 
-  """"""
-  deleteSubject(filter: SubjectFilter!): DeleteSubjectPayload
-
-  """"""
-  deleteTown(filter: TownFilter!): DeleteTownPayload
-
-  """"""
-  deleteTown_Subjects(filter: Town_SubjectsFilter!): DeleteTown_SubjectsPayload
-
-  """"""
-  deleteVotation(filter: VotationFilter!): DeleteVotationPayload
-
-  """"""
-  updateCanton(input: UpdateCantonInput!): UpdateCantonPayload
-
-  """"""
-  updateCanton_Subjects(input: UpdateCanton_SubjectsInput!): UpdateCanton_SubjectsPayload
-
-  """"""
-  updateCitizen(input: UpdateCitizenInput!): UpdateCitizenPayload
-
-  """"""
-  updateCitizen_Subject_Vote(input: UpdateCitizen_Subject_VoteInput!): UpdateCitizen_Subject_VotePayload
-
-  """"""
-  updateFederal_Subjects(input: UpdateFederal_SubjectsInput!): UpdateFederal_SubjectsPayload
-
-  """"""
-  updateSubject(input: UpdateSubjectInput!): UpdateSubjectPayload
-
-  """"""
-  updateTown(input: UpdateTownInput!): UpdateTownPayload
-
-  """"""
-  updateTown_Subjects(input: UpdateTown_SubjectsInput!): UpdateTown_SubjectsPayload
-
-  """"""
-  updateVotation(input: UpdateVotationInput!): UpdateVotationPayload
+  """
+  Update users, their passwords and groups.  As with AddUser, when linking to groups: if the
+  group doesn't exist it is created; if the group exists, the new user is linked to the existing
+  group.  If the filter doesn't match any users, the mutation has no effect.
+  """
+  updateUser(input: UpdateUserInput!): AddUserPayload
 }
 
 """"""
-input NearFilter {
+type NamespacePayload {
   """"""
-  coordinate: PointRef!
+  message: String
 
   """"""
-  distance: Float!
+  namespaceId: UInt64
 }
 
-""""""
-type Point {
-  """"""
-  latitude: Float!
+"""A NodeState is the state of an individual node in the Dgraph cluster."""
+type NodeState {
+  """Address of the node."""
+  address: String
 
-  """"""
-  longitude: Float!
-}
+  """List of Enterprise Features that are enabled."""
+  ee_features: [String]
 
-""""""
-input PointGeoFilter {
-  """"""
-  near: NearFilter
+  """
+  The group this node belongs to in the Dgraph cluster.
+  See : https://dgraph.io/docs/deploy/#cluster-setup.
+  """
+  group: String
 
-  """"""
-  within: WithinFilter
-}
+  """List of predicates for which indexes are built in the background."""
+  indexing: [String]
 
-""""""
-type PointList {
-  """"""
-  points: [Point!]!
-}
+  """Node type : either 'alpha' or 'zero'."""
+  instance: String
 
-""""""
-input PointListRef {
-  """"""
-  points: [PointRef!]!
-}
+  """
+  Time in Unix epoch time that the node was last contacted by another Zero or Alpha node.
+  """
+  lastEcho: Int64
 
-""""""
-input PointRef {
-  """"""
-  latitude: Float!
+  """List of ongoing operations in the background."""
+  ongoing: [String]
 
-  """"""
-  longitude: Float!
-}
+  """Node health status : either 'healthy' or 'unhealthy'."""
+  status: String
 
-""""""
-type Polygon {
-  """"""
-  coordinates: [PointList!]!
-}
+  """Time in nanoseconds since the node started."""
+  uptime: Int64
 
-""""""
-input PolygonGeoFilter {
-  """"""
-  contains: ContainsFilter
-
-  """"""
-  intersects: IntersectsFilter
-
-  """"""
-  near: NearFilter
-
-  """"""
-  within: WithinFilter
-}
-
-""""""
-input PolygonRef {
-  """"""
-  coordinates: [PointListRef!]!
+  """Version of the Dgraph binary."""
+  version: String
 }
 
 """"""
 type Query {
   """"""
-  aggregateCanton(filter: CantonFilter): CantonAggregateResult
+  config: Config
+
+  """Get the currently logged in user."""
+  getCurrentUser: User
 
   """"""
-  aggregateCanton_Subjects(filter: Canton_SubjectsFilter): Canton_SubjectsAggregateResult
+  getGQLSchema: GQLSchema
 
   """"""
-  aggregateCitizen(filter: CitizenFilter): CitizenAggregateResult
+  getGroup(name: String!): Group
 
   """"""
-  aggregateCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter): Citizen_Subject_VoteAggregateResult
+  getUser(name: String!): User
 
   """"""
-  aggregateFederal_Subjects(filter: Federal_SubjectsFilter): Federal_SubjectsAggregateResult
+  health: [NodeState]
+
+  """Get the information about the backups at a given location."""
+  listBackups(input: ListBackupsInput!): [Manifest]
 
   """"""
-  aggregateSubject(filter: SubjectFilter): SubjectAggregateResult
+  queryGroup(filter: GroupFilter, first: Int, offset: Int, order: GroupOrder): [Group]
 
   """"""
-  aggregateTown(filter: TownFilter): TownAggregateResult
+  queryUser(filter: UserFilter, first: Int, offset: Int, order: UserOrder): [User]
 
   """"""
-  aggregateTown_Subjects(filter: Town_SubjectsFilter): Town_SubjectsAggregateResult
+  state: MembershipState
 
   """"""
-  aggregateVotation(filter: VotationFilter): VotationAggregateResult
-
-  """"""
-  getCanton(id: ID!): Canton
-
-  """"""
-  getCanton_Subjects(id: ID!): Canton_Subjects
-
-  """"""
-  getCitizen(user_id: ID!): Citizen
-
-  """"""
-  getCitizen_Subject_Vote(id: ID!): Citizen_Subject_Vote
-
-  """"""
-  getFederal_Subjects(id: ID!): Federal_Subjects
-
-  """"""
-  getSubject(id: ID!): Subject
-
-  """"""
-  getTown(id: ID!): Town
-
-  """"""
-  getTown_Subjects(id: ID!): Town_Subjects
-
-  """"""
-  getVotation(id: ID!): Votation
-
-  """"""
-  queryCanton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
-
-  """"""
-  queryCanton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
-
-  """"""
-  queryCitizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
-
-  """"""
-  queryCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
-
-  """"""
-  queryFederal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
-
-  """"""
-  querySubject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
-
-  """"""
-  queryTown(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
-
-  """"""
-  queryTown_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
-
-  """"""
-  queryVotation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
+  task(input: TaskInput!): TaskPayload
 }
 
 """"""
-input StringExactFilter {
+input RemoveGroupPatch {
   """"""
-  between: StringRange
-
-  """"""
-  eq: String
-
-  """"""
-  ge: String
-
-  """"""
-  gt: String
-
-  """"""
-  in: [String]
-
-  """"""
-  le: String
-
-  """"""
-  lt: String
+  rules: [String!]!
 }
 
 """"""
-input StringFullTextFilter {
+input RemoveNodeInput {
+  """ID of the group from which the node is to be removed."""
+  groupId: UInt64!
+
+  """ID of the node to be removed."""
+  nodeId: UInt64!
+}
+
+""""""
+type RemoveNodePayload {
   """"""
-  alloftext: String
+  response: Response
+}
+
+""""""
+input ResetPasswordInput {
+  """"""
+  namespace: Int!
 
   """"""
-  anyoftext: String
+  password: String!
+
+  """"""
+  userId: String!
+}
+
+""""""
+type ResetPasswordPayload {
+  """"""
+  message: String
+
+  """"""
+  namespace: UInt64
+
+  """"""
+  userId: String
+}
+
+""""""
+type Response {
+  """"""
+  code: String
+
+  """"""
+  message: String
+}
+
+""""""
+input RestoreInput {
+  """Access key credential for the destination."""
+  accessKey: String
+
+  """
+  Set to true to allow backing up to S3 or Minio bucket that requires no credentials.
+  """
+  anonymous: Boolean
+
+  """
+  Backup ID of the backup series to restore. This ID is included in the manifest.json file.
+  If missing, it defaults to the latest series.
+  """
+  backupId: String
+
+  """
+  If backupNum is 0 or missing, the entire series will be restored i.e all the incremental
+  backups available in the series as well as the full backup will be restored. If backupNum is
+  non-zero, we restore all the backups in the series that have backupNum smaller or equal to
+  the backupNum provided here. Backups that have backupNum higher than this will be ignored.
+  In simple words, all the backups with backupNum of backup <= backupNum will be restored.
+  """
+  backupNum: Int
+
+  """
+  Path to the key file needed to decrypt the backup. This file should be accessible
+  by all alphas in the group. The backup will be written using the encryption key
+  with which the cluster was started, which might be different than this key.
+  """
+  encryptionKeyFile: String
+
+  """All the backups with backupNum >= incrementalFrom will be restored."""
+  incrementalFrom: Int
+
+  """
+  If isPartial is set to true then the cluster will be kept in draining mode after
+  restore. This makes sure that the db is not corrupted by any mutations or tablet
+  moves in between two restores.
+  """
+  isPartial: Boolean
+
+  """Destination for the backup: e.g. Minio or S3 bucket."""
+  location: String!
+
+  """Secret key credential for the destination."""
+  secretKey: String
+
+  """AWS session token, if required."""
+  sessionToken: String
+
+  """
+  Vault server address where the key is stored. This server must be accessible
+  by all alphas in the group. Default "http://localhost:8200".
+  """
+  vaultAddr: String
+
+  """Vault kv store field whose value is the key. Default "enc_key"."""
+  vaultField: String
+
+  """
+  Vault kv store field's format. Must be "base64" or "raw". Default "base64".
+  """
+  vaultFormat: String
+
+  """Vault kv store path where the key lives. Default "secret/data/dgraph"."""
+  vaultPath: String
+
+  """Path to the Vault RoleID file."""
+  vaultRoleIDFile: String
+
+  """Path to the Vault SecretID file."""
+  vaultSecretIDFile: String
+}
+
+""""""
+type RestorePayload {
+  """
+  A short string indicating whether the restore operation was successfully scheduled.
+  """
+  code: String
+
+  """Includes the error message if the operation failed."""
+  message: String
+}
+
+""""""
+type Rule {
+  """
+  Permissions that apply for the rule.  Represented following the UNIX file permission
+  convention. That is, 4 (binary 100) represents READ, 2 (binary 010) represents WRITE,
+  and 1 (binary 001) represents MODIFY (the permission to change a predicate’s schema).
+  
+  The options are:
+  * 1 (binary 001) : MODIFY
+  * 2 (010) : WRITE
+  * 3 (011) : WRITE+MODIFY
+  * 4 (100) : READ
+  * 5 (101) : READ+MODIFY
+  * 6 (110) : READ+WRITE
+  * 7 (111) : READ+WRITE+MODIFY
+  
+  Permission 0, which is equal to no permission for a predicate, blocks all read,
+  write and modify operations.
+  """
+  permission: Int!
+
+  """Predicate to which the rule applies."""
+  predicate: String!
+}
+
+""""""
+input RuleRef {
+  """
+  Permissions that apply for the rule.  Represented following the UNIX file permission
+  convention. That is, 4 (binary 100) represents READ, 2 (binary 010) represents WRITE,
+  and 1 (binary 001) represents MODIFY (the permission to change a predicate’s schema).
+  
+  The options are:
+  * 1 (binary 001) : MODIFY
+  * 2 (010) : WRITE
+  * 3 (011) : WRITE+MODIFY
+  * 4 (100) : READ
+  * 5 (101) : READ+MODIFY
+  * 6 (110) : READ+WRITE
+  * 7 (111) : READ+WRITE+MODIFY
+  
+  Permission 0, which is equal to no permission for a predicate, blocks all read,
+  write and modify operations.
+  """
+  permission: Int!
+
+  """Predicate to which the rule applies."""
+  predicate: String!
+}
+
+""""""
+input SetGroupPatch {
+  """"""
+  rules: [RuleRef!]!
+}
+
+""""""
+type ShutdownPayload {
+  """"""
+  response: Response
 }
 
 """"""
 input StringHashFilter {
   """"""
   eq: String
-
-  """"""
-  in: [String]
 }
 
 """"""
-input StringRange {
+type Tablet {
   """"""
-  max: String!
+  force: Boolean
 
   """"""
-  min: String!
+  groupId: UInt64
+
+  """"""
+  moveTs: UInt64
+
+  """"""
+  predicate: String
+
+  """"""
+  readOnly: Boolean
+
+  """"""
+  remove: Boolean
+
+  """"""
+  space: Int
 }
 
 """"""
-input StringRegExpFilter {
+input TaskInput {
   """"""
-  regexp: String
+  id: String!
 }
 
 """"""
-input StringTermFilter {
+enum TaskKind {
   """"""
-  allofterms: String
+  Backup
 
   """"""
-  anyofterms: String
+  Export
+
+  """"""
+  Unknown
 }
 
 """"""
-type Subject {
+type TaskPayload {
   """"""
-  description: String
+  kind: TaskKind
 
   """"""
-  id: ID!
+  lastUpdated: DateTime
 
   """"""
-  title: String
+  status: TaskStatus
 }
 
 """"""
-type SubjectAggregateResult {
+enum TaskStatus {
   """"""
-  count: Int
+  Failed
 
   """"""
-  descriptionMax: String
+  Queued
 
   """"""
-  descriptionMin: String
+  Running
 
   """"""
-  titleMax: String
+  Success
 
   """"""
-  titleMin: String
+  Unknown
+}
+
+"""
+The UInt64 scalar type represents an unsigned 64‐bit numeric non‐fractional value.
+UInt64 can represent values in range [0,(2^64 - 1)].
+"""
+scalar UInt64
+
+""""""
+input UpdateGQLSchemaInput {
+  """"""
+  set: GQLSchemaPatch!
 }
 
 """"""
-input SubjectFilter {
+type UpdateGQLSchemaPayload {
   """"""
-  and: [SubjectFilter]
-
-  """"""
-  has: [SubjectHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  not: SubjectFilter
-
-  """"""
-  or: [SubjectFilter]
+  gqlSchema: GQLSchema
 }
 
 """"""
-enum SubjectHasFilter {
+input UpdateGroupInput {
   """"""
-  description
+  filter: GroupFilter!
 
   """"""
-  title
+  remove: RemoveGroupPatch
+
+  """"""
+  set: SetGroupPatch
 }
 
 """"""
-input SubjectOrder {
+input UpdateUserInput {
   """"""
-  asc: SubjectOrderable
+  filter: UserFilter!
 
   """"""
-  desc: SubjectOrderable
+  remove: UserPatch
 
   """"""
-  then: SubjectOrder
+  set: UserPatch
 }
 
 """"""
-enum SubjectOrderable {
+type User {
   """"""
-  description
+  groups: [Group]
 
-  """"""
-  title
+  """Username for the user.  Dgraph ensures that usernames are unique."""
+  name: String!
 }
 
 """"""
-input SubjectPatch {
+input UserFilter {
   """"""
-  description: String
+  and: UserFilter
 
   """"""
-  title: String
+  name: StringHashFilter
+
+  """"""
+  not: UserFilter
+
+  """"""
+  or: UserFilter
 }
 
 """"""
-input SubjectRef {
+input UserOrder {
   """"""
-  description: String
+  asc: UserOrderable
 
   """"""
-  id: ID
+  desc: UserOrderable
 
   """"""
-  title: String
+  then: UserOrder
 }
 
 """"""
-type Town {
-  """"""
-  id: ID!
-
-  """"""
-  located_in(filter: CantonFilter): Canton
-
-  """"""
-  name: String
-}
-
-""""""
-type TownAggregateResult {
-  """"""
-  count: Int
-
-  """"""
-  nameMax: String
-
-  """"""
-  nameMin: String
-}
-
-""""""
-input TownFilter {
-  """"""
-  and: [TownFilter]
-
-  """"""
-  has: [TownHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  not: TownFilter
-
-  """"""
-  or: [TownFilter]
-}
-
-""""""
-enum TownHasFilter {
-  """"""
-  located_in
-
+enum UserOrderable {
   """"""
   name
 }
 
 """"""
-input TownOrder {
+input UserPatch {
   """"""
-  asc: TownOrderable
+  groups: [GroupRef]
 
   """"""
-  desc: TownOrderable
-
-  """"""
-  then: TownOrder
+  password: String
 }
 
 """"""
-enum TownOrderable {
+input UserRef {
   """"""
-  name
-}
-
-""""""
-input TownPatch {
-  """"""
-  located_in: CantonRef
-
-  """"""
-  name: String
-}
-
-""""""
-input TownRef {
-  """"""
-  id: ID
-
-  """"""
-  located_in: CantonRef
-
-  """"""
-  name: String
-}
-
-""""""
-type Town_Subjects {
-  """"""
-  id: ID!
-
-  """"""
-  subjects(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
-
-  """"""
-  subjectsAggregate(filter: SubjectFilter): SubjectAggregateResult
-
-  """"""
-  town(filter: TownFilter): Town
-}
-
-""""""
-type Town_SubjectsAggregateResult {
-  """"""
-  count: Int
-}
-
-""""""
-input Town_SubjectsFilter {
-  """"""
-  and: [Town_SubjectsFilter]
-
-  """"""
-  has: [Town_SubjectsHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  not: Town_SubjectsFilter
-
-  """"""
-  or: [Town_SubjectsFilter]
-}
-
-""""""
-enum Town_SubjectsHasFilter {
-  """"""
-  subjects
-
-  """"""
-  town
-}
-
-""""""
-input Town_SubjectsPatch {
-  """"""
-  subjects: [SubjectRef]
-
-  """"""
-  town: TownRef
-}
-
-""""""
-input Town_SubjectsRef {
-  """"""
-  id: ID
-
-  """"""
-  subjects: [SubjectRef]
-
-  """"""
-  town: TownRef
-}
-
-""""""
-input UpdateCantonInput {
-  """"""
-  filter: CantonFilter!
-
-  """"""
-  remove: CantonPatch
-
-  """"""
-  set: CantonPatch
-}
-
-""""""
-type UpdateCantonPayload {
-  """"""
-  canton(filter: CantonFilter, first: Int, offset: Int, order: CantonOrder): [Canton]
-
-  """"""
-  numUids: Int
-}
-
-""""""
-input UpdateCanton_SubjectsInput {
-  """"""
-  filter: Canton_SubjectsFilter!
-
-  """"""
-  remove: Canton_SubjectsPatch
-
-  """"""
-  set: Canton_SubjectsPatch
-}
-
-""""""
-type UpdateCanton_SubjectsPayload {
-  """"""
-  canton_Subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
-
-  """"""
-  numUids: Int
-}
-
-""""""
-input UpdateCitizenInput {
-  """"""
-  filter: CitizenFilter!
-
-  """"""
-  remove: CitizenPatch
-
-  """"""
-  set: CitizenPatch
-}
-
-""""""
-type UpdateCitizenPayload {
-  """"""
-  citizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
-
-  """"""
-  numUids: Int
-}
-
-""""""
-input UpdateCitizen_Subject_VoteInput {
-  """"""
-  filter: Citizen_Subject_VoteFilter!
-
-  """"""
-  remove: Citizen_Subject_VotePatch
-
-  """"""
-  set: Citizen_Subject_VotePatch
-}
-
-""""""
-type UpdateCitizen_Subject_VotePayload {
-  """"""
-  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
-
-  """"""
-  numUids: Int
-}
-
-""""""
-input UpdateFederal_SubjectsInput {
-  """"""
-  filter: Federal_SubjectsFilter!
-
-  """"""
-  remove: Federal_SubjectsPatch
-
-  """"""
-  set: Federal_SubjectsPatch
-}
-
-""""""
-type UpdateFederal_SubjectsPayload {
-  """"""
-  federal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
-
-  """"""
-  numUids: Int
-}
-
-""""""
-input UpdateSubjectInput {
-  """"""
-  filter: SubjectFilter!
-
-  """"""
-  remove: SubjectPatch
-
-  """"""
-  set: SubjectPatch
-}
-
-""""""
-type UpdateSubjectPayload {
-  """"""
-  numUids: Int
-
-  """"""
-  subject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
-}
-
-""""""
-input UpdateTownInput {
-  """"""
-  filter: TownFilter!
-
-  """"""
-  remove: TownPatch
-
-  """"""
-  set: TownPatch
-}
-
-""""""
-type UpdateTownPayload {
-  """"""
-  numUids: Int
-
-  """"""
-  town(filter: TownFilter, first: Int, offset: Int, order: TownOrder): [Town]
-}
-
-""""""
-input UpdateTown_SubjectsInput {
-  """"""
-  filter: Town_SubjectsFilter!
-
-  """"""
-  remove: Town_SubjectsPatch
-
-  """"""
-  set: Town_SubjectsPatch
-}
-
-""""""
-type UpdateTown_SubjectsPayload {
-  """"""
-  numUids: Int
-
-  """"""
-  town_Subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
-}
-
-""""""
-input UpdateVotationInput {
-  """"""
-  filter: VotationFilter!
-
-  """"""
-  remove: VotationPatch
-
-  """"""
-  set: VotationPatch
-}
-
-""""""
-type UpdateVotationPayload {
-  """"""
-  numUids: Int
-
-  """"""
-  votation(filter: VotationFilter, first: Int, offset: Int, order: VotationOrder): [Votation]
-}
-
-""""""
-type Votation {
-  """"""
-  canton_subjects(filter: Canton_SubjectsFilter, first: Int, offset: Int): [Canton_Subjects]
-
-  """"""
-  canton_subjectsAggregate(filter: Canton_SubjectsFilter): Canton_SubjectsAggregateResult
-
-  """"""
-  end_date: String
-
-  """"""
-  federal_subject(filter: Federal_SubjectsFilter): Federal_Subjects
-
-  """"""
-  id: ID!
-
-  """"""
-  start_date: DateTime
-
-  """"""
-  town_subjects(filter: Town_SubjectsFilter, first: Int, offset: Int): [Town_Subjects]
-
-  """"""
-  town_subjectsAggregate(filter: Town_SubjectsFilter): Town_SubjectsAggregateResult
-}
-
-""""""
-type VotationAggregateResult {
-  """"""
-  count: Int
-
-  """"""
-  end_dateMax: String
-
-  """"""
-  end_dateMin: String
-
-  """"""
-  start_dateMax: DateTime
-
-  """"""
-  start_dateMin: DateTime
-}
-
-""""""
-input VotationFilter {
-  """"""
-  and: [VotationFilter]
-
-  """"""
-  has: [VotationHasFilter]
-
-  """"""
-  id: [ID!]
-
-  """"""
-  not: VotationFilter
-
-  """"""
-  or: [VotationFilter]
-}
-
-""""""
-enum VotationHasFilter {
-  """"""
-  canton_subjects
-
-  """"""
-  end_date
-
-  """"""
-  federal_subject
-
-  """"""
-  start_date
-
-  """"""
-  town_subjects
-}
-
-""""""
-input VotationOrder {
-  """"""
-  asc: VotationOrderable
-
-  """"""
-  desc: VotationOrderable
-
-  """"""
-  then: VotationOrder
-}
-
-""""""
-enum VotationOrderable {
-  """"""
-  end_date
-
-  """"""
-  start_date
-}
-
-""""""
-input VotationPatch {
-  """"""
-  canton_subjects: [Canton_SubjectsRef]
-
-  """"""
-  end_date: String
-
-  """"""
-  federal_subject: Federal_SubjectsRef
-
-  """"""
-  start_date: DateTime
-
-  """"""
-  town_subjects: [Town_SubjectsRef]
-}
-
-""""""
-input VotationRef {
-  """"""
-  canton_subjects: [Canton_SubjectsRef]
-
-  """"""
-  end_date: String
-
-  """"""
-  federal_subject: Federal_SubjectsRef
-
-  """"""
-  id: ID
-
-  """"""
-  start_date: DateTime
-
-  """"""
-  town_subjects: [Town_SubjectsRef]
-}
-
-""""""
-input WithinFilter {
-  """"""
-  polygon: PolygonRef!
+  name: String!
 }

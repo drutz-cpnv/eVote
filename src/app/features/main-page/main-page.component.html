@@ -1,4 +1,22 @@
 <app-header/>
 <section>
-  <div class="container"></div>
+  <div class="container flex flex-col bg-[#DF0000] rounded-b-2xl pt-10 gap-2">
+    @for (subject of subjects; track subject.id) {
+      <app-hero-row [title]="SubjectNumber[parseInt(subject.id, 10) - 1].toString()" [description]="subject.title" theme="dark"/>
+      <app-hero-row title="Resultats" theme="dark" type="element">
+        <div class="w-full bg-white p-1">
+          <div class="h-2 w-[]"></div>
+        </div>
+        <progress value="20" max="100" class="w-full bg-white text-white">20%</progress>
+      </app-hero-row>
+    }
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <app-card type="empty">Aucun objet cantonal</app-card>
+    </div>
+  </div>
 </section>
