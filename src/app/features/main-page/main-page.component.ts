@@ -2,9 +2,19 @@ import { Component, Inject } from '@angular/core';
 import { IconComponent } from "../icon/icon.component";
 import { HeroRowComponent } from "../hero-row/hero-row.component";
 import { CardComponent } from "../card/card.component";
-import {MyQueryGQL, Subject} from '../../../graphql/generated/graphql';
+import {
+  GetCurrentVotationGQL,
+  GetCurrentVotationQuery,
+  MyQueryGQL,
+  Subject,
+  Votation
+} from '../../../graphql/generated/graphql';
 import { HeaderComponent } from "../header/header.component";
 import {SubjectNumber} from "../header/subject-number";
+import { ApolloQueryResult, Observable } from '@apollo/client/core';
+import {AsyncPipe, JsonPipe} from "@angular/common";
+import { NetworkStatus } from '@apollo/client/core/networkStatus';
+import {SubjectListComponent} from "./subject-list/subject-list.component";
 
 
 @Component({
@@ -14,7 +24,10 @@ import {SubjectNumber} from "../header/subject-number";
     IconComponent,
     HeroRowComponent,
     CardComponent,
-    HeaderComponent
+    HeaderComponent,
+    AsyncPipe,
+    JsonPipe,
+    SubjectListComponent
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.css'
@@ -23,24 +36,16 @@ export class MainPageComponent {
   @Inject('title')
   public title: string = 'Main Page';
 
-  public subjects: Subject[] = [
-    {
-      id: "1",
-      title: "Initiative populaire « Mieux vivre à la retraite (initiative pour une 13e rente AVS) »",
-      description: "Description 1",
-    },
-    {
-      id: "2",
-      title: "Initiative populaire « Pour une prévoyance vieillesse sûre et pérenne (initiative sur les rentes) »",
-      description: "Description 2",
-    },
-  ]
+  @Inject('title')
+  public votation?: Observable<ApolloQueryResult<GetCurrentVotationGQL>>;
 
-/*  constructor(private myQueryGQL: MyQueryGQL) {
-    this.myQueryGQL.fetch().subscribe(result => {
-      console.log(result);
-    });
-  }*/
+  public getVotationResult$
+
+  constructor(getCurrentVotationGQL: GetCurrentVotationGQL) {
+    this.getVotationResult$ = getCurrentVotationGQL.fetch();
+  }
+
   protected readonly SubjectNumber = SubjectNumber;
   protected readonly parseInt = parseInt;
+  public NetworkStatus:typeof NetworkStatus = NetworkStatus;
 }

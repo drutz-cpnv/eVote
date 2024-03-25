@@ -1,7 +1,0 @@
-mutation AddVote($target: ID!, $voter: ID!, $vote: String) {
-  addCitizen_Subject_Vote(input: {target: {id: $target}, voter: {id: $voter}, vote: $vote}) {
-    citizen_subject_vote {
-      id
-    }
-  }
-}
