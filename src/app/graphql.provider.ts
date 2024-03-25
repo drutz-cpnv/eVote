@@ -6,11 +6,11 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
 export function apolloOptionsFactory(): ApolloClientOptions<any> {
-    const httpLink = inject(HttpLink).create({ uri: "https://zero.poo-e-vote.orb.local/" });
+    const httpLink = inject(HttpLink).create({ uri: "https://nameless-brook-570006.eu-central-1.aws.cloud.dgraph.io/graphql" });
 
 
     // Crée un WebSocketLink avec l'instance de wsClient
-    const wsLink = new WebSocketLink({ uri: "wss://localhost:6080" });
+    const wsLink = new WebSocketLink({ uri: "wss://nameless-brook-570006.eu-central-1.aws.cloud.dgraph.io/graphql" });
 
     // Utilise 'split' pour dispatcher les requêtes vers le bon 'link'
     const link = split(
