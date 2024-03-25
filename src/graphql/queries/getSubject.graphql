@@ -1,0 +1,6 @@
+query getSubject {
+  querySubject {
+    id
+    title
+  }
+}

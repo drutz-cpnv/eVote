@@ -1,0 +1,7 @@
+mutation DeleteSubject($subjectId: [ID!]) {
+  deleteSubject(filter: { id: $subjectId }) {
+    subject {
+      id
+    }
+  }
+}
