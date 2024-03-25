@@ -1,0 +1,7 @@
+mutation AddVotation($startDate: DateTime!, $endDate: DateTime!, $federalSubjectId: ID!) {
+  addVotation(input: {start_date: $startDate, end_date: $endDate, federal_subject: {id: $federalSubjectId}}) {
+    votation {
+      id
+    }
+  }
+}
