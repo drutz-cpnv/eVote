@@ -1,1 +1,21 @@
-<p>vote-page works!</p>
+<app-header/>
+
+<section>
+  <div class="container">
+    @if ((getVotationResult$ | async); as getVotationResult) {
+      @switch (getVotationResult.networkStatus) {
+        @case (NetworkStatus.ready) {
+          <app-vote-sheet [subjects]="$any(getVotationResult.data.queryVotation)"></app-vote-sheet>
+        }
+        @case (NetworkStatus.error) {
+
+          An error occurred...
+        }
+        @default {
+          Loading or so...
+        }
+
+      }
+    }
+  </div>
+</section>

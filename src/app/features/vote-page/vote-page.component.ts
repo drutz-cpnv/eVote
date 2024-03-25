@@ -1,12 +1,30 @@
 import { Component } from '@angular/core';
+import {HeaderComponent} from "../header/header.component";
+import {NetworkStatus} from "@apollo/client/core/networkStatus";
+import {AsyncPipe} from "@angular/common";
+import {SubjectListComponent} from "../main-page/subject-list/subject-list.component";
+import {ApolloQueryResult, Observable} from "@apollo/client/core";
+import {AddVoteGQL, GetCurrentVotationGQL, GetCurrentVotationQuery} from "../../../graphql/generated/graphql";
+import {VoteSheetComponent} from "../vote-sheet/vote-sheet.component";
 
 @Component({
   selector: 'app-votation-page',
   standalone: true,
-  imports: [],
+  imports: [
+    HeaderComponent,
+    AsyncPipe,
+    SubjectListComponent,
+    VoteSheetComponent
+  ],
   templateUrl: './vote-page.component.html',
-  styleUrl: './votation-page.component.css'
 })
 export class VotePageComponent {
 
+  public getVotationResult$
+
+  constructor(addVote: AddVoteGQL, getVotationResult: GetCurrentVotationGQL) {
+    this.getVotationResult$ = getVotationResult.fetch();
+  }
+
+  protected readonly NetworkStatus = NetworkStatus;
 }
