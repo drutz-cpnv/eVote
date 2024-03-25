@@ -1,0 +1,7 @@
+mutation AddSubjects($subjects: [AddSubjectInput!]!) {
+  addSubject(input: $subjects) {
+    subject {
+      id
+    }
+  }
+}
