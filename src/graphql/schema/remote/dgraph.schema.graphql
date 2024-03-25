@@ -100,9 +100,6 @@ type AddCitizenPayload {
 """"""
 input AddCitizen_Subject_VoteInput {
   """"""
-  countCitizenSubjectVotesByChoice: Int
-
-  """"""
   target: SubjectRef
 
   """"""
@@ -115,7 +112,7 @@ input AddCitizen_Subject_VoteInput {
 """"""
 type AddCitizen_Subject_VotePayload {
   """"""
-  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int, order: Citizen_Subject_VoteOrder): [Citizen_Subject_Vote]
+  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
 
   """"""
   numUids: Int
@@ -416,6 +413,15 @@ enum Choice {
 }
 
 """"""
+input Choice_hash {
+  """"""
+  eq: Choice
+
+  """"""
+  in: [Choice]
+}
+
+""""""
 type Citizen {
   """"""
   lives(filter: TownFilter): Town
@@ -508,9 +514,6 @@ input CitizenRef {
 """"""
 type Citizen_Subject_Vote {
   """"""
-  countCitizenSubjectVotesByChoice(choice: Choice!, subjectId: ID!): Int
-
-  """"""
   id: ID!
 
   """"""
@@ -527,18 +530,6 @@ type Citizen_Subject_Vote {
 type Citizen_Subject_VoteAggregateResult {
   """"""
   count: Int
-
-  """"""
-  countCitizenSubjectVotesByChoiceAvg: Float
-
-  """"""
-  countCitizenSubjectVotesByChoiceMax: Int
-
-  """"""
-  countCitizenSubjectVotesByChoiceMin: Int
-
-  """"""
-  countCitizenSubjectVotesByChoiceSum: Int
 }
 
 """"""
@@ -557,13 +548,13 @@ input Citizen_Subject_VoteFilter {
 
   """"""
   or: [Citizen_Subject_VoteFilter]
+
+  """"""
+  vote: Choice_hash
 }
 
 """"""
 enum Citizen_Subject_VoteHasFilter {
-  """"""
-  countCitizenSubjectVotesByChoice
-
   """"""
   target
 
@@ -575,28 +566,7 @@ enum Citizen_Subject_VoteHasFilter {
 }
 
 """"""
-input Citizen_Subject_VoteOrder {
-  """"""
-  asc: Citizen_Subject_VoteOrderable
-
-  """"""
-  desc: Citizen_Subject_VoteOrderable
-
-  """"""
-  then: Citizen_Subject_VoteOrder
-}
-
-""""""
-enum Citizen_Subject_VoteOrderable {
-  """"""
-  countCitizenSubjectVotesByChoice
-}
-
-""""""
 input Citizen_Subject_VotePatch {
-  """"""
-  countCitizenSubjectVotesByChoice: Int
-
   """"""
   target: SubjectRef
 
@@ -609,9 +579,6 @@ input Citizen_Subject_VotePatch {
 
 """"""
 input Citizen_Subject_VoteRef {
-  """"""
-  countCitizenSubjectVotesByChoice: Int
-
   """"""
   id: ID
 
@@ -742,7 +709,7 @@ type DeleteCitizenPayload {
 """"""
 type DeleteCitizen_Subject_VotePayload {
   """"""
-  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int, order: Citizen_Subject_VoteOrder): [Citizen_Subject_Vote]
+  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
 
   """"""
   msg: String
@@ -1321,7 +1288,7 @@ type Query {
   queryCitizen(filter: CitizenFilter, first: Int, offset: Int, order: CitizenOrder): [Citizen]
 
   """"""
-  queryCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int, order: Citizen_Subject_VoteOrder): [Citizen_Subject_Vote]
+  queryCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
 
   """"""
   queryFederal_Subjects(filter: Federal_SubjectsFilter, first: Int, offset: Int): [Federal_Subjects]
@@ -1502,6 +1469,27 @@ input SubjectRef {
 
   """"""
   title: String
+}
+
+""""""
+type Subscription {
+  """"""
+  aggregateCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter): Citizen_Subject_VoteAggregateResult
+
+  """"""
+  aggregateSubject(filter: SubjectFilter): SubjectAggregateResult
+
+  """"""
+  getCitizen_Subject_Vote(id: ID!): Citizen_Subject_Vote
+
+  """"""
+  getSubject(id: ID!): Subject
+
+  """"""
+  queryCitizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
+
+  """"""
+  querySubject(filter: SubjectFilter, first: Int, offset: Int, order: SubjectOrder): [Subject]
 }
 
 """"""
@@ -1741,7 +1729,7 @@ input UpdateCitizen_Subject_VoteInput {
 """"""
 type UpdateCitizen_Subject_VotePayload {
   """"""
-  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int, order: Citizen_Subject_VoteOrder): [Citizen_Subject_Vote]
+  citizen_Subject_Vote(filter: Citizen_Subject_VoteFilter, first: Int, offset: Int): [Citizen_Subject_Vote]
 
   """"""
   numUids: Int
