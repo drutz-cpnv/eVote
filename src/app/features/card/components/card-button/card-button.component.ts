@@ -14,8 +14,13 @@ import {CardComponent} from "../../card.component";
   templateUrl: './card-button.component.html',
   styleUrl: './card-button.component.css'
 })
-export class CardButtonComponent {
+export class CardButtonComponent extends CardComponent{
   @Input() iconName!: string;
   @Input() text!: string;
   @Input() linkPath!: string;
+
+  constructor() {
+    super();
+    this.type = 'button';
+  }
 }

@@ -1,0 +1,13 @@
+<tr class="h-52">
+  <td class="font-bold font-mono text-3xl pr-10 block" style="width: 100px">{{ object.id }}</td>
+  <td class="p-2 border-black border-2 w-full">
+    <strong>Objet {{ object.id }}</strong>
+    <p>{{ object.title }}</p>
+  </td>
+  <td class="w-40 border-black border-2">
+    <div class="flex flex-col h-[208px]">
+      <p class="p-2 font-medium">Réponse</p>
+      <input type="text" [value]="value" class="bg-transparent border-none p-3 text-xl invalid:bg-red-600 invalid:border-red-600 mt-auto" pattern="^(Oui)|(Non)|(No)|(N)|(O)|(Ou)$">
+    </div>
+  </td>
+</tr>
