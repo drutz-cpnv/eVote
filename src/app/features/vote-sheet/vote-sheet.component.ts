@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ObjectComponent} from "./object/object.component";
+import {Subject} from "../../../graphql/generated/graphql";
 
 @Component({
   selector: 'app-vote-sheet',
@@ -11,6 +12,10 @@ import {ObjectComponent} from "./object/object.component";
   styleUrl: './vote-sheet.component.css'
 })
 export class VoteSheetComponent {
-  @Input() objects: any;
+  @Input() subjects: any;
 
+
+  public getSubjects(): Array<Subject> {
+    return this.subjects[0].federal_subject.subjects;
+  }
 }

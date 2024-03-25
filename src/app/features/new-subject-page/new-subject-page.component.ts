@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {SubjectFormGroupComponent} from "../subject/subject-form-group/subject-form-group.component";
 import {FormsModule} from "@angular/forms";
 import {HeaderComponent} from "../header/header.component";
@@ -21,7 +21,13 @@ import {AddSubjectsGQL, UpdateFederalSubjectsGQL} from "../../../graphql/generat
 export class NewSubjectPageComponent {
   public formGroup:SubjectFormGroup;
 
-  constructor(subjectFormGroupService:SubjectFormGroupService, private addSubjectGQL:AddSubjectsGQL, private updateSubjectGQL:UpdateFederalSubjectsGQL) {
+  private addSubjectGQL: AddSubjectsGQL;
+
+  private updateSubjectGQL: UpdateFederalSubjectsGQL;
+
+  constructor(subjectFormGroupService:SubjectFormGroupService, addSubjectGQL:AddSubjectsGQL, updateSubjectGQL:UpdateFederalSubjectsGQL) {
+    this.updateSubjectGQL = updateSubjectGQL;
+    this.addSubjectGQL = addSubjectGQL;
     this.formGroup = subjectFormGroupService.createFormGroup();
   }
   async onCreateClicked() {

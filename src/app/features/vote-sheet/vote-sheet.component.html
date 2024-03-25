@@ -1,8 +1,8 @@
 <div class="bg-gray-300 rounded-2xl p-5 pl-10 relative">
   <div class="absolute w-10 h-10 top-20 -left-5 rounded-full bg-white block"></div>
   <table class="w-full">
-    @for (object of objects; track object.id) {
-      <app-object [object]="object"></app-object>
+    @for (subject of subjects; track subject.id) {
+      <app-subject [subject]="subject"></app-subject>
     }
   </table>
   <button>Voter</button>

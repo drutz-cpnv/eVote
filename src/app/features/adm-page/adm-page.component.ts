@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {CardButtonComponent} from "../card/components/card-button/card-button.component";
 import {HeaderComponent} from "../header/header.component";
+import {Subject} from "../../../graphql/generated/graphql";
 
 @Component({
   selector: 'app-adm-page',
