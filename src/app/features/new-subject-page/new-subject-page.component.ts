@@ -4,8 +4,8 @@ import {FormsModule} from "@angular/forms";
 import {HeaderComponent} from "../header/header.component";
 import {SubjectFormGroup, SubjectFormGroupData, SubjectFormGroupService} from "../subject/subject-form-group.service";
 import {subjectInput} from "../subject/service-to-gql.mapper";
-import {AddSubjectsGQL} from "../../../graphql/generated/graphql";
-import {lastValueFrom} from "rxjs";
+import {first, last, lastValueFrom} from "rxjs";
+import {AddSubjectsGQL, UpdateFederalSubjectsGQL} from "../../../graphql/generated/graphql";
 
 @Component({
   selector: 'app-new-subject-page',
@@ -21,7 +21,7 @@ import {lastValueFrom} from "rxjs";
 export class NewSubjectPageComponent {
   public formGroup:SubjectFormGroup;
 
-  constructor(subjectFormGroupService:SubjectFormGroupService, private addSubjectGQL:AddSubjectsGQL) {
+  constructor(subjectFormGroupService:SubjectFormGroupService, private addSubjectGQL:AddSubjectsGQL, private updateSubjectGQL:UpdateFederalSubjectsGQL) {
     this.formGroup = subjectFormGroupService.createFormGroup();
   }
   async onCreateClicked() {
@@ -31,14 +31,15 @@ export class NewSubjectPageComponent {
     const subjectFormData:SubjectFormGroupData = this.formGroup.getRawValue();
     const subject = subjectInput(subjectFormData);
 
-    // Make the GraphQL mutation call
     const result = await lastValueFrom(this.addSubjectGQL.mutate({ subjects: subject }));
+    const subjects = result.data?.addSubject?.subject;
 
-    // Extract the id from the result
-
-
-    // Now you can use the id variable as needed
-    console.log(result);
+    // C'est dégeulasse et on en est conscient mais c'est la crise... Désolé
+    if (subjects && subjects.length > 0) {
+      const firstSubject = subjects[0];
+      const id = firstSubject?.id ?? '';
+      await lastValueFrom(this.updateSubjectGQL.mutate({ subjectId: id }));
+      }
   }
 
 }
