@@ -1,0 +1,9 @@
+@for (subject of getSubjects(); track subject.id; let idx = $index) {
+  <app-hero-row [title]="SubjectNumber[idx]" [description]="subject.title" theme="light"/>
+  <app-hero-row title="Action" theme="light" type="element">
+    <div class="flex gap-2">
+    <app-card-button iconName="update" iconSize="6xl" text="Update"  linkPath="/admin/subject/update/{{subject.id}}"/>
+    <app-card-button iconName="delete" iconSize="6xl" text="Delete" (click)="onDeleteClicked(subject.id)"/>
+    </div>
+  </app-hero-row>
+}

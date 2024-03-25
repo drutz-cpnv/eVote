@@ -1,8 +1,7 @@
 /* eslint-disable */
+import { gql } from 'apollo-angular';
+import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
-import {gql} from 'apollo-angular';
-import {Injectable} from '@angular/core';
-
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -86,7 +85,6 @@ export type AddCitizenPayloadCitizenArgs = {
 };
 
 export type AddCitizen_Subject_VoteInput = {
-  countCitizenSubjectVotesByChoice?: InputMaybe<Scalars['Int']['input']>;
   target?: InputMaybe<SubjectRef>;
   vote?: InputMaybe<Choice | `${Choice}`>;
   voter?: InputMaybe<CitizenRef>;
@@ -103,7 +101,6 @@ export type AddCitizen_Subject_VotePayloadCitizen_Subject_VoteArgs = {
   filter?: InputMaybe<Citizen_Subject_VoteFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order?: InputMaybe<Citizen_Subject_VoteOrder>;
 };
 
 export type AddFederal_SubjectsInput = {
@@ -321,6 +318,11 @@ export enum Choice {
   Oui = 'Oui'
 }
 
+export type Choice_Hash = {
+  eq?: InputMaybe<Choice | `${Choice}`>;
+  in?: InputMaybe<Array<InputMaybe<Choice | `${Choice}`>>>;
+};
+
 export type Citizen = {
   __typename?: 'Citizen';
   lives?: Maybe<Town>;
@@ -376,17 +378,10 @@ export type CitizenRef = {
 
 export type Citizen_Subject_Vote = {
   __typename?: 'Citizen_Subject_Vote';
-  countCitizenSubjectVotesByChoice?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   target?: Maybe<Subject>;
   vote?: Maybe<Choice | `${Choice}`>;
   voter?: Maybe<Citizen>;
-};
-
-
-export type Citizen_Subject_VoteCountCitizenSubjectVotesByChoiceArgs = {
-  choice: Choice;
-  subjectId: Scalars['ID']['input'];
 };
 
 
@@ -402,10 +397,6 @@ export type Citizen_Subject_VoteVoterArgs = {
 export type Citizen_Subject_VoteAggregateResult = {
   __typename?: 'Citizen_Subject_VoteAggregateResult';
   count?: Maybe<Scalars['Int']['output']>;
-  countCitizenSubjectVotesByChoiceAvg?: Maybe<Scalars['Float']['output']>;
-  countCitizenSubjectVotesByChoiceMax?: Maybe<Scalars['Int']['output']>;
-  countCitizenSubjectVotesByChoiceMin?: Maybe<Scalars['Int']['output']>;
-  countCitizenSubjectVotesByChoiceSum?: Maybe<Scalars['Int']['output']>;
 };
 
 export type Citizen_Subject_VoteFilter = {
@@ -414,34 +405,22 @@ export type Citizen_Subject_VoteFilter = {
   id?: InputMaybe<Array<Scalars['ID']['input']>>;
   not?: InputMaybe<Citizen_Subject_VoteFilter>;
   or?: InputMaybe<Array<InputMaybe<Citizen_Subject_VoteFilter>>>;
+  vote?: InputMaybe<Choice_Hash>;
 };
 
 export enum Citizen_Subject_VoteHasFilter {
-  CountCitizenSubjectVotesByChoice = 'countCitizenSubjectVotesByChoice',
   Target = 'target',
   Vote = 'vote',
   Voter = 'voter'
 }
 
-export type Citizen_Subject_VoteOrder = {
-  asc?: InputMaybe<Citizen_Subject_VoteOrderable | `${Citizen_Subject_VoteOrderable}`>;
-  desc?: InputMaybe<Citizen_Subject_VoteOrderable | `${Citizen_Subject_VoteOrderable}`>;
-  then?: InputMaybe<Citizen_Subject_VoteOrder>;
-};
-
-export enum Citizen_Subject_VoteOrderable {
-  CountCitizenSubjectVotesByChoice = 'countCitizenSubjectVotesByChoice'
-}
-
 export type Citizen_Subject_VotePatch = {
-  countCitizenSubjectVotesByChoice?: InputMaybe<Scalars['Int']['input']>;
   target?: InputMaybe<SubjectRef>;
   vote?: InputMaybe<Choice | `${Choice}`>;
   voter?: InputMaybe<CitizenRef>;
 };
 
 export type Citizen_Subject_VoteRef = {
-  countCitizenSubjectVotesByChoice?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   target?: InputMaybe<SubjectRef>;
   vote?: InputMaybe<Choice | `${Choice}`>;
@@ -536,7 +515,6 @@ export type DeleteCitizen_Subject_VotePayloadCitizen_Subject_VoteArgs = {
   filter?: InputMaybe<Citizen_Subject_VoteFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order?: InputMaybe<Citizen_Subject_VoteOrder>;
 };
 
 export type DeleteFederal_SubjectsPayload = {
@@ -1122,7 +1100,6 @@ export type QueryQueryCitizen_Subject_VoteArgs = {
   filter?: InputMaybe<Citizen_Subject_VoteFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order?: InputMaybe<Citizen_Subject_VoteOrder>;
 };
 
 
@@ -1246,6 +1223,51 @@ export type SubjectRef = {
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  aggregateCitizen_Subject_Vote?: Maybe<Citizen_Subject_VoteAggregateResult>;
+  aggregateSubject?: Maybe<SubjectAggregateResult>;
+  getCitizen_Subject_Vote?: Maybe<Citizen_Subject_Vote>;
+  getSubject?: Maybe<Subject>;
+  queryCitizen_Subject_Vote?: Maybe<Array<Maybe<Citizen_Subject_Vote>>>;
+  querySubject?: Maybe<Array<Maybe<Subject>>>;
+};
+
+
+export type SubscriptionAggregateCitizen_Subject_VoteArgs = {
+  filter?: InputMaybe<Citizen_Subject_VoteFilter>;
+};
+
+
+export type SubscriptionAggregateSubjectArgs = {
+  filter?: InputMaybe<SubjectFilter>;
+};
+
+
+export type SubscriptionGetCitizen_Subject_VoteArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type SubscriptionGetSubjectArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type SubscriptionQueryCitizen_Subject_VoteArgs = {
+  filter?: InputMaybe<Citizen_Subject_VoteFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type SubscriptionQuerySubjectArgs = {
+  filter?: InputMaybe<SubjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<SubjectOrder>;
 };
 
 export type Town = {
@@ -1432,7 +1454,6 @@ export type UpdateCitizen_Subject_VotePayloadCitizen_Subject_VoteArgs = {
   filter?: InputMaybe<Citizen_Subject_VoteFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order?: InputMaybe<Citizen_Subject_VoteOrder>;
 };
 
 export type UpdateFederal_SubjectsInput = {
@@ -1631,166 +1652,380 @@ export type WithinFilter = {
   polygon: PolygonRef;
 };
 
+export type AddFederal_SubjectsMutationVariables = Exact<{
+  subjects: Array<SubjectRef> | SubjectRef;
+}>;
+
+
+export type AddFederal_SubjectsMutation = { __typename?: 'Mutation', addFederal_Subjects?: { __typename?: 'AddFederal_SubjectsPayload', federal_Subjects?: Array<{ __typename?: 'Federal_Subjects', id: string } | null> | null } | null };
+
+export type AddSubjectsMutationVariables = Exact<{
+  subjects: Array<AddSubjectInput> | AddSubjectInput;
+}>;
+
+
+export type AddSubjectsMutation = { __typename?: 'Mutation', addSubject?: { __typename?: 'AddSubjectPayload', subject?: Array<{ __typename?: 'Subject', id: string } | null> | null } | null };
+
+export type AddVotationMutationVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+  federalSubjectId: Scalars['ID']['input'];
+}>;
+
+
+export type AddVotationMutation = { __typename?: 'Mutation', addVotation?: { __typename?: 'AddVotationPayload', votation?: Array<{ __typename?: 'Votation', id: string } | null> | null } | null };
+
+export type AddVoteMutationVariables = Exact<{
+  target: Scalars['ID']['input'];
+  voter: Scalars['ID']['input'];
+  vote: Choice;
+}>;
+
+
+export type AddVoteMutation = { __typename?: 'Mutation', addCitizen_Subject_Vote?: { __typename?: 'AddCitizen_Subject_VotePayload', citizen_Subject_Vote?: Array<{ __typename?: 'Citizen_Subject_Vote', id: string } | null> | null } | null };
+
+export type DeleteSubjectMutationVariables = Exact<{
+  subjectId?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  subjectId2: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteSubjectMutation = { __typename?: 'Mutation', deleteSubject?: { __typename?: 'DeleteSubjectPayload', subject?: Array<{ __typename?: 'Subject', id: string } | null> | null } | null, updateFederal_Subjects?: { __typename?: 'UpdateFederal_SubjectsPayload', federal_Subjects?: Array<{ __typename?: 'Federal_Subjects', id: string } | null> | null } | null };
+
+export type UpdateSubjectMutationVariables = Exact<{
+  subjectId?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  description: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+}>;
+
+
+export type UpdateSubjectMutation = { __typename?: 'Mutation', updateSubject?: { __typename?: 'UpdateSubjectPayload', subject?: Array<{ __typename?: 'Subject', id: string } | null> | null } | null };
+
+export type UpdateFederalSubjectsMutationVariables = Exact<{
+  subjectId: Scalars['ID']['input'];
+}>;
+
+
+export type UpdateFederalSubjectsMutation = { __typename?: 'Mutation', updateFederal_Subjects?: { __typename?: 'UpdateFederal_SubjectsPayload', federal_Subjects?: Array<{ __typename?: 'Federal_Subjects', id: string } | null> | null } | null };
+
 export type GetCitizenQueryVariables = Exact<{
   user_id: Scalars['ID']['input'];
 }>;
 
 
-export type GetCitizenQuery = {
-  __typename?: 'Query',
-  getCitizen?: {
-    __typename?: 'Citizen',
-    user_id: string,
-    lives?: { __typename?: 'Town', id: string, located_in?: { __typename?: 'Canton', id: string } | null } | null
-  } | null
-};
+export type GetCitizenQuery = { __typename?: 'Query', getCitizen?: { __typename?: 'Citizen', user_id: string, lives?: { __typename?: 'Town', id: string, located_in?: { __typename?: 'Canton', id: string } | null } | null } | null };
 
 export type GetCurrentVotationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentVotationQuery = {
-  __typename?: 'Query',
-  queryVotation?: Array<{
-    __typename?: 'Votation',
-    id: string,
-    end_date?: any | null,
-    federal_subject?: {
-      __typename?: 'Federal_Subjects',
-      id: string,
-      subjects?: Array<{
-        __typename?: 'Subject',
-        title?: string | null,
-        id: string,
-        description?: string | null
-      } | null> | null
-    } | null,
-    town_subjects?: Array<{
-      __typename?: 'Town_Subjects',
-      id: string,
-      subjects?: Array<{
-        __typename?: 'Subject',
-        title?: string | null,
-        id: string,
-        description?: string | null
-      } | null> | null
-    } | null> | null,
-    canton_subjects?: Array<{
-      __typename?: 'Canton_Subjects',
-      id: string,
-      subjects?: Array<{
-        __typename?: 'Subject',
-        description?: string | null,
-        id: string,
-        title?: string | null
-      } | null> | null
-    } | null> | null
-  } | null> | null
-};
+export type GetCurrentVotationQuery = { __typename?: 'Query', queryVotation?: Array<{ __typename?: 'Votation', id: string, end_date?: any | null, federal_subject?: { __typename?: 'Federal_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null, town_subjects?: Array<{ __typename?: 'Town_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null> | null, canton_subjects?: Array<{ __typename?: 'Canton_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', description?: string | null, id: string, title?: string | null } | null> | null } | null> | null } | null> | null };
+
+export type GetSubjectsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSubjectsQuery = { __typename?: 'Query', querySubject?: Array<{ __typename?: 'Subject', id: string, title?: string | null } | null> | null };
+
+export type GetVotationCountQueryVariables = Exact<{
+  id?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  vote: Choice;
+}>;
+
+
+export type GetVotationCountQuery = { __typename?: 'Query', queryCitizen_Subject_Vote?: Array<{ __typename?: 'Citizen_Subject_Vote', target?: { __typename?: 'Subject', id: string } | null } | null> | null };
 
 export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyQueryQuery = {
-  __typename?: 'Query',
-  queryCanton?: Array<{ __typename?: 'Canton', name?: string | null, id: string } | null> | null
-};
+export type MyQueryQuery = { __typename?: 'Query', queryCanton?: Array<{ __typename?: 'Canton', name?: string | null, id: string } | null> | null };
 
+export const AddFederal_SubjectsDocument = gql`
+    mutation AddFederal_Subjects($subjects: [SubjectRef!]!) {
+  addFederal_Subjects(input: {subjects: $subjects}) {
+    federal_Subjects {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddFederal_SubjectsGQL extends Apollo.Mutation<AddFederal_SubjectsMutation, AddFederal_SubjectsMutationVariables> {
+    override document = AddFederal_SubjectsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddSubjectsDocument = gql`
+    mutation AddSubjects($subjects: [AddSubjectInput!]!) {
+  addSubject(input: $subjects) {
+    subject {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddSubjectsGQL extends Apollo.Mutation<AddSubjectsMutation, AddSubjectsMutationVariables> {
+    override document = AddSubjectsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddVotationDocument = gql`
+    mutation AddVotation($startDate: DateTime!, $endDate: DateTime!, $federalSubjectId: ID!) {
+  addVotation(
+    input: {start_date: $startDate, end_date: $endDate, federal_subject: {id: $federalSubjectId}}
+  ) {
+    votation {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddVotationGQL extends Apollo.Mutation<AddVotationMutation, AddVotationMutationVariables> {
+    override document = AddVotationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddVoteDocument = gql`
+    mutation AddVote($target: ID!, $voter: ID!, $vote: Choice!) {
+  addCitizen_Subject_Vote(
+    input: {target: {id: $target}, voter: {user_id: $voter}, vote: $vote}
+  ) {
+    citizen_Subject_Vote {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddVoteGQL extends Apollo.Mutation<AddVoteMutation, AddVoteMutationVariables> {
+    override document = AddVoteDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteSubjectDocument = gql`
+    mutation DeleteSubject($subjectId: [ID!], $subjectId2: ID!) {
+  deleteSubject(filter: {id: $subjectId}) {
+    subject {
+      id
+    }
+  }
+  updateFederal_Subjects(
+    input: {filter: {id: "0x1a5193fcb7"}, remove: {subjects: {id: $subjectId2}}}
+  ) {
+    federal_Subjects {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteSubjectGQL extends Apollo.Mutation<DeleteSubjectMutation, DeleteSubjectMutationVariables> {
+    override document = DeleteSubjectDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateSubjectDocument = gql`
+    mutation UpdateSubject($subjectId: [ID!], $description: String!, $title: String!) {
+  updateSubject(
+    input: {set: {description: $description, title: $title}, filter: {id: $subjectId}}
+  ) {
+    subject {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateSubjectGQL extends Apollo.Mutation<UpdateSubjectMutation, UpdateSubjectMutationVariables> {
+    override document = UpdateSubjectDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateFederalSubjectsDocument = gql`
+    mutation UpdateFederalSubjects($subjectId: ID!) {
+  updateFederal_Subjects(
+    input: {set: {subjects: [{id: $subjectId}]}, filter: {id: "0x1a5193fcb7"}}
+  ) {
+    federal_Subjects {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateFederalSubjectsGQL extends Apollo.Mutation<UpdateFederalSubjectsMutation, UpdateFederalSubjectsMutationVariables> {
+    override document = UpdateFederalSubjectsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetCitizenDocument = gql`
-  query GetCitizen($user_id: ID!) {
-    getCitizen(user_id: $user_id) {
-      user_id
-      lives {
+    query GetCitizen($user_id: ID!) {
+  getCitizen(user_id: $user_id) {
+    user_id
+    lives {
+      id
+      located_in {
         id
-        located_in {
-          id
-        }
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root'
-})
-export class GetCitizenGQL extends Apollo.Query<GetCitizenQuery, GetCitizenQueryVariables> {
-  override document = GetCitizenDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
 
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetCitizenGQL extends Apollo.Query<GetCitizenQuery, GetCitizenQueryVariables> {
+    override document = GetCitizenDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetCurrentVotationDocument = gql`
-  query GetCurrentVotation {
-    queryVotation(first: 1) {
+    query GetCurrentVotation {
+  queryVotation(first: 1) {
+    id
+    end_date
+    federal_subject {
+      subjects {
+        title
+        id
+        description
+      }
       id
-      end_date
-      federal_subject {
-        subjects {
-          title
-          id
-          description
-        }
+    }
+    town_subjects {
+      subjects {
+        title
         id
+        description
       }
-      town_subjects {
-        subjects {
-          title
-          id
-          description
-        }
+      id
+    }
+    canton_subjects {
+      id
+      subjects {
+        description
         id
-      }
-      canton_subjects {
-        id
-        subjects {
-          description
-          id
-          title
-        }
+        title
       }
     }
   }
-`;
+}
+    `;
 
-@Injectable({
-  providedIn: 'root'
-})
-export class GetCurrentVotationGQL extends Apollo.Query<GetCurrentVotationQuery, GetCurrentVotationQueryVariables> {
-  override document = GetCurrentVotationDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetCurrentVotationGQL extends Apollo.Query<GetCurrentVotationQuery, GetCurrentVotationQueryVariables> {
+    override document = GetCurrentVotationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetSubjectsDocument = gql`
+    query getSubjects {
+  querySubject {
+    id
+    title
   }
 }
+    `;
 
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetSubjectsGQL extends Apollo.Query<GetSubjectsQuery, GetSubjectsQueryVariables> {
+    override document = GetSubjectsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetVotationCountDocument = gql`
+    query GetVotationCount($id: [ID!], $vote: Choice!) {
+  queryCitizen_Subject_Vote(filter: {vote: {eq: $vote}}) {
+    target(filter: {id: $id}) {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetVotationCountGQL extends Apollo.Query<GetVotationCountQuery, GetVotationCountQueryVariables> {
+    override document = GetVotationCountDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const MyQueryDocument = gql`
-  query MyQuery {
-    queryCanton {
-      name
-      id
+    query MyQuery {
+  queryCanton {
+    name
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class MyQueryGQL extends Apollo.Query<MyQueryQuery, MyQueryQueryVariables> {
+    override document = MyQueryDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
     }
   }
-`;
 
-@Injectable({
-  providedIn: 'root'
-})
-export class MyQueryGQL extends Apollo.Query<MyQueryQuery, MyQueryQueryVariables> {
-  override document = MyQueryDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-
-export interface PossibleTypesResultData {
-  possibleTypes: {
-    [key: string]: string[]
-  }
-}
-
-const result: PossibleTypesResultData = {
+      export interface PossibleTypesResultData {
+        possibleTypes: {
+          [key: string]: string[]
+        }
+      }
+      const result: PossibleTypesResultData = {
   "possibleTypes": {}
 };
-export default result;
+      export default result;
+    
