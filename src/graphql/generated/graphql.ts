@@ -1,7 +1,8 @@
 /* eslint-disable */
-import { gql } from 'apollo-angular';
-import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
+import {gql} from 'apollo-angular';
+import {Injectable} from '@angular/core';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -1630,233 +1631,166 @@ export type WithinFilter = {
   polygon: PolygonRef;
 };
 
-export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MyQueryQuery = { __typename?: 'Query', queryCanton?: Array<{ __typename?: 'Canton', name?: string | null, id: string } | null> | null };
-
-export type AddVoteMutationVariables = Exact<{
-  target: Scalars['ID']['input'];
-  voter: Scalars['ID']['input'];
-  vote: Choice;
-}>;
-
-
-export type AddVoteMutation = { __typename?: 'Mutation', addCitizen_Subject_Vote?: { __typename?: 'AddCitizen_Subject_VotePayload', citizen_Subject_Vote?: Array<{ __typename?: 'Citizen_Subject_Vote', id: string } | null> | null } | null };
-
 export type GetCitizenQueryVariables = Exact<{
   user_id: Scalars['ID']['input'];
 }>;
 
 
-export type GetCitizenQuery = { __typename?: 'Query', getCitizen?: { __typename?: 'Citizen', user_id: string, lives?: { __typename?: 'Town', id: string, located_in?: { __typename?: 'Canton', id: string } | null } | null } | null };
+export type GetCitizenQuery = {
+  __typename?: 'Query',
+  getCitizen?: {
+    __typename?: 'Citizen',
+    user_id: string,
+    lives?: { __typename?: 'Town', id: string, located_in?: { __typename?: 'Canton', id: string } | null } | null
+  } | null
+};
 
 export type GetCurrentVotationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentVotationQuery = { __typename?: 'Query', queryVotation?: Array<{ __typename?: 'Votation', id: string, end_date?: any | null, federal_subject?: { __typename?: 'Federal_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null, town_subjects?: Array<{ __typename?: 'Town_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null> | null, canton_subjects?: Array<{ __typename?: 'Canton_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', description?: string | null, id: string, title?: string | null } | null> | null } | null> | null } | null> | null };
+export type GetCurrentVotationQuery = {
+  __typename?: 'Query',
+  queryVotation?: Array<{
+    __typename?: 'Votation',
+    id: string,
+    end_date?: any | null,
+    federal_subject?: {
+      __typename?: 'Federal_Subjects',
+      id: string,
+      subjects?: Array<{
+        __typename?: 'Subject',
+        title?: string | null,
+        id: string,
+        description?: string | null
+      } | null> | null
+    } | null,
+    town_subjects?: Array<{
+      __typename?: 'Town_Subjects',
+      id: string,
+      subjects?: Array<{
+        __typename?: 'Subject',
+        title?: string | null,
+        id: string,
+        description?: string | null
+      } | null> | null
+    } | null> | null,
+    canton_subjects?: Array<{
+      __typename?: 'Canton_Subjects',
+      id: string,
+      subjects?: Array<{
+        __typename?: 'Subject',
+        description?: string | null,
+        id: string,
+        title?: string | null
+      } | null> | null
+    } | null> | null
+  } | null> | null
+};
 
-export type AddFederal_SubjectsMutationVariables = Exact<{
-  subjects: Array<SubjectRef> | SubjectRef;
-}>;
+export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AddFederal_SubjectsMutation = { __typename?: 'Mutation', addFederal_Subjects?: { __typename?: 'AddFederal_SubjectsPayload', federal_Subjects?: Array<{ __typename?: 'Federal_Subjects', id: string } | null> | null } | null };
+export type MyQueryQuery = {
+  __typename?: 'Query',
+  queryCanton?: Array<{ __typename?: 'Canton', name?: string | null, id: string } | null> | null
+};
 
-export type AddSubjectsMutationVariables = Exact<{
-  subjects: Array<AddSubjectInput> | AddSubjectInput;
-}>;
-
-
-export type AddSubjectsMutation = { __typename?: 'Mutation', addSubject?: { __typename?: 'AddSubjectPayload', subject?: Array<{ __typename?: 'Subject', id: string } | null> | null } | null };
-
-export type AddVotationMutationVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
-  federalSubjectId: Scalars['ID']['input'];
-}>;
-
-
-export type AddVotationMutation = { __typename?: 'Mutation', addVotation?: { __typename?: 'AddVotationPayload', votation?: Array<{ __typename?: 'Votation', id: string } | null> | null } | null };
-
-export const MyQueryDocument = gql`
-    query MyQuery {
-  queryCanton {
-    name
-    id
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class MyQueryGQL extends Apollo.Query<MyQueryQuery, MyQueryQueryVariables> {
-    override document = MyQueryDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const AddVoteDocument = gql`
-    mutation AddVote($target: ID!, $voter: ID!, $vote: Choice!) {
-  addCitizen_Subject_Vote(
-    input: {target: {id: $target}, voter: {user_id: $voter}, vote: $vote}
-  ) {
-    citizen_Subject_Vote {
-      id
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddVoteGQL extends Apollo.Mutation<AddVoteMutation, AddVoteMutationVariables> {
-    override document = AddVoteDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const GetCitizenDocument = gql`
-    query GetCitizen($user_id: ID!) {
-  getCitizen(user_id: $user_id) {
-    user_id
-    lives {
-      id
-      located_in {
+  query GetCitizen($user_id: ID!) {
+    getCitizen(user_id: $user_id) {
+      user_id
+      lives {
         id
-      }
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetCitizenGQL extends Apollo.Query<GetCitizenQuery, GetCitizenQueryVariables> {
-    override document = GetCitizenDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetCurrentVotationDocument = gql`
-    query GetCurrentVotation {
-  queryVotation(first: 1) {
-    id
-    end_date
-    federal_subject {
-      subjects {
-        title
-        id
-        description
-      }
-      id
-    }
-    town_subjects {
-      subjects {
-        title
-        id
-        description
-      }
-      id
-    }
-    canton_subjects {
-      id
-      subjects {
-        description
-        id
-        title
-      }
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetCurrentVotationGQL extends Apollo.Query<GetCurrentVotationQuery, GetCurrentVotationQueryVariables> {
-    override document = GetCurrentVotationDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const AddFederal_SubjectsDocument = gql`
-    mutation AddFederal_Subjects($subjects: [SubjectRef!]!) {
-  addFederal_Subjects(input: {subjects: $subjects}) {
-    federal_Subjects {
-      id
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddFederal_SubjectsGQL extends Apollo.Mutation<AddFederal_SubjectsMutation, AddFederal_SubjectsMutationVariables> {
-    override document = AddFederal_SubjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const AddSubjectsDocument = gql`
-    mutation AddSubjects($subjects: [AddSubjectInput!]!) {
-  addSubject(input: $subjects) {
-    subject {
-      id
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddSubjectsGQL extends Apollo.Mutation<AddSubjectsMutation, AddSubjectsMutationVariables> {
-    override document = AddSubjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const AddVotationDocument = gql`
-    mutation AddVotation($startDate: DateTime!, $endDate: DateTime!, $federalSubjectId: ID!) {
-  addVotation(
-    input: {start_date: $startDate, end_date: $endDate, federal_subject: {id: $federalSubjectId}}
-  ) {
-    votation {
-      id
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddVotationGQL extends Apollo.Mutation<AddVotationMutation, AddVotationMutationVariables> {
-    override document = AddVotationDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-
-      export interface PossibleTypesResultData {
-        possibleTypes: {
-          [key: string]: string[]
+        located_in {
+          id
         }
       }
-      const result: PossibleTypesResultData = {
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GetCitizenGQL extends Apollo.Query<GetCitizenQuery, GetCitizenQueryVariables> {
+  override document = GetCitizenDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+
+export const GetCurrentVotationDocument = gql`
+  query GetCurrentVotation {
+    queryVotation(first: 1) {
+      id
+      end_date
+      federal_subject {
+        subjects {
+          title
+          id
+          description
+        }
+        id
+      }
+      town_subjects {
+        subjects {
+          title
+          id
+          description
+        }
+        id
+      }
+      canton_subjects {
+        id
+        subjects {
+          description
+          id
+          title
+        }
+      }
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GetCurrentVotationGQL extends Apollo.Query<GetCurrentVotationQuery, GetCurrentVotationQueryVariables> {
+  override document = GetCurrentVotationDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+
+export const MyQueryDocument = gql`
+  query MyQuery {
+    queryCanton {
+      name
+      id
+    }
+  }
+`;
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MyQueryGQL extends Apollo.Query<MyQueryQuery, MyQueryQueryVariables> {
+  override document = MyQueryDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+
+export interface PossibleTypesResultData {
+  possibleTypes: {
+    [key: string]: string[]
+  }
+}
+
+const result: PossibleTypesResultData = {
   "possibleTypes": {}
 };
-      export default result;
-    
+export default result;

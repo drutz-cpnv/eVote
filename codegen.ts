@@ -17,6 +17,7 @@ const config: CodegenConfig = {
       plugins: ['schema-ast']
     },
 
+
     [GENERATED_SERVICES_PATH]: {
       schema: SCHEMA_PATH,
       documents: ['./src/**/*.ts', 'src/**/*.graphql'],
