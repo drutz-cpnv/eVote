@@ -1,4 +1,4 @@
-query getSubject {
+query getSubjects {
   querySubject {
     id
     title
