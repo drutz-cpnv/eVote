@@ -1,0 +1,7 @@
+mutation UpdateFederalSubjects($subjectId: ID!) {
+  updateFederal_Subjects(input: { set: { subjects: [{ id: $subjectId }] }, filter: { id: "0x1a5193fcb7" } }) {
+    federal_Subjects {
+      id
+    }
+  }
+}
