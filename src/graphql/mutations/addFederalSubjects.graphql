@@ -1,0 +1,7 @@
+mutation AddFederal_Subjects($subjects: [SubjectRef!]!) {
+addFederal_Subjects(input: {subjects: $subjects}) {
+    federal_Subjects {
+    id
+    }
+}
+}

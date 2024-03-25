@@ -27,24 +27,24 @@ const config: CodegenConfig = {
           addExplicitOverride: true
         },
       },
-        {
-          'typescript-operations': {
-            exportFragmentSpreadSubTypes: true,
-          },
+      {
+        'typescript-operations': {
+          exportFragmentSpreadSubTypes: true,
         },
+      },
 
-        {
-          'typescript-apollo-angular': {
-            addExplicitOverride: true
-          }
-        },
+      {
+        'typescript-apollo-angular': {
+          addExplicitOverride: true
+        }
+      },
         'fragment-matcher',
-        {
-          add: {
-            content: '/* eslint-disable */',
-            placement: 'prepend',
-          },
-        }]
+      {
+        add: {
+          content: '/* eslint-disable */',
+          placement: 'prepend',
+        },
+      }]
     }
 
   }

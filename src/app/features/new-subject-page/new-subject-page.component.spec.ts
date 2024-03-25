@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewVotationPageComponent } from './new-votation-page.component';
+import { NewSubjectPageComponent } from './new-subject-page.component';
 
-describe('NewVotePageComponent', () => {
-  let component: NewVotationPageComponent;
-  let fixture: ComponentFixture<NewVotationPageComponent>;
+describe('NewSubjectPageComponent', () => {
+  let component: NewSubjectPageComponent;
+  let fixture: ComponentFixture<NewSubjectPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewVotationPageComponent]
+      imports: [NewSubjectPageComponent]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(NewVotationPageComponent);
+    
+    fixture = TestBed.createComponent(NewSubjectPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

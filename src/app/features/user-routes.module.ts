@@ -2,7 +2,7 @@ import {Routes} from '@angular/router';
 import {ComponentPageComponent} from "./component-page/component-page.component";
 import {MainPageComponent} from "./main-page/main-page.component";
 import {AdmPageComponent} from "./adm-page/adm-page.component";
-import {NewVotationPageComponent} from "./new-votation-page/new-votation-page.component";
+import {NewSubjectPageComponent} from "./new-subject-page/new-subject-page.component";
 
 export const routes: Routes = [
   {
@@ -14,8 +14,8 @@ export const routes: Routes = [
     component: AdmPageComponent
   },
   {
-    path: "admin/votation/new",
-    component: NewVotationPageComponent
+    path: "admin/subject/new",
+    component: NewSubjectPageComponent
   },
   {
     path: "",
