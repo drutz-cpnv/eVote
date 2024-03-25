@@ -1,0 +1,7 @@
+mutation UpdateSubject($subjectId: [ID!],$description: String!,$title: String!) {
+  updateSubject(input: { set: { description: $description, title: $title }, filter: { id: $subjectId } }) {
+    subject {
+      id
+    }
+  }
+}
