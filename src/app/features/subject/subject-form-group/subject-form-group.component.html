@@ -1,0 +1,11 @@
+<app-header/>
+<section class="flex flex-col">
+  @if (formGroup) {
+    <label>Titre
+      <input class="border-2 rounded" [formControl]="formGroup.controls.title">
+    </label>
+    <label>Description
+      <input class="border-2 rounded" [formControl]="formGroup.controls.description">
+    </label>
+  }
+</section>
