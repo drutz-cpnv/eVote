@@ -3,6 +3,7 @@ import {ComponentPageComponent} from "./component-page/component-page.component"
 import {MainPageComponent} from "./main-page/main-page.component";
 import {AdmPageComponent} from "./adm-page/adm-page.component";
 import {NewSubjectPageComponent} from "./new-subject-page/new-subject-page.component";
+import {AdmSubjectPageComponent} from "./adm-subject-page/adm-subject-page.component";
 
 export const routes: Routes = [
   {
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path: "admin/subject/new",
     component: NewSubjectPageComponent
+  },
+  {
+    path: "admin/subject",
+    component: AdmSubjectPageComponent
   },
   {
     path: "",
