@@ -2,7 +2,7 @@
   @if (linkPath){
     <a routerLink="{{linkPath}}">
       <div class="flex pt-8 pb-0">
-        <app-icon name="{{ iconName }}" styleClass="text-5xl"></app-icon>
+        <app-icon name="{{ iconName }}" styleClass="text-5xl px-2"></app-icon>
       </div>
       <div class="flex items-center justify-between px-4 pb-4">
         <p class="text-lg">{{ text }}</p>
@@ -12,7 +12,7 @@
   } @else {
     <div class="cursor-pointer">
       <div class="flex pt-8 pb-0">
-        <app-icon name="{{ iconName }}" styleClass="text-5xl"></app-icon>
+        <app-icon name="{{ iconName }}" styleClass="text-5xl px-2"></app-icon>
       </div>
       <div class="flex items-center justify-between px-4 pb-4">
         <p class="text-lg">{{ text }}</p>
