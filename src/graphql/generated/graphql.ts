@@ -1761,16 +1761,16 @@ export const AddFederal_SubjectsDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddFederal_SubjectsGQL extends Apollo.Mutation<AddFederal_SubjectsMutation, AddFederal_SubjectsMutationVariables> {
-    override document = AddFederal_SubjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class AddFederal_SubjectsGQL extends Apollo.Mutation<AddFederal_SubjectsMutation, AddFederal_SubjectsMutationVariables> {
+  override document = AddFederal_SubjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const AddSubjectsDocument = gql`
     mutation AddSubjects($subjects: [AddSubjectInput!]!) {
   addSubject(input: $subjects) {
@@ -1781,16 +1781,16 @@ export const AddSubjectsDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddSubjectsGQL extends Apollo.Mutation<AddSubjectsMutation, AddSubjectsMutationVariables> {
-    override document = AddSubjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class AddSubjectsGQL extends Apollo.Mutation<AddSubjectsMutation, AddSubjectsMutationVariables> {
+  override document = AddSubjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const AddVotationDocument = gql`
     mutation AddVotation($startDate: DateTime!, $endDate: DateTime!, $federalSubjectId: ID!) {
   addVotation(
@@ -1803,16 +1803,16 @@ export const AddVotationDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddVotationGQL extends Apollo.Mutation<AddVotationMutation, AddVotationMutationVariables> {
-    override document = AddVotationDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class AddVotationGQL extends Apollo.Mutation<AddVotationMutation, AddVotationMutationVariables> {
+  override document = AddVotationDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const AddVoteDocument = gql`
     mutation AddVote($target: ID!, $voter: ID!, $vote: Choice!) {
   addCitizen_Subject_Vote(
@@ -1825,16 +1825,16 @@ export const AddVoteDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AddVoteGQL extends Apollo.Mutation<AddVoteMutation, AddVoteMutationVariables> {
-    override document = AddVoteDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class AddVoteGQL extends Apollo.Mutation<AddVoteMutation, AddVoteMutationVariables> {
+  override document = AddVoteDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const DeleteSubjectDocument = gql`
     mutation DeleteSubject($subjectId: [ID!]) {
   deleteSubject(filter: {id: $subjectId}) {
@@ -1845,16 +1845,16 @@ export const DeleteSubjectDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteSubjectGQL extends Apollo.Mutation<DeleteSubjectMutation, DeleteSubjectMutationVariables> {
-    override document = DeleteSubjectDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class DeleteSubjectGQL extends Apollo.Mutation<DeleteSubjectMutation, DeleteSubjectMutationVariables> {
+  override document = DeleteSubjectDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const UpdateRemoveSubjectDocument = gql`
     mutation updateRemoveSubject($subjectId: ID!) {
   updateFederal_Subjects(
@@ -1867,16 +1867,16 @@ export const UpdateRemoveSubjectDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class UpdateRemoveSubjectGQL extends Apollo.Mutation<UpdateRemoveSubjectMutation, UpdateRemoveSubjectMutationVariables> {
-    override document = UpdateRemoveSubjectDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class UpdateRemoveSubjectGQL extends Apollo.Mutation<UpdateRemoveSubjectMutation, UpdateRemoveSubjectMutationVariables> {
+  override document = UpdateRemoveSubjectDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const UpdateSubjectDocument = gql`
     mutation UpdateSubject($subjectId: [ID!], $description: String!, $title: String!) {
   updateSubject(
@@ -1889,16 +1889,16 @@ export const UpdateSubjectDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class UpdateSubjectGQL extends Apollo.Mutation<UpdateSubjectMutation, UpdateSubjectMutationVariables> {
-    override document = UpdateSubjectDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class UpdateSubjectGQL extends Apollo.Mutation<UpdateSubjectMutation, UpdateSubjectMutationVariables> {
+  override document = UpdateSubjectDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const UpdateFederalSubjectsDocument = gql`
     mutation UpdateFederalSubjects($subjectId: ID!) {
   updateFederal_Subjects(
@@ -1911,16 +1911,16 @@ export const UpdateFederalSubjectsDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class UpdateFederalSubjectsGQL extends Apollo.Mutation<UpdateFederalSubjectsMutation, UpdateFederalSubjectsMutationVariables> {
-    override document = UpdateFederalSubjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class UpdateFederalSubjectsGQL extends Apollo.Mutation<UpdateFederalSubjectsMutation, UpdateFederalSubjectsMutationVariables> {
+  override document = UpdateFederalSubjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const GetCitizenDocument = gql`
     query GetCitizen($user_id: ID!) {
   getCitizen(user_id: $user_id) {
@@ -1935,16 +1935,16 @@ export const GetCitizenDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetCitizenGQL extends Apollo.Query<GetCitizenQuery, GetCitizenQueryVariables> {
-    override document = GetCitizenDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class GetCitizenGQL extends Apollo.Query<GetCitizenQuery, GetCitizenQueryVariables> {
+  override document = GetCitizenDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const GetCurrentVotationDocument = gql`
     query GetCurrentVotation {
   queryVotation(first: 1) {
@@ -1978,16 +1978,16 @@ export const GetCurrentVotationDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetCurrentVotationGQL extends Apollo.Query<GetCurrentVotationQuery, GetCurrentVotationQueryVariables> {
-    override document = GetCurrentVotationDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class GetCurrentVotationGQL extends Apollo.Query<GetCurrentVotationQuery, GetCurrentVotationQueryVariables> {
+  override document = GetCurrentVotationDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const MyQueryDocument = gql`
     query MyQuery {
   queryCanton {
@@ -1997,16 +1997,16 @@ export const MyQueryDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class MyQueryGQL extends Apollo.Query<MyQueryQuery, MyQueryQueryVariables> {
-    override document = MyQueryDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class MyQueryGQL extends Apollo.Query<MyQueryQuery, MyQueryQueryVariables> {
+  override document = MyQueryDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const GetSubjectsDocument = gql`
     subscription getSubjects {
   querySubject {
@@ -2016,16 +2016,16 @@ export const GetSubjectsDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetSubjectsGQL extends Apollo.Subscription<GetSubjectsSubscription, GetSubjectsSubscriptionVariables> {
-    override document = GetSubjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class GetSubjectsGQL extends Apollo.Subscription<GetSubjectsSubscription, GetSubjectsSubscriptionVariables> {
+  override document = GetSubjectsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const GetVotationCountDocument = gql`
     subscription GetVotationCount($id: [ID!], $vote: Choice!) {
   queryCitizen_Subject_Vote(filter: {vote: {eq: $vote}}) {
@@ -2036,16 +2036,16 @@ export const GetVotationCountDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetVotationCountGQL extends Apollo.Subscription<GetVotationCountSubscription, GetVotationCountSubscriptionVariables> {
-    override document = GetVotationCountDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class GetVotationCountGQL extends Apollo.Subscription<GetVotationCountSubscription, GetVotationCountSubscriptionVariables> {
+  override document = GetVotationCountDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
   }
+}
 export const GetSubjectDocument = gql`
     query getSubject($subject_id: ID!) {
   getSubject(id: $subject_id) {
@@ -2055,24 +2055,23 @@ export const GetSubjectDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetSubjectGQL extends Apollo.Query<GetSubjectQuery, GetSubjectQueryVariables> {
-    override document = GetSubjectDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
+@Injectable({
+  providedIn: 'root'
+})
+export class GetSubjectGQL extends Apollo.Query<GetSubjectQuery, GetSubjectQueryVariables> {
+  override document = GetSubjectDocument;
 
-      export interface PossibleTypesResultData {
-        possibleTypes: {
-          [key: string]: string[]
-        }
-      }
-      const result: PossibleTypesResultData = {
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+
+export interface PossibleTypesResultData {
+  possibleTypes: {
+    [key: string]: string[]
+  }
+}
+const result: PossibleTypesResultData = {
   "possibleTypes": {}
 };
-      export default result;
-    
+export default result;
