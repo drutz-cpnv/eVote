@@ -2,12 +2,12 @@
   @if (formGroup) {
     <div class="flex gap-2">
       <label class="w-[100px]">Titre</label>
-      <input class="border-2 rounded" [formControl]="formGroup.controls.title">
+      <textarea class="border-2 rounded" [formControl]="formGroup.controls.title"></textarea>
     </div>
 
     <div class="flex gap-2">
       <label class="w-[100px]">Description</label>
-      <input class="border-2 rounded" [formControl]="formGroup.controls.description">
+      <textarea class="border-2 rounded" [formControl]="formGroup.controls.description"></textarea>
     </div>
   }
 </div>
