@@ -11,7 +11,8 @@ import {JsonPipe} from "@angular/common";
   imports: [
     HeroRowComponent,
     VoteResult,
-    JsonPipe
+    JsonPipe,
+    VoteResult
   ],
   templateUrl: './subject-list.component.html',
   styleUrl: './subject-list.component.css'
