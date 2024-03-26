@@ -1,4 +1,4 @@
-query GetVotationCount($id: [ID!], $vote: Choice!) {
+subscription GetVotationCount($id: [ID!], $vote: Choice!) {
   queryCitizen_Subject_Vote(filter: { vote: { eq: $vote } }) {
     target(filter: { id: $id }) {
       id
