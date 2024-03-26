@@ -5,7 +5,7 @@
     @if ((getVotationResult$ | async); as getVotationResult) {
       @switch (getVotationResult.networkStatus) {
         @case (NetworkStatus.ready) {
-          <app-vote-sheet [subjects]="$any(getVotationResult.data.queryVotation)"></app-vote-sheet>
+          <app-vote-sheet [subjects]="$any(getVotationResult.data.queryVotation)" class="w-full"></app-vote-sheet>
         }
         @case (NetworkStatus.error) {
 

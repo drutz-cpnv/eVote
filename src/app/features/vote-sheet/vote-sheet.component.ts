@@ -1,7 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {ObjectComponent} from "./object/object.component";
-import {Subject} from "../../../graphql/generated/graphql";
+import {AddVoteGQL, Choice, Subject} from "../../../graphql/generated/graphql";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {instanceOf} from "graphql/jsutils/instanceOf";
+import {lastValueFrom} from "rxjs";
 
 type SubjectVotes = {
   [key: string]: string
@@ -20,18 +22,27 @@ type SubjectVotes = {
 export class VoteSheetComponent {
   @Input() subjects: any;
   user_id: FormControl = new FormControl();
-  value: FormControl<any> = new FormControl({})
+  private addVote: AddVoteGQL;
+
+  constructor(addVote: AddVoteGQL) {
+    this.addVote = addVote;
+  }
 
   public getSubjects(): Array<Subject> {
-
-
-
-    for (let subject of this.subjects[0].federal_subject.subjects) {
-      this.value.setValue(subject.id)
-    }
-
-
-
     return this.subjects[0].federal_subject.subjects;
+  }
+
+  vote($event: SubmitEvent) {
+    $event.preventDefault()
+    console.log($event)
+    const form: HTMLFormElement = $event?.target as HTMLFormElement
+    const elements: Array<HTMLInputElement> = form.elements as unknown as Array<HTMLInputElement>
+    for (const $eventElement of elements) {
+      lastValueFrom(this.addVote.mutate({
+        target: $eventElement.id,
+        vote: $eventElement.value as Choice,
+        voter: this.user_id.value
+      })).then(r => console.log(r))
+    }
   }
 }
