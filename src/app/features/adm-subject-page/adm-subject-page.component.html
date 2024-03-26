@@ -1,21 +1,7 @@
 <section>
   <div class="container flex flex-col rounded-b-2xl pt-10 gap-2">
-    @if ((getVotationResult$ | async); as getVotationResult) {
-      @switch (getVotationResult.networkStatus) {
-        @case (NetworkStatus.ready) {
-          <app-adm-subject-list [subjects]="$any(getVotationResult.data.queryVotation)"></app-adm-subject-list>
-        }
-        @case (NetworkStatus.error) {
-
-          An error occurred...
-        }
-        @default {
-          Loading or so...
-        }
-
-      }
+    @if ((getSubjects$ | async); as getSubjects) {
+      <app-adm-subject-list [subjects]="$any(getSubjects.data?.querySubject)"></app-adm-subject-list>
     }
-
-
   </div>
 </section>

@@ -1,4 +1,4 @@
-@for (subject of getSubjects(); track subject.id; let idx = $index) {
+@for (subject of subjects; track subject.id; let idx = $index) {
   <app-hero-row [title]="SubjectNumber[idx]" [description]="subject.title" theme="light"/>
   <app-hero-row title="Action" theme="light" type="element">
     <div class="flex gap-2">
