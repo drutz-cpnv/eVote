@@ -45,6 +45,7 @@ export class NewSubjectPageComponent {
       const firstSubject = subjects[0];
       const id = firstSubject?.id ?? '';
       await lastValueFrom(this.updateSubjectGQL.mutate({ subjectId: id }));
+      alert('Subject created');
       }
   }
 
