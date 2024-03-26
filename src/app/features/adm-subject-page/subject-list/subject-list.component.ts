@@ -34,6 +34,6 @@ export class SubjectListComponent {
 
   async onDeleteClicked(subjectId: string) {
     console.log('onDeleteClicked', subjectId)
-    await lastValueFrom(this.deleteSubjectGQL.mutate({subjectId: subjectId}))
+    await lastValueFrom(this.deleteSubjectGQL.mutate({subjectId: subjectId, subjectId2: subjectId}))
   }
 }
