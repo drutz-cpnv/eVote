@@ -26,5 +26,7 @@ export class VotePageComponent {
     this.getVotationResult$ = getVotationResult.fetch();
   }
 
+
+
   protected readonly NetworkStatus = NetworkStatus;
 }

@@ -1,10 +1,11 @@
 <app-header/>
-<section>
-  <div class="container bg-white shadow rounded-lg w-2/3 m-2 flex p-5 flex-col border border-gray-200">
-    <h1 class="text-4xl pb-4 ">Gestion des sujets</h1>
-    <div class="flex flex-row justify-between">
-      <app-card-button iconName="add" iconSize="6xl" text="Ajouter" linkPath="/admin/subject/new"/>
-      <app-card-button iconName="list" iconSize="6xl" text="Liste" linkPath="/admin/subject"/>
-    </div>
+<section class="w-full">
+  <div class="container">
+    <app-hero-row title="Gestion des sujets">
+      <div class="flex flex-row gap-2">
+        <app-card-button iconName="add" iconSize="6xl" text="Ajouter" linkPath="/admin/subject/new"/>
+        <app-card-button iconName="list" iconSize="6xl" text="Liste" linkPath="/admin/subject"/>
+      </div>
+    </app-hero-row>
   </div>
 </section>

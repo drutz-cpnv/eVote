@@ -1,8 +1,8 @@
-import {Component, Inject, Input} from '@angular/core';
-import {Choice, GetVotationCountGQL, Subject} from "../../../../../graphql/generated/graphql";
+import {Component, Input, OnInit} from '@angular/core';
+import {Choice, GetVotationCountGQL} from "../../../../../graphql/generated/graphql";
 import {HeroRowComponent} from "../../../hero-row/hero-row.component";
-import {Observable} from "rxjs";
 import {AsyncPipe, JsonPipe, PercentPipe} from "@angular/common";
+import {VoteProgressComponent} from "./vote-progress/vote-progress.component";
 
 @Component({
   selector: 'app-vote-result',
@@ -11,26 +11,34 @@ import {AsyncPipe, JsonPipe, PercentPipe} from "@angular/common";
     HeroRowComponent,
     AsyncPipe,
     JsonPipe,
-    PercentPipe
+    PercentPipe,
+    VoteProgressComponent
   ],
   templateUrl: './vote-result.html',
 })
 
-export class VoteResult {
+export class VoteResult implements OnInit {
 
+  protected readonly Math = Math;
   public subjectResultYes$
   public subjectResultNo$
   @Input() subject!: string;
+  private subjectResultYes: GetVotationCountGQL;
+  private subjectResultNon: GetVotationCountGQL;
 
   constructor(subjectResultYes: GetVotationCountGQL, subjectResultNon: GetVotationCountGQL) {
-    this.subjectResultYes$ = subjectResultYes.subscribe({id: this.subject, vote: 'Oui' as Choice})
-    this.subjectResultNo$ = subjectResultNon.subscribe({id: this.subject, vote: 'Non' as Choice})
+    this.subjectResultYes = subjectResultYes;
+    this.subjectResultNon = subjectResultNon;
+    this.subjectResultYes$ = this.subjectResultYes.subscribe({id: this.subject, vote: 'Oui' as Choice})
+    this.subjectResultNo$ = this.subjectResultNon.subscribe({id: this.subject, vote: 'Non' as Choice})
   }
 
-  public getNoCount() {
-    const data = this.subjectResultNo$ as any
-    return data.data?.votationCount.length()
+  ngOnInit(): void {
+    this.subjectResultYes$ = this.subjectResultYes.subscribe({id: this.subject, vote: 'Oui' as Choice})
+    this.subjectResultNo$ = this.subjectResultNon.subscribe({id: this.subject, vote: 'Non' as Choice})
   }
 
-  protected readonly Math = Math;
+  getSubjectResultYes() {
+    //return Math.floor((this.subjectResultYes$?.data?.queryCitizen_Subject_Vote?.length ?? 0) / ((this.subjectResultNo$?.data?.queryCitizen_Subject_Vote?.length ?? 0) + (this.subjectResultYes$?.data?.queryCitizen_Subject_Vote?.length ?? 0)) * 100)
+  }
 }

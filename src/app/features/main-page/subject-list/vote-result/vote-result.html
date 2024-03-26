@@ -3,14 +3,7 @@
     <app-hero-row title="Resultats" theme="dark" type="element">
       <div class="w-full bg-white rounded-lg p-1 flex flex-col gap-1 relative">
         <div class="absolute left-1/2 h-full w-[1px] top-0 bg-black"></div>
-        <div class="bg-[#009300] rounded p-1 px-3" style="width: {{ Math.floor((subjectResultYes?.data?.queryCitizen_Subject_Vote?.length ?? 0) / ((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) + (subjectResultYes?.data?.queryCitizen_Subject_Vote?.length ?? 0)) * 100) }}%">
-          Oui {{ Math.floor((subjectResultYes?.data?.queryCitizen_Subject_Vote?.length ?? 0) / ((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) + (subjectResultYes?.data?.queryCitizen_Subject_Vote?.length ?? 0)) * 100) }}
-          %
-        </div>
-        <div class="bg-[#DF0000] rounded p-1 px-3" style="width: {{ Math.floor((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) / ((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) + (subjectResultYes?.data?.queryCitizen_Subject_Vote?.length ?? 0)) * 100) }}%">
-          Non {{ Math.floor((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) / ((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) + (subjectResultYes?.data?.queryCitizen_Subject_Vote?.length ?? 0)) * 100) }}
-          %
-        </div>
+        <app-vote-progress [subjectResultYes]="subjectResultYes?.data?.queryCitizen_Subject_Vote?.length" [subjectResultNo]="subjectResultNo?.data?.queryCitizen_Subject_Vote?.length"></app-vote-progress>
       </div>
     </app-hero-row>
   }
