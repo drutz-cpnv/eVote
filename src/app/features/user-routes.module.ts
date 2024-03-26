@@ -5,6 +5,7 @@ import {AdmPageComponent} from "./adm-page/adm-page.component";
 import {NewSubjectPageComponent} from "./new-subject-page/new-subject-page.component";
 import {AdmSubjectPageComponent} from "./adm-subject-page/adm-subject-page.component";
 import {VotePageComponent} from "./vote-page/vote-page.component";
+import {UpdateSubjectPageComponent} from "./update-subject-page/update-subject-page.component";
 
 export const routes: Routes = [
   {
@@ -14,6 +15,10 @@ export const routes: Routes = [
   {
     path: "admin",
     component: AdmPageComponent
+  },
+  {
+    path: "admin/subject/update/:id",
+    component: UpdateSubjectPageComponent
   },
   {
     path: "admin/subject/new",
