@@ -1,11 +1,12 @@
 import {Component, Inject} from '@angular/core';
-import {ApolloQueryResult, Observable} from "@apollo/client/core";
-import {DeleteSubjectGQL, GetCurrentVotationGQL} from "../../../graphql/generated/graphql";
+import {ApolloQueryResult} from "@apollo/client/core";
+import {Observable} from "rxjs";
+import {GetCurrentVotationGQL, GetSubjectsGQL, GetSubjectsSubscription} from "../../../graphql/generated/graphql";
 import {SubjectNumber} from "../header/subject-number";
 import { NetworkStatus } from '@apollo/client/core/networkStatus';
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, JsonPipe} from "@angular/common";
 import {SubjectListComponent} from "./subject-list/subject-list.component";
-import {lastValueFrom} from "rxjs";
+import {SubscriptionResult} from "apollo-angular";
 
 
 @Component({
@@ -14,7 +15,8 @@ import {lastValueFrom} from "rxjs";
   imports: [
     AsyncPipe,
     SubjectListComponent,
-    SubjectListComponent
+    SubjectListComponent,
+    JsonPipe
   ],
   templateUrl: './adm-subject-page.component.html',
   styleUrl: './adm-subject-page.component.css'
@@ -23,10 +25,10 @@ export class AdmSubjectPageComponent {
   @Inject('title')
   public votation?: Observable<ApolloQueryResult<GetCurrentVotationGQL>>;
 
-  public getVotationResult$
+  public getSubjects$: Observable<SubscriptionResult<GetSubjectsSubscription>>
 
-  constructor(getCurrentVotationGQL: GetCurrentVotationGQL, private deleteSubjectGQL:DeleteSubjectGQL) {
-    this.getVotationResult$ = getCurrentVotationGQL.fetch();
+  constructor(getSubjectsGQL: GetSubjectsGQL) {
+    this.getSubjects$ = getSubjectsGQL.subscribe()
   }
 
   protected readonly SubjectNumber = SubjectNumber;

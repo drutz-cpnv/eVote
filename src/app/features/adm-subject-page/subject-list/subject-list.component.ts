@@ -4,36 +4,32 @@ import {HeroRowComponent} from "../../hero-row/hero-row.component";
 import {SubjectNumber} from "../../header/subject-number";
 import {CardButtonComponent} from "../../card/components/card-button/card-button.component";
 import {lastValueFrom} from "rxjs";
+import * as console from "console";
+import {JsonPipe} from "@angular/common";
 
 @Component({
   selector: 'app-adm-subject-list',
   standalone: true,
   imports: [
     HeroRowComponent,
-    CardButtonComponent
+    CardButtonComponent,
+    JsonPipe
   ],
   templateUrl: './subject-list.component.html',
   styleUrl: './subject-list.component.css'
 })
 export class SubjectListComponent {
 
+
+  @Input() subjects: Array<Subject> = [];
+
   constructor(private deleteSubjectGQL:DeleteSubjectGQL, private updateRemoveSubjectGQL:UpdateRemoveSubjectGQL) {
 
   }
-  @Input() subjects: any;
-
-  @Output()
-  deleteUser = new EventEmitter<string>();
-
-  public getSubjects(): Array<Subject> {
-    return this.subjects[0].federal_subject.subjects;
-  }
 
   protected readonly SubjectNumber = SubjectNumber;
-  protected readonly parseInt = parseInt;
 
   async onDeleteClicked(subjectId: string) {
-    console.log('onDeleteClicked', subjectId)
     await lastValueFrom(this.updateRemoveSubjectGQL.mutate({subjectId: subjectId}))
     await lastValueFrom(this.deleteSubjectGQL.mutate({subjectId: subjectId}))
   }
