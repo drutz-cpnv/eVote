@@ -3,7 +3,7 @@
     <app-hero-row title="Resultats" theme="dark" type="element">
       <div class="w-full bg-white rounded-lg p-1 flex flex-col gap-1 relative">
         <div class="absolute left-1/2 h-full w-[1px] top-0 bg-black"></div>
-        <app-vote-progress [subjectResultYes]="subjectResultYes?.data?.queryCitizen_Subject_Vote?.length" [subjectResultNo]="subjectResultNo?.data?.queryCitizen_Subject_Vote?.length"></app-vote-progress>
+        <app-vote-progress [subjectResultYes]="subjectResultYes?.data?.queryCitizen_Subject_Vote" [subjectResultNo]="subjectResultNo?.data?.queryCitizen_Subject_Vote"/>
       </div>
     </app-hero-row>
   }

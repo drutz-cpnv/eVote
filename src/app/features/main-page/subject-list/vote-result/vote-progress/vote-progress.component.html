@@ -1,8 +1,6 @@
-<div class="bg-[#009300] rounded p-1 px-3" style="width: {{ Math.floor((subjectResultYes ?? 0) / ((subjectResultNo ?? 0) + (subjectResultYes ?? 0)) * 100) }}%">
-  Oui {{ Math.floor((subjectResultYes ?? 0) / ((subjectResultNo ?? 0) + (subjectResultYes ?? 0)) * 100) }}
-  %
+<div class="bg-[#009300] rounded p-1 px-3 h-[32px]" style="width: {{ Math.floor((getResultYes()) / ((getResultNo()) + (getResultYes())) * 100) }}%">
+  Oui {{ Math.floor((getResultYes()) / ((getResultNo()) + (getResultYes())) * 100) }}%
 </div>
-<div class="bg-[#DF0000] rounded p-1 px-3" style="width: {{ Math.floor((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) / ((subjectResultNo?.data?.queryCitizen_Subject_Vote?.length ?? 0) + (subjectResultYes?.data?.queryCitizen_Subject_Vote?.length ?? 0)) * 100) }}%">
-  Non {{ Math.floor((subjectResultNo ?? 0) / ((subjectResultNo ?? 0) + (subjectResultYes ?? 0)) * 100) }}
-  %
+<div class="bg-[#DF0000] rounded p-1 px-3 h-[32px] overflow-hidden transition-all duration-100" style="width: {{ Math.floor((getResultNo()) / ((getResultNo()) + (getResultYes())) * 100) }}%">
+  <span class="text-clip">Non {{ Math.floor((getResultNo()) / ((getResultNo()) + (getResultYes())) * 100) }}%</span>
 </div>
