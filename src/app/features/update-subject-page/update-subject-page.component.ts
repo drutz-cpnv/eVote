@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {GetSubjectGQL, UpdateSubjectGQL} from "../../../graphql/generated/graphql";
 import {firstValueFrom, lastValueFrom} from "rxjs";
 import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 import {HeaderComponent} from "../header/header.component";
+import {IconComponent} from "../icon/icon.component";
 
 @Component({
   selector: 'app-update-subject-page',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    HeaderComponent,
-  ],
+    imports: [
+        ReactiveFormsModule,
+        HeaderComponent,
+        IconComponent,
+        RouterLink,
+    ],
   templateUrl: './update-subject-page.component.html',
   styleUrl: './update-subject-page.component.css'
 })

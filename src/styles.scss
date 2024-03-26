@@ -12,6 +12,13 @@
   @apply w-full;
 }
 
+@media screen and (max-width: 1520px) {
+  .container {
+    @apply mx-5;
+    width: calc(100% - 40px);
+  }
+}
+
 .border-l-1 {
   border-left-width: .5px;
 }

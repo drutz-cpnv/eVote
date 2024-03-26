@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {IconComponent} from "../icon/icon.component";
 
@@ -13,5 +13,7 @@ import {IconComponent} from "../icon/icon.component";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+
+  @Input() type: string = 'solo';
 
 }

@@ -1,7 +1,13 @@
+<app-header type="extended"/>
+<section class="mb-4">
+  <div class="container flex bg-[#DF0000] rounded-b-2xl py-3 gap-2">
+    <h2 class="text-xl font-bold ml-[58px] text-white text-opacity-65"><a routerLink="/admin">Administration</a></h2> <app-icon name="chevron_right" class="text-white"/> <h3 class="text-xl font-bold text-white">Objets</h3>
+  </div>
+</section>
 <section>
-  <div class="container flex flex-col rounded-b-2xl pt-10 gap-2">
+  <div class="container">
     @if ((getSubjects$ | async); as getSubjects) {
-      <app-adm-subject-list [subjects]="$any(getSubjects.data?.querySubject)"></app-adm-subject-list>
+      <app-adm-subject-list [subjects]="$any(getSubjects.data?.querySubject)" class="w-full"></app-adm-subject-list>
     }
   </div>
 </section>

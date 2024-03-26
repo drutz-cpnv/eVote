@@ -15,6 +15,8 @@ import { ApolloQueryResult, Observable } from '@apollo/client/core';
 import {AsyncPipe, JsonPipe} from "@angular/common";
 import { NetworkStatus } from '@apollo/client/core/networkStatus';
 import {SubjectListComponent} from "./subject-list/subject-list.component";
+import {CardButtonComponent} from "../card/components/card-button/card-button.component";
+import {RouterLink} from "@angular/router";
 
 
 @Component({
@@ -27,7 +29,9 @@ import {SubjectListComponent} from "./subject-list/subject-list.component";
     HeaderComponent,
     AsyncPipe,
     JsonPipe,
-    SubjectListComponent
+    SubjectListComponent,
+    CardButtonComponent,
+    RouterLink
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.css'

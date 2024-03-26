@@ -1,4 +1,4 @@
-<app-header/>
+<app-header type="extended"/>
 <section>
   <div class="container flex flex-col bg-[#DF0000] rounded-b-2xl pt-10 gap-2">
     @if ((getVotationResult$ | async); as getVotationResult) {
@@ -21,10 +21,10 @@
   </div>
 </section>
 
-<section>
-  <div class="container">
+<section class="mt-4">
+  <div class="container" style="padding: 0">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <app-card type="empty">Aucun objet cantonal</app-card>
+      <app-card-button iconName="how_to_vote" iconSize="6xl" text="Voter" routerLink="/vote/new"/>
     </div>
   </div>
 </section>

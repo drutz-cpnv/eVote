@@ -1,4 +1,4 @@
-<app-card>
+<app-card class="h-full block">
   @if (linkPath){
     <a routerLink="{{linkPath}}">
       <div class="flex pt-8 pb-0">
@@ -6,7 +6,7 @@
       </div>
       <div class="flex items-center justify-between px-4 pb-4">
         <p class="text-lg">{{ text }}</p>
-        <app-icon name="arrow_forward"></app-icon>
+        <app-icon name="{{ bottomIconName ?? 'arrow_forward' }}"></app-icon>
       </div>
     </a>
   } @else {
@@ -16,7 +16,7 @@
       </div>
       <div class="flex items-center justify-between px-4 pb-4">
         <p class="text-lg">{{ text }}</p>
-        <app-icon name="arrow_forward"></app-icon>
+        <app-icon name="{{ bottomIconName ?? 'arrow_forward' }}"></app-icon>
       </div>
     </div>
   }

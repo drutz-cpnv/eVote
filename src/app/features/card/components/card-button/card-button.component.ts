@@ -18,6 +18,7 @@ export class CardButtonComponent extends CardComponent{
   @Input() iconName!: string;
   @Input() text!: string;
   @Input() linkPath!: string;
+  @Input() bottomIconName: string = 'arrow_forward';
 
   constructor() {
     super();

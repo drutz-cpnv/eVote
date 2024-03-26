@@ -7,6 +7,10 @@ import { NetworkStatus } from '@apollo/client/core/networkStatus';
 import {AsyncPipe, JsonPipe} from "@angular/common";
 import {SubjectListComponent} from "./subject-list/subject-list.component";
 import {SubscriptionResult} from "apollo-angular";
+import {HeaderComponent} from "../header/header.component";
+import {IconComponent} from "../icon/icon.component";
+import {RouterLink} from "@angular/router";
+import {HeroRowComponent} from "../hero-row/hero-row.component";
 
 
 @Component({
@@ -16,7 +20,11 @@ import {SubscriptionResult} from "apollo-angular";
     AsyncPipe,
     SubjectListComponent,
     SubjectListComponent,
-    JsonPipe
+    JsonPipe,
+    HeaderComponent,
+    IconComponent,
+    RouterLink,
+    HeroRowComponent
   ],
   templateUrl: './adm-subject-page.component.html',
   styleUrl: './adm-subject-page.component.css'

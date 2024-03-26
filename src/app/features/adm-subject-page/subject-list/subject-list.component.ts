@@ -6,6 +6,9 @@ import {CardButtonComponent} from "../../card/components/card-button/card-button
 import {lastValueFrom} from "rxjs";
 import * as console from "console";
 import {JsonPipe} from "@angular/common";
+import {HeaderComponent} from "../../header/header.component";
+import {IconComponent} from "../../icon/icon.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-adm-subject-list',
@@ -13,7 +16,10 @@ import {JsonPipe} from "@angular/common";
   imports: [
     HeroRowComponent,
     CardButtonComponent,
-    JsonPipe
+    JsonPipe,
+    HeaderComponent,
+    IconComponent,
+    RouterLink
   ],
   templateUrl: './subject-list.component.html',
   styleUrl: './subject-list.component.css'
