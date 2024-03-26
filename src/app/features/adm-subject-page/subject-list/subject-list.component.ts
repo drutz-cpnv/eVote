@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {DeleteSubjectGQL, Subject} from "../../../../graphql/generated/graphql";
+import {DeleteSubjectGQL, Subject, UpdateRemoveSubjectGQL} from "../../../../graphql/generated/graphql";
 import {HeroRowComponent} from "../../hero-row/hero-row.component";
 import {SubjectNumber} from "../../header/subject-number";
 import {CardButtonComponent} from "../../card/components/card-button/card-button.component";
@@ -17,7 +17,7 @@ import {lastValueFrom} from "rxjs";
 })
 export class SubjectListComponent {
 
-  constructor(private deleteSubjectGQL:DeleteSubjectGQL) {
+  constructor(private deleteSubjectGQL:DeleteSubjectGQL, private updateRemoveSubjectGQL:UpdateRemoveSubjectGQL) {
 
   }
   @Input() subjects: any;
@@ -34,6 +34,7 @@ export class SubjectListComponent {
 
   async onDeleteClicked(subjectId: string) {
     console.log('onDeleteClicked', subjectId)
-    await lastValueFrom(this.deleteSubjectGQL.mutate({subjectId: subjectId, subjectId2: subjectId}))
+    await lastValueFrom(this.updateRemoveSubjectGQL.mutate({subjectId: subjectId}))
+    await lastValueFrom(this.deleteSubjectGQL.mutate({subjectId: subjectId}))
   }
 }
