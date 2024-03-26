@@ -1,0 +1,7 @@
+mutation AddVote($target: ID!, $voter: ID!, $vote: Choice!) {
+  addCitizen_Subject_Vote(input: {target: {id: $target}, voter: {user_id: $voter}, vote: $vote}) {
+    citizen_Subject_Vote {
+      id
+    }
+  }
+}

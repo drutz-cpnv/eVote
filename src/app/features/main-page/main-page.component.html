@@ -1,1 +1,30 @@
-<p>main-page works!</p>
+<app-header type="extended"/>
+<section>
+  <div class="container flex flex-col bg-[#DF0000] rounded-b-2xl pt-10 gap-2">
+    @if ((getVotationResult$ | async); as getVotationResult) {
+      @switch (getVotationResult.networkStatus) {
+        @case (NetworkStatus.ready) {
+          <app-subject-list [subjects]="$any(getVotationResult.data.queryVotation)"></app-subject-list>
+        }
+        @case (NetworkStatus.error) {
+
+          An error occurred...
+        }
+        @default {
+          Loading or so...
+        }
+
+      }
+    }
+
+
+  </div>
+</section>
+
+<section class="mt-4">
+  <div class="container" style="padding: 0">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <app-card-button iconName="how_to_vote" iconSize="6xl" text="Voter" routerLink="/vote/new"/>
+    </div>
+  </div>
+</section>

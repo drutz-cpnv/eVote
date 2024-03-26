@@ -1,0 +1,4 @@
+@for (subject of getSubjects(); track subject.id; let idx = $index) {
+  <app-hero-row [title]="SubjectNumber[idx]" [description]="subject.title" theme="dark"/>
+  <app-vote-result [subject]="subject.id"/>
+}

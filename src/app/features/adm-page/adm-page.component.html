@@ -1,0 +1,16 @@
+<app-header type="extended"/>
+<section class="mb-4">
+  <div class="container flex flex-col bg-[#DF0000] rounded-b-2xl py-3 gap-2">
+    <h2 class="text-xl font-bold ml-[58px] text-white">Administration</h2>
+  </div>
+</section>
+<section class="w-full">
+  <div class="container">
+    <app-hero-row title="Gestion des sujets" class="w-full mt-6">
+      <div class="flex flex-row gap-2">
+        <app-card-button iconName="add" iconSize="6xl" text="Ajouter" linkPath="/admin/subject/new"/>
+        <app-card-button iconName="list" iconSize="6xl" text="Liste" linkPath="/admin/subject"/>
+      </div>
+    </app-hero-row>
+  </div>
+</section>

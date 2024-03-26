@@ -1,0 +1,21 @@
+<app-header/>
+
+<section>
+  <div class="container">
+    @if ((getVotationResult$ | async); as getVotationResult) {
+      @switch (getVotationResult.networkStatus) {
+        @case (NetworkStatus.ready) {
+          <app-vote-sheet [subjects]="$any(getVotationResult.data.queryVotation)" class="w-full"></app-vote-sheet>
+        }
+        @case (NetworkStatus.error) {
+
+          An error occurred...
+        }
+        @default {
+          Loading or so...
+        }
+
+      }
+    }
+  </div>
+</section>

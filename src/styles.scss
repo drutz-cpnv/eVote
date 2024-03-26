@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.container {
+  @apply mx-auto;
+  max-width: 1500px;
+  @apply px-10;
+  @apply flex;
+  @apply w-full;
+}
+
+@media screen and (max-width: 1520px) {
+  .container {
+    @apply mx-5;
+    width: calc(100% - 40px);
+  }
+}
+
+.border-l-1 {
+  border-left-width: .5px;
+}

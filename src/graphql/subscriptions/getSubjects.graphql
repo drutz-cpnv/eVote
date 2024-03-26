@@ -1,0 +1,6 @@
+subscription getSubjects {
+  querySubject {
+    id
+    title
+  }
+}

@@ -1,0 +1,11 @@
+query GetCitizen($user_id: ID!) {
+  getCitizen(user_id: $user_id) {
+    user_id
+    lives {
+      id
+      located_in {
+        id
+      }
+    }
+  }
+}

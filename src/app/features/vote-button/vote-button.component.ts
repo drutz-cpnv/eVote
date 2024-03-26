@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
+import {CardComponent} from "../card/card.component";
+import {IconComponent} from "../icon/icon.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-vote-button',
+  selector: 'app-votation-button',
   standalone: true,
-  imports: [],
+    imports: [
+        CardComponent,
+        IconComponent,
+        RouterLink
+    ],
   templateUrl: './vote-button.component.html',
-  styleUrl: './vote-button.component.css'
+  styleUrl: './votation-button.component.css'
 })
 export class VoteButtonComponent {
 

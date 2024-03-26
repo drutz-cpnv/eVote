@@ -1,0 +1,25 @@
+<div class="bg-gray-300 rounded-2xl p-5 pl-10 relative">
+  <div class="absolute w-10 h-10 top-20 -left-5 rounded-full bg-white block"></div>
+  <form action="" (submit)="vote($event)">
+    <table class="w-full">
+      @for (subject of getSubjects(); track subject.id; let i = $index) {
+        <tr class="h-52">
+          <td class="font-bold font-mono text-3xl pr-10 block" style="width: 100px">{{ i + 1 }}</td>
+          <td class="p-2 border-black border-2 w-full">
+            <strong>Objet {{ i + 1 }}</strong>
+            <p>{{ subject.title }}</p>
+          </td>
+          <td class="w-40 border-black border-2">
+            <div class="flex flex-col h-[208px]">
+              <p class="p-2 font-medium">Réponse</p>
+              <input type="text" [id]="subject.id" class="bg-transparent border-none p-3 text-xl invalid:bg-red-600 invalid:border-red-600 mt-auto" pattern="^(Oui)|(Non)|(No)|(N)|(O)|(Ou)$">
+            </div>
+          </td>
+        </tr>
+        <app-subject [subject]="subject" [_id]="i + 1"></app-subject>
+      }
+    </table>
+    <input type="text" [formControl]="user_id">
+    <button>Voter</button>
+  </form>
+</div>

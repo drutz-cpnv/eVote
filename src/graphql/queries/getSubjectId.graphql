@@ -1,0 +1,6 @@
+query getSubject($subject_id: ID!) {
+  getSubject(id: $subject_id) {
+    title
+    description
+  }
+}
