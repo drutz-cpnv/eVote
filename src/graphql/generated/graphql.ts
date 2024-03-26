@@ -1726,14 +1726,6 @@ export type GetCurrentVotationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrentVotationQuery = { __typename?: 'Query', queryVotation?: Array<{ __typename?: 'Votation', id: string, end_date?: any | null, federal_subject?: { __typename?: 'Federal_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null, town_subjects?: Array<{ __typename?: 'Town_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null> | null, canton_subjects?: Array<{ __typename?: 'Canton_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', description?: string | null, id: string, title?: string | null } | null> | null } | null> | null } | null> | null };
 
-export type GetVotationCountQueryVariables = Exact<{
-  id?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
-  vote: Choice;
-}>;
-
-
-export type GetVotationCountQuery = { __typename?: 'Query', queryCitizen_Subject_Vote?: Array<{ __typename?: 'Citizen_Subject_Vote', target?: { __typename?: 'Subject', id: string } | null } | null> | null };
-
 export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1743,6 +1735,14 @@ export type GetSubjectsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetSubjectsSubscription = { __typename?: 'Subscription', querySubject?: Array<{ __typename?: 'Subject', id: string, title?: string | null } | null> | null };
+
+export type GetVotationCountSubscriptionVariables = Exact<{
+  id?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
+  vote: Choice;
+}>;
+
+
+export type GetVotationCountSubscription = { __typename?: 'Subscription', queryCitizen_Subject_Vote?: Array<{ __typename?: 'Citizen_Subject_Vote', target?: { __typename?: 'Subject', id: string } | null } | null> | null };
 
 export const AddFederal_SubjectsDocument = gql`
     mutation AddFederal_Subjects($subjects: [SubjectRef!]!) {
@@ -1981,26 +1981,6 @@ export const GetCurrentVotationDocument = gql`
       super(apollo);
     }
   }
-export const GetVotationCountDocument = gql`
-    query GetVotationCount($id: [ID!], $vote: Choice!) {
-  queryCitizen_Subject_Vote(filter: {vote: {eq: $vote}}) {
-    target(filter: {id: $id}) {
-      id
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetVotationCountGQL extends Apollo.Query<GetVotationCountQuery, GetVotationCountQueryVariables> {
-    override document = GetVotationCountDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const MyQueryDocument = gql`
     query MyQuery {
   queryCanton {
@@ -2034,6 +2014,26 @@ export const GetSubjectsDocument = gql`
   })
   export class GetSubjectsGQL extends Apollo.Subscription<GetSubjectsSubscription, GetSubjectsSubscriptionVariables> {
     override document = GetSubjectsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetVotationCountDocument = gql`
+    subscription GetVotationCount($id: [ID!], $vote: Choice!) {
+  queryCitizen_Subject_Vote(filter: {vote: {eq: $vote}}) {
+    target(filter: {id: $id}) {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetVotationCountGQL extends Apollo.Subscription<GetVotationCountSubscription, GetVotationCountSubscriptionVariables> {
+    override document = GetVotationCountDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

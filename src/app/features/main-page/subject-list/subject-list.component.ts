@@ -2,12 +2,16 @@ import {Component, Input} from '@angular/core';
 import {Subject} from "../../../../graphql/generated/graphql";
 import {HeroRowComponent} from "../../hero-row/hero-row.component";
 import {SubjectNumber} from "../../header/subject-number";
+import {VoteResult} from "./vote-result/vote-result";
+import {JsonPipe} from "@angular/common";
 
 @Component({
   selector: 'app-subject-list',
   standalone: true,
   imports: [
-    HeroRowComponent
+    HeroRowComponent,
+    VoteResult,
+    JsonPipe
   ],
   templateUrl: './subject-list.component.html',
   styleUrl: './subject-list.component.css'
