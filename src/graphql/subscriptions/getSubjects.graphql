@@ -1,4 +1,4 @@
-query getSubjects {
+subscription getSubjects {
   querySubject {
     id
     title

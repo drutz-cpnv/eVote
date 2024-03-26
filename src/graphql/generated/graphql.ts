@@ -1686,11 +1686,17 @@ export type AddVoteMutation = { __typename?: 'Mutation', addCitizen_Subject_Vote
 
 export type DeleteSubjectMutationVariables = Exact<{
   subjectId?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
-  subjectId2: Scalars['ID']['input'];
 }>;
 
 
-export type DeleteSubjectMutation = { __typename?: 'Mutation', deleteSubject?: { __typename?: 'DeleteSubjectPayload', subject?: Array<{ __typename?: 'Subject', id: string } | null> | null } | null, updateFederal_Subjects?: { __typename?: 'UpdateFederal_SubjectsPayload', federal_Subjects?: Array<{ __typename?: 'Federal_Subjects', id: string } | null> | null } | null };
+export type DeleteSubjectMutation = { __typename?: 'Mutation', deleteSubject?: { __typename?: 'DeleteSubjectPayload', subject?: Array<{ __typename?: 'Subject', id: string } | null> | null } | null };
+
+export type UpdateRemoveSubjectMutationVariables = Exact<{
+  subjectId: Scalars['ID']['input'];
+}>;
+
+
+export type UpdateRemoveSubjectMutation = { __typename?: 'Mutation', updateFederal_Subjects?: { __typename?: 'UpdateFederal_SubjectsPayload', federal_Subjects?: Array<{ __typename?: 'Federal_Subjects', id: string } | null> | null } | null };
 
 export type UpdateSubjectMutationVariables = Exact<{
   subjectId?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
@@ -1720,11 +1726,6 @@ export type GetCurrentVotationQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCurrentVotationQuery = { __typename?: 'Query', queryVotation?: Array<{ __typename?: 'Votation', id: string, end_date?: any | null, federal_subject?: { __typename?: 'Federal_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null, town_subjects?: Array<{ __typename?: 'Town_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', title?: string | null, id: string, description?: string | null } | null> | null } | null> | null, canton_subjects?: Array<{ __typename?: 'Canton_Subjects', id: string, subjects?: Array<{ __typename?: 'Subject', description?: string | null, id: string, title?: string | null } | null> | null } | null> | null } | null> | null };
 
-export type GetSubjectsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetSubjectsQuery = { __typename?: 'Query', querySubject?: Array<{ __typename?: 'Subject', id: string, title?: string | null } | null> | null };
-
 export type GetVotationCountQueryVariables = Exact<{
   id?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
   vote: Choice;
@@ -1737,6 +1738,11 @@ export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MyQueryQuery = { __typename?: 'Query', queryCanton?: Array<{ __typename?: 'Canton', name?: string | null, id: string } | null> | null };
+
+export type GetSubjectsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSubjectsSubscription = { __typename?: 'Subscription', querySubject?: Array<{ __typename?: 'Subject', id: string, title?: string | null } | null> | null };
 
 export const AddFederal_SubjectsDocument = gql`
     mutation AddFederal_Subjects($subjects: [SubjectRef!]!) {
@@ -1823,16 +1829,9 @@ export const AddVoteDocument = gql`
     }
   }
 export const DeleteSubjectDocument = gql`
-    mutation DeleteSubject($subjectId: [ID!], $subjectId2: ID!) {
+    mutation DeleteSubject($subjectId: [ID!]) {
   deleteSubject(filter: {id: $subjectId}) {
     subject {
-      id
-    }
-  }
-  updateFederal_Subjects(
-    input: {filter: {id: "0x1a5193fcb7"}, remove: {subjects: {id: $subjectId2}}}
-  ) {
-    federal_Subjects {
       id
     }
   }
@@ -1844,6 +1843,28 @@ export const DeleteSubjectDocument = gql`
   })
   export class DeleteSubjectGQL extends Apollo.Mutation<DeleteSubjectMutation, DeleteSubjectMutationVariables> {
     override document = DeleteSubjectDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateRemoveSubjectDocument = gql`
+    mutation updateRemoveSubject($subjectId: ID!) {
+  updateFederal_Subjects(
+    input: {filter: {id: "0x1a5193fcb7"}, remove: {subjects: {id: $subjectId}}}
+  ) {
+    federal_Subjects {
+      id
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateRemoveSubjectGQL extends Apollo.Mutation<UpdateRemoveSubjectMutation, UpdateRemoveSubjectMutationVariables> {
+    override document = UpdateRemoveSubjectDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1960,25 +1981,6 @@ export const GetCurrentVotationDocument = gql`
       super(apollo);
     }
   }
-export const GetSubjectsDocument = gql`
-    query getSubjects {
-  querySubject {
-    id
-    title
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetSubjectsGQL extends Apollo.Query<GetSubjectsQuery, GetSubjectsQueryVariables> {
-    override document = GetSubjectsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const GetVotationCountDocument = gql`
     query GetVotationCount($id: [ID!], $vote: Choice!) {
   queryCitizen_Subject_Vote(filter: {vote: {eq: $vote}}) {
@@ -2013,6 +2015,25 @@ export const MyQueryDocument = gql`
   })
   export class MyQueryGQL extends Apollo.Query<MyQueryQuery, MyQueryQueryVariables> {
     override document = MyQueryDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetSubjectsDocument = gql`
+    subscription getSubjects {
+  querySubject {
+    id
+    title
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetSubjectsGQL extends Apollo.Subscription<GetSubjectsSubscription, GetSubjectsSubscriptionVariables> {
+    override document = GetSubjectsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
