@@ -1,11 +1,13 @@
-<app-header/>
-<section class="flex flex-col">
+<div class="flex flex-col gap-2">
   @if (formGroup) {
-    <label>Titre
+    <div class="flex gap-2">
+      <label class="w-[100px]">Titre</label>
       <input class="border-2 rounded" [formControl]="formGroup.controls.title">
-    </label>
-    <label>Description
+    </div>
+
+    <div class="flex gap-2">
+      <label class="w-[100px]">Description</label>
       <input class="border-2 rounded" [formControl]="formGroup.controls.description">
-    </label>
+    </div>
   }
-</section>
+</div>
