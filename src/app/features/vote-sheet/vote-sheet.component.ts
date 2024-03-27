@@ -14,7 +14,8 @@ type SubjectVotes = {
   standalone: true,
   imports: [
     ObjectComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ObjectComponent
   ],
   templateUrl: './vote-sheet.component.html',
   styleUrl: './vote-sheet.component.css'

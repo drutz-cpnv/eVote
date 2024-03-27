@@ -28,7 +28,7 @@ export class UpdateSubjectPageComponent {
   }
   async fillForm() {
     const myId = this.route.snapshot.params["id"];
-    const subject = await firstValueFrom(this.getSubjectByIdGQL.fetch({subject_id: myId}));
+    const subject = await lastValueFrom(this.getSubjectByIdGQL.fetch({subject_id: myId}));
     const title = subject?.data?.getSubject?.title ?? ''
     const description = subject?.data?.getSubject?.description ?? '';
     this.title.setValue(title);

@@ -15,6 +15,5 @@ import {SubjectFormGroup} from "../subject-form-group.service";
   styleUrl: './subject-form-group.component.css'
 })
 export class SubjectFormGroupComponent {
-  @Input({required: true})
-  public formGroup!: SubjectFormGroup;
+  @Input({required: true}) public formGroup!: SubjectFormGroup;
 }

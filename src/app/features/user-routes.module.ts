@@ -25,7 +25,7 @@ export const routes: Routes = [
     component: NewSubjectPageComponent
   },
   {
-    path: "vote/:id",
+    path: "vote/new",
     component: VotePageComponent
   },
   {
