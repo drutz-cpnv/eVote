@@ -12,14 +12,18 @@
           <td class="w-40 border-black border-2">
             <div class="flex flex-col h-[208px]">
               <p class="p-2 font-medium">Réponse</p>
-              <input type="text" [id]="subject.id" class="bg-transparent border-none p-3 text-xl invalid:bg-red-600 invalid:border-red-600 mt-auto" pattern="^(Oui)|(Non)|(No)|(N)|(O)|(Ou)$">
+              <input type="text" [id]="subject.id" class="bg-transparent border-none outline-0 p-3 text-xl invalid:bg-red-600 invalid:border-red-600 mt-auto" style="border-top: 1px solid #000" pattern="^(Oui)|(Non)|(No)|(N)|(O)|(Ou)$">
             </div>
           </td>
         </tr>
         <app-subject [subject]="subject" [_id]="i + 1"></app-subject>
       }
     </table>
-    <input type="text" [formControl]="user_id">
-    <button>Voter</button>
+    <div class="flex justify-between mt-2 pl-[100px]">
+      <div>
+        <input type="text" [formControl]="user_id" placeholder="Entrer votre identifiant" class="p-2 rounded border-2 outline-0 focus:ring-1 focus:ring-red-600">
+      </div>
+      <button class="py-1 px-5 bg-red-700 text-white rounded">Voter</button>
+    </div>
   </form>
 </div>
